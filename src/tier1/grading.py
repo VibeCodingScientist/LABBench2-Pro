@@ -18,16 +18,33 @@ Respond with JSON only: {{"correct": true, "explanation": "brief reason"}} or {{
 
 
 def grade_programmatic(task: dict, response: str) -> dict:
-    """Grade by exact match, numeric tolerance, or custom verifier."""
+    """Grade by exact match, numeric tolerance, multiple choice, or custom verifier."""
     ideal = task.get("ideal", "")
     verification = task.get("verification_fn", "exact_match")
 
-    if verification == "numeric_tolerance":
+    if verification == "multiple_choice":
+        return _grade_multiple_choice(ideal, response)
+    elif verification == "numeric_tolerance":
         return _grade_numeric(ideal, response, tolerance=task.get("meta", {}).get("tolerance", 0.01))
     elif verification == "integer_match":
         return _grade_integer(ideal, response)
     else:
         return _grade_exact(ideal, response)
+
+
+def _grade_multiple_choice(ideal: str, response: str) -> dict:
+    """Grade multiple choice: extract the letter from the response and compare."""
+    ideal_letter = ideal.strip().upper()[:1]
+    # Extract the first standalone letter from the response
+    response_clean = response.strip()
+    # Try: starts with a letter, or "The answer is X", or just a single letter
+    match = re.search(r'\b([A-Z])\b', response_clean.upper())
+    if match:
+        response_letter = match.group(1)
+    else:
+        response_letter = response_clean.upper()[:1]
+    correct = ideal_letter == response_letter
+    return {"correct": correct, "score": 1.0 if correct else 0.0, "grader": "programmatic_mc"}
 
 
 def _grade_exact(ideal: str, response: str) -> dict:

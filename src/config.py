@@ -14,6 +14,7 @@ if not ANTHROPIC_API_KEY:
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "")
 GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY", "")
 HF_TOKEN = os.environ.get("HF_TOKEN", "")
+NCBI_EMAIL = os.environ.get("NCBI_EMAIL", "")
 
 # --- Infrastructure ---
 DATABASE_URL = os.environ.get("DATABASE_URL", "postgresql://dev:dev@localhost:5432/labbench2pro")

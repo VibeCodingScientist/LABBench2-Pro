@@ -1,4 +1,6 @@
-"""Generate hypothesis generation tasks from PubMed Central.
+"""Generate hypothesis generation tasks from PubMed abstracts.
+
+Fetches real papers via NCBI Entrez API. Requires NCBI_EMAIL env var.
 
 Usage: python -m src.tier2.gen_hypothesis --output-dir tasks/hypothesis --count 100
 """
@@ -8,8 +10,9 @@ import json
 import os
 import time
 
-from Bio import Entrez
+from Bio import Entrez, Medline
 
+from src.config import NCBI_EMAIL
 
 HYPOTHESIS_RUBRIC = """Evaluate the proposed hypotheses on these criteria:
 1. Falsifiable: Each hypothesis must be testable with a concrete experiment
@@ -19,145 +22,140 @@ HYPOTHESIS_RUBRIC = """Evaluate the proposed hypotheses on these criteria:
 
 Score: 0-4 points (one per criterion met). A score of 3+ is "correct"."""
 
+# Diverse biology search queries to get varied papers
+SEARCH_QUERIES = [
+    '"unexpected finding" AND biology[MeSH]',
+    '"surprising result" AND molecular[Title]',
+    '"novel mechanism" AND cell biology[MeSH]',
+    '"contrary to expectations" AND genetics[MeSH]',
+    '"previously unknown" AND biochemistry[MeSH]',
+    '"first evidence" AND neuroscience[MeSH]',
+    '"unexpected role" AND immunology[MeSH]',
+    '"novel pathway" AND cancer[MeSH]',
+    '"surprising discovery" AND microbiology[MeSH]',
+    '"previously uncharacterized" AND genomics[MeSH]',
+]
 
-def fetch_papers(email: str, count: int = 200) -> list[dict]:
-    """Fetch papers with unexpected findings from PubMed Central."""
+
+def fetch_abstracts(email: str, count: int) -> list[dict]:
+    """Fetch paper abstracts from PubMed via Entrez."""
     Entrez.email = email
-
-    # Search for papers with interesting findings
-    query = '"unexpected finding" OR "surprising result" OR "contrary to expectations"'
-    handle = Entrez.esearch(db="pmc", term=query, retmax=count, sort="relevance")
-    record = Entrez.read(handle)
-    handle.close()
-
-    ids = record.get("IdList", [])
-    if not ids:
-        return []
-
     papers = []
-    # Fetch in batches of 10
-    for batch_start in range(0, len(ids), 10):
-        batch_ids = ids[batch_start:batch_start + 10]
+    per_query = max(count // len(SEARCH_QUERIES), 15)
+
+    for query in SEARCH_QUERIES:
+        if len(papers) >= count:
+            break
+
         try:
-            handle = Entrez.efetch(db="pmc", id=",".join(batch_ids), rettype="xml")
-            # Parse just the abstracts for simplicity
-            from Bio import Medline
-            # Use abstract fetching instead
+            # Search
+            handle = Entrez.esearch(db="pubmed", term=query, retmax=per_query, sort="relevance")
+            record = Entrez.read(handle)
             handle.close()
-        except Exception:
-            pass
-        time.sleep(0.5)  # Respect NCBI rate limits
+            ids = record.get("IdList", [])
+            if not ids:
+                continue
 
-    # Fallback: fetch abstracts via pubmed
-    handle = Entrez.esearch(db="pubmed", term=query, retmax=count, sort="relevance")
-    record = Entrez.read(handle)
-    handle.close()
+            time.sleep(0.4)
 
-    pubmed_ids = record.get("IdList", [])
-    for batch_start in range(0, min(len(pubmed_ids), count), 10):
-        batch = pubmed_ids[batch_start:batch_start + 10]
-        try:
-            handle = Entrez.efetch(db="pubmed", id=",".join(batch), rettype="abstract", retmode="text")
-            text = handle.read()
+            # Fetch as Medline format (easy to parse)
+            handle = Entrez.efetch(db="pubmed", id=ids, rettype="medline", retmode="text")
+            records = list(Medline.parse(handle))
             handle.close()
 
-            # Split into individual abstracts
-            abstracts = text.strip().split("\n\n\n")
-            for abstract in abstracts:
-                if len(abstract) > 100:
-                    papers.append({"text": abstract.strip(), "pmid": batch[0] if batch else "unknown"})
-        except Exception:
-            pass
-        time.sleep(0.5)
+            for rec in records:
+                abstract = rec.get("AB", "")
+                title = rec.get("TI", "")
+                pmid = rec.get("PMID", "unknown")
+                authors = rec.get("AU", [])
+                journal = rec.get("JT", "")
+                year = rec.get("DP", "").split()[0] if rec.get("DP") else ""
+
+                if len(abstract) < 200:
+                    continue
+
+                papers.append({
+                    "pmid": pmid,
+                    "title": title,
+                    "abstract": abstract,
+                    "authors": authors[:3],
+                    "journal": journal,
+                    "year": year,
+                })
+
+            time.sleep(0.4)
+
+        except Exception as e:
+            print(f"  Warning: query '{query[:40]}...' failed: {e}")
+            time.sleep(1)
+            continue
 
     return papers[:count]
 
 
-def generate_from_abstract(task_id: int, paper: dict) -> dict:
+def generate_task(task_id: int, paper: dict) -> dict:
     """Generate a hypothesis task from a paper abstract."""
-    text = paper["text"]
-    # Truncate to a reasonable length
-    if len(text) > 2000:
-        text = text[:2000] + "..."
+    # Build a rich context from the abstract
+    context = f"Title: {paper['title']}\n"
+    if paper.get("journal"):
+        context += f"Journal: {paper['journal']}"
+        if paper.get("year"):
+            context += f" ({paper['year']})"
+        context += "\n"
+    context += f"\nAbstract:\n{paper['abstract']}"
+
+    if len(context) > 2500:
+        context = context[:2500] + "..."
 
     return {
         "id": f"pro_hyp_{task_id:04d}",
         "category": "HypothesisGeneration",
-        "question": f"Based on the following research finding, propose 3 testable hypotheses "
-                     f"that could extend this work. Each hypothesis should be falsifiable, "
-                     f"connected to the finding, novel, and specific.\n\n"
-                     f"Finding:\n{text}",
+        "question": (
+            "Based on the following research paper, propose 3 testable hypotheses "
+            "that could extend this work. Each hypothesis should be:\n"
+            "- Falsifiable (testable with a concrete experiment)\n"
+            "- Connected (logically following from the findings)\n"
+            "- Novel (non-obvious extensions)\n"
+            "- Specific (naming genes, pathways, or mechanisms)\n\n"
+            f"{context}"
+        ),
         "ideal": "Evaluated by rubric: falsifiable, connected, novel, specific (3+/4 = correct)",
         "verification": "llm-judge",
         "source": "pro",
         "meta": {
             "template": "hypothesis",
-            "pmid": paper.get("pmid", "unknown"),
+            "pmid": paper["pmid"],
+            "title": paper["title"],
             "rubric": HYPOTHESIS_RUBRIC,
             "difficulty": "hard",
         },
     }
 
 
-def generate_placeholder_tasks(count: int) -> list[dict]:
-    """Generate placeholder tasks when PubMed is unavailable."""
-    findings = [
-        "CRISPR-Cas9 editing of the FOXP2 gene in organoids led to unexpected enhancement of synaptic plasticity markers.",
-        "Single-cell RNA sequencing revealed a novel population of immune cells in the tumor microenvironment that express both T-cell and macrophage markers.",
-        "Gut microbiome transplant from centenarians to germ-free mice resulted in increased lifespan and reduced inflammatory markers.",
-        "Protein folding simulations suggest that intrinsically disordered regions of p53 adopt transient alpha-helical structures under oxidative stress.",
-        "Metagenomic analysis of deep-sea hydrothermal vent samples identified bacteria using a previously unknown carbon fixation pathway.",
-        "Long-read sequencing of the human Y chromosome revealed extensive structural variation between populations that correlates with fertility metrics.",
-        "Optogenetic stimulation of astrocytes, rather than neurons, was sufficient to restore memory formation in an Alzheimer's disease mouse model.",
-        "ATAC-seq data from developing embryos shows that enhancer accessibility patterns predict cell fate 48 hours before transcriptional changes.",
-        "A screen of 10,000 natural compounds identified a moss-derived molecule that selectively inhibits cancer stem cell self-renewal.",
-        "Spatial transcriptomics of the aging brain reveals that glial cell heterogeneity increases while neuronal diversity decreases.",
-    ]
-
-    tasks = []
-    for i in range(count):
-        finding = findings[i % len(findings)]
-        tasks.append({
-            "id": f"pro_hyp_{i+1:04d}",
-            "category": "HypothesisGeneration",
-            "question": f"Based on the following research finding, propose 3 testable hypotheses "
-                         f"that could extend this work. Each hypothesis should be falsifiable, "
-                         f"connected to the finding, novel, and specific.\n\n"
-                         f"Finding: {finding}",
-            "ideal": "Evaluated by rubric: falsifiable, connected, novel, specific (3+/4 = correct)",
-            "verification": "llm-judge",
-            "source": "pro",
-            "meta": {"template": "hypothesis", "rubric": HYPOTHESIS_RUBRIC, "difficulty": "hard"},
-        })
-    return tasks
-
-
 def main():
-    parser = argparse.ArgumentParser(description="Generate hypothesis tasks")
+    parser = argparse.ArgumentParser(description="Generate hypothesis tasks from PubMed")
     parser.add_argument("--output-dir", default="tasks/hypothesis")
     parser.add_argument("--count", type=int, default=100)
-    parser.add_argument("--email", default="labbench2pro@example.com", help="Email for NCBI Entrez")
-    parser.add_argument("--use-placeholders", action="store_true", help="Skip PubMed, use placeholder findings")
     args = parser.parse_args()
+
+    email = NCBI_EMAIL
+    if not email:
+        print("NCBI_EMAIL not set. Using default (set it in .env for better rate limits).")
+        email = "labbench2pro@research.org"
 
     os.makedirs(args.output_dir, exist_ok=True)
 
-    if args.use_placeholders:
-        tasks = generate_placeholder_tasks(args.count)
-    else:
-        print(f"Fetching papers from PubMed (email={args.email})...")
-        try:
-            papers = fetch_papers(args.email, args.count * 2)
-            print(f"Fetched {len(papers)} papers")
-        except Exception as e:
-            print(f"PubMed fetch failed ({e}), using placeholders...")
-            tasks = generate_placeholder_tasks(args.count)
-            papers = []
+    print(f"Fetching ~{args.count} abstracts from PubMed (email={email})...")
+    papers = fetch_abstracts(email, args.count * 2)  # fetch extra in case some are too short
+    print(f"Fetched {len(papers)} usable abstracts")
 
-        if papers:
-            tasks = []
-            for i, paper in enumerate(papers[:args.count]):
-                tasks.append(generate_from_abstract(i + 1, paper))
+    if not papers:
+        print("ERROR: Could not fetch any papers from PubMed. Check network connectivity.", flush=True)
+        raise SystemExit(1)
+
+    tasks = []
+    for i, paper in enumerate(papers[:args.count]):
+        tasks.append(generate_task(i + 1, paper))
 
     for task in tasks:
         filepath = os.path.join(args.output_dir, f"{task['id']}.json")
