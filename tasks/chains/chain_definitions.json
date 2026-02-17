@@ -1,21 +1,94 @@
 [
-    {
-        "chain_id": "lit_to_primer_01",
-        "description": "Retrieve paper -> read figure -> design primers -> check protocol",
-        "steps": [
-            {"task_id": "PLACEHOLDER_litqa3_001", "input_type": "none"},
-            {"task_id": "PLACEHOLDER_figqa2_001", "input_type": "previous_response"},
-            {"task_id": "PLACEHOLDER_seqqa2_001", "input_type": "previous_response"},
-            {"task_id": "PLACEHOLDER_protqa2_001", "input_type": "previous_response"}
-        ]
-    },
-    {
-        "chain_id": "stats_pipeline_01",
-        "description": "Select test -> compute p-value -> count significant genes",
-        "steps": [
-            {"task_id": "pro_stats_0001", "input_type": "none"},
-            {"task_id": "pro_stats_0002", "input_type": "previous_response"},
-            {"task_id": "pro_stats_0003", "input_type": "previous_response"}
-        ]
-    }
+  {
+    "chain_id": "paper_to_experiment",
+    "description": "Paper finding → data interpretation → statistical test → hypothesis generation",
+    "steps": [
+      {"task_id": "chain01_step1", "input_type": "none"},
+      {"task_id": "chain01_step2", "input_type": "previous_response"},
+      {"task_id": "chain01_step3", "input_type": "previous_response"},
+      {"task_id": "chain01_step4", "input_type": "previous_response"}
+    ]
+  },
+  {
+    "chain_id": "structure_to_drug",
+    "description": "Protein structure → binding mechanism → SAR prediction → experimental validation",
+    "steps": [
+      {"task_id": "chain02_step1", "input_type": "none"},
+      {"task_id": "chain02_step2", "input_type": "previous_response"},
+      {"task_id": "chain02_step3", "input_type": "previous_response"},
+      {"task_id": "chain02_step4", "input_type": "previous_response"}
+    ]
+  },
+  {
+    "chain_id": "stats_pipeline",
+    "description": "Test selection → multiple testing correction → pathway interpretation",
+    "steps": [
+      {"task_id": "chain03_step1", "input_type": "none"},
+      {"task_id": "chain03_step2", "input_type": "previous_response"},
+      {"task_id": "chain03_step3", "input_type": "previous_response"}
+    ]
+  },
+  {
+    "chain_id": "critical_appraisal",
+    "description": "Evaluate weak evidence → integrate conflicting data → design definitive experiment",
+    "steps": [
+      {"task_id": "chain04_step1", "input_type": "none"},
+      {"task_id": "chain04_step2", "input_type": "previous_response"},
+      {"task_id": "chain04_step3", "input_type": "previous_response"}
+    ]
+  },
+  {
+    "chain_id": "genetics_to_therapy",
+    "description": "Genetic finding → structural analysis of mutation → therapeutic strategy",
+    "steps": [
+      {"task_id": "chain05_step1", "input_type": "none"},
+      {"task_id": "chain05_step2", "input_type": "previous_response"},
+      {"task_id": "chain05_step3", "input_type": "previous_response"}
+    ]
+  },
+  {
+    "chain_id": "protocol_troubleshoot",
+    "description": "Diagnose protocol error → interpret corrected result → design quantitative follow-up",
+    "steps": [
+      {"task_id": "chain06_step1", "input_type": "none"},
+      {"task_id": "chain06_step2", "input_type": "previous_response"},
+      {"task_id": "chain06_step3", "input_type": "previous_response"}
+    ]
+  },
+  {
+    "chain_id": "paradox_resolution",
+    "description": "Explain paradoxical result → design discriminating experiment → synthesize conclusion",
+    "steps": [
+      {"task_id": "chain07_step1", "input_type": "none"},
+      {"task_id": "chain07_step2", "input_type": "previous_response"},
+      {"task_id": "chain07_step3", "input_type": "previous_response"}
+    ]
+  },
+  {
+    "chain_id": "sequence_to_function",
+    "description": "Identify protein from sequence → predict adaptation mechanism → design validation",
+    "steps": [
+      {"task_id": "chain08_step1", "input_type": "none"},
+      {"task_id": "chain08_step2", "input_type": "previous_response"},
+      {"task_id": "chain08_step3", "input_type": "previous_response"}
+    ]
+  },
+  {
+    "chain_id": "data_to_mechanism",
+    "description": "Interpret ambiguous data → update with new evidence → correct prior analysis",
+    "steps": [
+      {"task_id": "chain09_step1", "input_type": "none"},
+      {"task_id": "chain09_step2", "input_type": "previous_response"},
+      {"task_id": "chain09_step3", "input_type": "previous_response"}
+    ]
+  },
+  {
+    "chain_id": "evidence_synthesis",
+    "description": "Compare conflicting studies → meta-analytic reasoning → clinical recommendation",
+    "steps": [
+      {"task_id": "chain10_step1", "input_type": "none"},
+      {"task_id": "chain10_step2", "input_type": "previous_response"},
+      {"task_id": "chain10_step3", "input_type": "previous_response"}
+    ]
+  }
 ]

@@ -1,0 +1,15 @@
+{
+  "id": "chain08_step2",
+  "category": "ChainTask",
+  "question": "[FILL: Ask about functional implications of specific sequence features.\nExample: 'You identified this as a [family] protein. Compared to the human homolog, this deep-sea variant has the following substitutions in the active site: [list 2-3 specific mutations]. Given that this organism lives at 4C and 200 atm pressure, how might these substitutions represent cold/pressure adaptations?']",
+  "ideal": "[FILL: Structure-function reasoning about adaptations.\nExample: 'The [mutation 1] likely increases backbone flexibility at low temperature by replacing a bulky residue with a smaller one, maintaining catalytic activity when thermal motion is reduced. The [mutation 2] may strengthen hydrophobic packing to resist pressure-induced unfolding. These are consistent with known psychrophilic enzyme adaptations: increased flexibility, reduced proline content, fewer salt bridges.']",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "sequence_to_function",
+    "step": 2,
+    "step_role": "Predict functional consequences of sequence variation",
+    "depends_on": "Must use the protein family identification from step 1",
+    "what_cascades": "Wrong adaptation reasoning → wrong biochemical predictions"
+  }
+}

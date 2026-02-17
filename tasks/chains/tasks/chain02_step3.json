@@ -1,0 +1,16 @@
+{
+  "id": "chain02_step3",
+  "category": "ChainTask",
+  "question": "[FILL: Ask the model to predict SAR (structure-activity relationships) based on the binding model.\nExample: 'Based on the sulfonamide binding mode (zinc coordination + Thr199 H-bonds + hydrophobic pocket), predict which modification would MOST improve binding affinity: A) Adding a fluorine to the aromatic ring, B) Replacing the sulfonamide with a carboxylate, C) Extending the aromatic ring into the hydrophobic pocket with a phenyl group, D) Adding a polar hydroxyl group to the ring']",
+  "ideal": "[FILL: The correct answer with reasoning.\nExample: 'C) Extending into the hydrophobic pocket. The zinc coordination (sulfonamide) and H-bonding (Thr199) are already optimized. The hydrophobic pocket offers the most room for additional favorable contacts. B would lose the critical N-Zn bond. A would add minimal contacts. D would be unfavorable in the hydrophobic environment.']",
+  "verification": "programmatic",
+  "verification_fn": "multiple_choice",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "structure_to_drug",
+    "step": 3,
+    "step_role": "Predict SAR from binding model",
+    "depends_on": "Must use binding mode from step 2 to reason about modifications",
+    "what_cascades": "Wrong SAR → wrong lead optimization strategy"
+  }
+}

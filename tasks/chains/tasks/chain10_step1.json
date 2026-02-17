@@ -1,0 +1,15 @@
+{
+  "id": "chain10_step1",
+  "category": "ChainTask",
+  "question": "[FILL: Present two conflicting papers and ask for assessment.\nExample: 'Paper A (Nature, 2022, n=500 patients): Reports that biomarker Z predicts 5-year survival in pancreatic cancer with AUC=0.89. Paper B (Lancet Oncol, 2024, n=1200 patients): Reports AUC=0.61 for the same biomarker in the same cancer type. What are the most likely explanations for this discrepancy?']",
+  "ideal": "[FILL: Systematic analysis of discrepancy sources.\nExample: 'Key explanations: 1) Overfitting in Paper A — smaller cohort (500 vs 1200) may have inflated AUC, especially if feature selection used the same data for training and testing. 2) Population differences — cohort composition (stage distribution, ethnicity, treatment history) may differ. 3) Assay differences — different antibody clones, cutoff values, or measurement platforms. 4) Paper B may have pre-registered their analysis while Paper A may have done post-hoc optimization. 5) Publication bias — Paper A's striking result was publishable in Nature; a replication with lower AUC still merits publication. The larger, more recent study (Paper B) is generally more credible.']",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "evidence_synthesis",
+    "step": 1,
+    "step_role": "Critically compare conflicting literature",
+    "depends_on": "nothing",
+    "what_cascades": "Uncritical acceptance of either paper → wrong clinical recommendation"
+  }
+}

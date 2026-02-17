@@ -1,0 +1,15 @@
+{
+  "id": "chain05_step3",
+  "category": "ChainTask",
+  "question": "[FILL: Ask for therapeutic strategy based on the mechanism.\nExample: 'Given that PINK1 G309D likely has reduced kinase activity and impaired mitophagy, propose two distinct therapeutic strategies: one targeting the PINK1-Parkin pathway directly, and one targeting downstream consequences. For each, name a specific drug or compound class and explain the rationale.']",
+  "ideal": "[FILL: Two therapeutic strategies.\nExample: '1) Direct pathway rescue: Kinetin triphosphate (KTP), a neo-substrate that can be phosphorylated by even partially active PINK1, activating Parkin-dependent mitophagy. Rationale: bypasses the reduced kinase activity by providing an easier substrate. 2) Downstream: Mitochondria-targeted antioxidant (MitoQ or SS-31/elamipretide) to reduce ROS from accumulated damaged mitochondria. Rationale: addresses the proximate cause of neuronal death while the underlying mitophagy defect persists.']",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "genetics_to_therapy",
+    "step": 3,
+    "step_role": "Propose therapeutic strategies grounded in the mechanism from steps 1-2",
+    "depends_on": "Must target the specific pathway disruption identified in steps 1-2",
+    "what_cascades": "Terminal step"
+  }
+}

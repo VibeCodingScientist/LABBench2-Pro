@@ -1,0 +1,15 @@
+{
+  "id": "chain03_step2",
+  "category": "ChainTask",
+  "question": "[FILL: Give results and ask for multiple testing correction.\nExample: 'Using the approach you recommended, you obtain p-values for 20,000 genes. 1,247 genes have p < 0.05. How should you correct for multiple testing? If you apply Benjamini-Hochberg FDR correction at q < 0.05, approximately how many genes do you expect to remain significant, and how many would be false positives?']",
+  "ideal": "[FILL: Correct MTC reasoning.\nExample: 'Apply Benjamini-Hochberg (BH) procedure for FDR control. At FDR q < 0.05, approximately 5% of the significant genes are expected to be false positives. If ~800 genes survive BH correction, expect ~40 false positives. Bonferroni would be too conservative for 20,000 tests (threshold = 2.5e-6), likely missing many true positives.']",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "stats_pipeline",
+    "step": 2,
+    "step_role": "Apply multiple testing correction to step 1's framework",
+    "depends_on": "Must use the statistical framework from step 1",
+    "what_cascades": "Wrong correction → inflated or deflated gene lists"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "id": "chain02_step1",
+  "category": "ChainTask",
+  "question": "[FILL: Ask about a protein's structure from PDB data.\nExample: 'The crystal structure of human carbonic anhydrase II (PDB: 1CA2) contains a zinc ion in the active site. How many protein chains are in this structure, and what amino acids coordinate the catalytic zinc?']",
+  "ideal": "[FILL: Structural facts.\nExample: 'One chain. The catalytic zinc is coordinated by three histidine residues: His94, His96, and His119, plus a water/hydroxide molecule.']",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "structure_to_drug",
+    "step": 1,
+    "step_role": "Identify structural features of a drug target",
+    "depends_on": "nothing",
+    "what_cascades": "Wrong active site residues → wrong binding analysis → wrong drug design"
+  }
+}

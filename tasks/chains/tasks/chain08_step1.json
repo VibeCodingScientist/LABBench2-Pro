@@ -1,0 +1,15 @@
+{
+  "id": "chain08_step1",
+  "category": "ChainTask",
+  "question": "[FILL: Present sequence data and ask for analysis.\nExample: 'You receive the following protein sequence from a newly discovered deep-sea organism: [paste ~100 AA sequence]. Run a BLAST-like analysis: what known protein family does this most likely belong to, and what conserved domains do you expect to find?']",
+  "ideal": "[FILL: Sequence identification.\nExample: 'Based on the conserved [motif], this is likely a member of the [family] family, specifically related to [specific protein]. Expected domains: [domain 1] (residues ~X-Y), [domain 2] (residues ~A-B). The [specific residues] are hallmarks of this family.']",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "sequence_to_function",
+    "step": 1,
+    "step_role": "Identify protein family from sequence",
+    "depends_on": "nothing",
+    "what_cascades": "Wrong family ID → wrong functional predictions → wrong experiment"
+  }
+}

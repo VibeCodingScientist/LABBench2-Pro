@@ -1,0 +1,15 @@
+{
+  "id": "chain01_step1",
+  "category": "ChainTask",
+  "question": "[FILL: Describe a specific paper finding about a protein-protein interaction.\nExample: 'A 2023 study in Cell found that protein X binds receptor Y with Kd = 2.3 nM, but only when zinc ions are present. What is the role of zinc in this interaction?']",
+  "ideal": "[FILL: The correct mechanistic answer.\nExample: 'Zinc acts as an allosteric cofactor that stabilizes the binding interface between X and Y by coordinating residues His142 and Cys205.']",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "paper_to_experiment",
+    "step": 1,
+    "step_role": "Extract key finding from literature",
+    "depends_on": "nothing — this is the seed question",
+    "what_cascades": "If the model misunderstands the mechanism, all downstream steps will use wrong reasoning"
+  }
+}

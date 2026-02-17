@@ -1,0 +1,15 @@
+{
+  "id": "chain07_step3",
+  "category": "ChainTask",
+  "question": "[FILL: Present the experimental results and ask for conclusion.\nExample: 'You performed the invasion assay. Results: ZEB1-KO cells showed 60% DECREASED Matrigel invasion vs. WT (p<0.01), while ZEB1/ZEB2 double KO showed 80% decreased invasion. ZEB1-KO cells had restored E-cadherin expression and reduced vimentin. Which hypothesis does this support, and what is the broader implication for using wound healing assays to study EMT?']",
+  "ideal": "[FILL: Conclusion integrating all evidence.\nExample: 'The data strongly support the collective migration hypothesis. ZEB1-KO cells are MORE migratory in 2D (wound healing) but LESS invasive in 3D (Matrigel), consistent with restored epithelial phenotype enabling fast sheet migration but losing mesenchymal invasion capacity. The ZEB2 compensation hypothesis is weakened because double KO further reduces invasion rather than rescuing it. Broader implication: wound healing assays are misleading for studying EMT — they measure collective 2D migration, not the mesenchymal single-cell invasion that is clinically relevant for metastasis. Studies should use 3D invasion assays when evaluating EMT regulators.']",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "paradox_resolution",
+    "step": 3,
+    "step_role": "Synthesize experimental results into a conclusion",
+    "depends_on": "Must evaluate results against hypotheses from step 1 and experiment from step 2",
+    "what_cascades": "Terminal step"
+  }
+}

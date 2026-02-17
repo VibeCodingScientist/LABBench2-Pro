@@ -1,0 +1,15 @@
+{
+  "id": "chain07_step1",
+  "category": "ChainTask",
+  "question": "[FILL: Present a surprising experimental observation.\nExample: 'A CRISPR knockout of transcription factor ZEB1 in A549 lung cancer cells unexpectedly INCREASED cell migration in a wound healing assay (2.1x faster closure vs. wild-type, p<0.001). ZEB1 is a known promoter of epithelial-mesenchymal transition (EMT) and migration. How do you explain this paradox?']",
+  "ideal": "[FILL: Plausible mechanistic explanations.\nExample: 'Possible explanations: 1) ZEB1 KO may derepress ZEB2, a paralog that can compensate and even hyperactivate EMT. 2) ZEB1 loss may trigger a collective migration phenotype (which is faster than mesenchymal single-cell migration) by restoring E-cadherin-mediated cell-cell junctions. 3) The wound healing assay measures 2D sheet migration, not invasion — ZEB1 KO cells may move faster as a sheet but lose 3D invasive capacity. The assay may not be measuring what the authors think.']",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "paradox_resolution",
+    "step": 1,
+    "step_role": "Generate hypotheses to explain a paradoxical result",
+    "depends_on": "nothing",
+    "what_cascades": "If model can't generate plausible explanations, it can't design discriminating experiments"
+  }
+}

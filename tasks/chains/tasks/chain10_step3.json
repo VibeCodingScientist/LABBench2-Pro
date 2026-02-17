@@ -1,0 +1,15 @@
+{
+  "id": "chain10_step3",
+  "category": "ChainTask",
+  "question": "[FILL: Ask for clinical recommendation based on the synthesis.\nExample: 'Based on your analysis (likely true AUC ~0.70, significant heterogeneity, small-study bias), should biomarker Z be incorporated into clinical practice for pancreatic cancer prognosis? What would you recommend as next steps before clinical adoption?']",
+  "ideal": "[FILL: Nuanced clinical recommendation.\nExample: 'Not yet ready for clinical practice. AUC of 0.70 is moderate — better than random but insufficient alone for clinical decision-making. Required before adoption: 1) Prospective validation in a pre-registered, multi-center study (n>1000) with locked-down assay protocol and pre-specified cutoffs. 2) Demonstrate added value beyond existing clinical staging (does Z + stage outperform stage alone?). 3) Establish clinical utility — does knowledge of Z change treatment decisions and improve outcomes? 4) Cost-effectiveness analysis. Current evidence supports Z as a research biomarker for risk stratification in clinical trials, but not as a standalone clinical test.']",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "evidence_synthesis",
+    "step": 3,
+    "step_role": "Translate evidence synthesis into actionable recommendation",
+    "depends_on": "Must base recommendation on the pooled evidence assessment from steps 1-2",
+    "what_cascades": "Terminal step"
+  }
+}

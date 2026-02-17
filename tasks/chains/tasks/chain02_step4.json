@@ -1,0 +1,15 @@
+{
+  "id": "chain02_step4",
+  "category": "ChainTask",
+  "question": "[FILL: Ask for an experimental plan to validate the prediction.\nExample: 'Design a 3-step experimental plan to validate your predicted SAR modification (phenyl extension into the hydrophobic pocket). Include: synthesis approach, binding assay, and selectivity assessment against the 12 other human CA isoforms.']",
+  "ideal": "[FILL: Concrete experimental plan.\nExample: '1) Synthesis: Couple 4-aminobenzenesulfonamide with biphenyl-4-boronic acid via Suzuki coupling to extend into the pocket. 2) Binding: Measure Ki using a CO2 hydration stopped-flow assay (Khalifah method) comparing parent vs. extended compound against CA-II. 3) Selectivity: Profile against CA-I, CA-IV, CA-IX, CA-XII panel using the same assay — the hydrophobic pocket varies across isoforms, so selectivity is expected.']",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "structure_to_drug",
+    "step": 4,
+    "step_role": "Design validation experiment for the SAR prediction",
+    "depends_on": "Must design experiments specific to the modification chosen in step 3",
+    "what_cascades": "Terminal step"
+  }
+}

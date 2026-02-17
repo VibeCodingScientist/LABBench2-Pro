@@ -53,12 +53,17 @@ async def ensure_model(model_key: str) -> int:
 
 async def upsert_task(task: dict) -> None:
     """Insert task into DB (skip if exists)."""
+    # Ensure verification fields are in meta so chain runner can grade correctly
+    meta = dict(task.get("meta", {}))
+    for key in ("verification", "verification_fn", "question", "ideal", "choices"):
+        if key in task and key not in meta:
+            meta[key] = task[key]
     await execute(
         """INSERT INTO tasks (id, category, variant, source, meta)
            VALUES ($1, $2, $3, $4, $5)
            ON CONFLICT (id) DO NOTHING""",
         task["id"], task["category"], task.get("variant"),
-        task.get("source", "labbench2"), json.dumps(task.get("meta", {})),
+        task.get("source", "labbench2"), json.dumps(meta),
     )
 
 
@@ -220,7 +225,15 @@ def load_tasks_from_dir(tasks_dir: str) -> list[dict]:
     for filepath in sorted(glob.glob(os.path.join(tasks_dir, "*.json"))):
         with open(filepath) as f:
             task = json.load(f)
-            tasks.append(task)
+
+        # Load images from disk if referenced in meta (e.g., gel images)
+        meta = task.get("meta", {})
+        image_path = meta.get("image_path")
+        if image_path and os.path.isfile(image_path):
+            with open(image_path, "rb") as img_f:
+                task["_images"] = [img_f.read()]
+
+        tasks.append(task)
     return tasks
 
 

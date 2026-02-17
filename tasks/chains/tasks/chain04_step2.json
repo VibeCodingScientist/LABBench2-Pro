@@ -1,0 +1,15 @@
+{
+  "id": "chain04_step2",
+  "category": "ChainTask",
+  "question": "[FILL: Present additional contradictory evidence.\nExample: 'A follow-up study by a different group tested drug X in 3 cell lines (4T1, B16, LLC) with n=10 per group. Results: 4T1 showed 15% reduction (p=0.21), B16 showed 5% increase (p=0.73), LLC showed 32% reduction (p=0.01). How does this change your assessment from the previous analysis?']",
+  "ideal": "[FILL: Updated assessment integrating both studies.\nExample: 'This substantially weakens the original claim. 1) The 4T1 effect did not replicate (40% → 15%, now non-significant with larger n). 2) Results are inconsistent across cell lines — B16 shows no effect. 3) Only LLC shows a significant effect, but this could be cell-line-specific rather than a general anti-cancer property. The evidence now suggests drug X may have narrow, cell-line-specific activity rather than broad anti-cancer efficacy.']",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "critical_appraisal",
+    "step": 2,
+    "step_role": "Update assessment with new conflicting data",
+    "depends_on": "Must compare new data against the evaluation made in step 1",
+    "what_cascades": "Failure to properly update → wrong experimental recommendation"
+  }
+}

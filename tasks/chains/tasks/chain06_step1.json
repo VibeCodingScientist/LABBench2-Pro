@@ -1,0 +1,15 @@
+{
+  "id": "chain06_step1",
+  "category": "ChainTask",
+  "question": "[FILL: Describe a protocol step and ask the model to identify what could go wrong.\nExample: 'You are performing a Western blot for phospho-ERK1/2 in HeLa cell lysates. You lyse cells in RIPA buffer, run SDS-PAGE on a 12% gel, transfer to PVDF membrane, block with 5% non-fat milk in TBST, and incubate with anti-phospho-ERK1/2 antibody (1:1000) overnight at 4C. You see no signal despite positive control working. What is the most likely error in this protocol?']",
+  "ideal": "[FILL: The specific error.\nExample: 'Blocking with non-fat milk for a phospho-specific antibody. Milk contains casein, a phosphoprotein, which competes with phospho-epitopes and blocks the antibody from binding. Should use 5% BSA in TBST for phospho-antibodies.']",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "protocol_troubleshoot",
+    "step": 1,
+    "step_role": "Diagnose a protocol error from symptoms",
+    "depends_on": "nothing",
+    "what_cascades": "Wrong diagnosis → wrong fix → wasted experiment"
+  }
+}

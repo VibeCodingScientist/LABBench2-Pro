@@ -1,0 +1,15 @@
+{
+  "id": "chain03_step1",
+  "category": "ChainTask",
+  "question": "[FILL: Present gene expression data and ask for appropriate test.\nExample: 'You have RNA-seq data from 12 tumor samples and 12 matched normal tissues. For each of 20,000 genes, you have normalized read counts. What statistical test should you use to identify differentially expressed genes, and why?']",
+  "ideal": "[FILL: Correct test choice.\nExample: 'DESeq2 or edgeR using a negative binomial generalized linear model, as RNA-seq count data is overdispersed relative to Poisson. A paired/matched design should be used since samples are matched tumor-normal pairs. A simple t-test would be inappropriate because count data violates normality assumptions.']",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "stats_pipeline",
+    "step": 1,
+    "step_role": "Choose appropriate statistical framework",
+    "depends_on": "nothing",
+    "what_cascades": "Wrong test → wrong p-values → wrong gene list → wrong pathway analysis"
+  }
+}

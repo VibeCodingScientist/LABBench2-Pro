@@ -1,0 +1,15 @@
+{
+  "id": "chain08_step3",
+  "category": "ChainTask",
+  "question": "[FILL: Ask for experimental validation plan.\nExample: 'Design an experiment to test whether the deep-sea enzyme adaptations you predicted actually confer cold/pressure tolerance. Compare the deep-sea variant to the human homolog. Include: expression system, purification strategy, and the specific activity measurements at different temperatures and pressures.']",
+  "ideal": "[FILL: Complete experimental plan.\nExample: 'Express both variants in E. coli BL21(DE3) with His-tag, purify by Ni-NTA + size exclusion. Measure enzyme kinetics (kcat/Km) at 4C, 15C, 25C, 37C at atmospheric pressure. For pressure: use a high-pressure spectrophotometric cell to measure activity at 1, 100, 200, 500 atm at 4C. Predict: deep-sea variant maintains >50% activity at 4C/200atm where human homolog retains <10%. Thermal stability by DSF: expect lower Tm for deep-sea variant (flexibility tradeoff).']",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "sequence_to_function",
+    "step": 3,
+    "step_role": "Design biochemical validation of computational predictions",
+    "depends_on": "Must test the specific adaptation hypotheses from step 2",
+    "what_cascades": "Terminal step"
+  }
+}

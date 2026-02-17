@@ -1,0 +1,15 @@
+{
+  "id": "chain04_step3",
+  "category": "ChainTask",
+  "question": "[FILL: Ask what experiment would resolve the discrepancy.\nExample: 'Given the conflicting results across cell lines, design a definitive experiment to determine whether drug X has genuine anti-cancer activity. Specify: cell lines, sample sizes, controls, primary endpoint, and statistical analysis plan.']",
+  "ideal": "[FILL: Well-designed definitive experiment.\nExample: 'Panel of 6+ cell lines across 3 cancer types, n=15/group (powered for 25% effect at alpha=0.05, 80% power), vehicle control + positive control (standard-of-care), primary endpoint = tumor volume at day 21, dose-response (3 doses), two-way ANOVA (drug x cell line) to test for interaction. Pre-register the analysis plan. Include pharmacokinetic confirmation of drug exposure.']",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "critical_appraisal",
+    "step": 3,
+    "step_role": "Design experiment to resolve the conflicting evidence",
+    "depends_on": "Must address the specific discrepancies identified in steps 1-2",
+    "what_cascades": "Terminal step"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "id": "chain01_step2",
+  "category": "ChainTask",
+  "question": "[FILL: Present a figure/data and ask the model to interpret it in light of step 1's finding.\nExample: 'Given that zinc facilitates the X-Y interaction, the following dose-response data shows binding at zinc concentrations of 0, 0.1, 1, 10, 100 µM with percent binding of 2%, 8%, 31%, 78%, 95%. At what zinc concentration does binding reach half-maximal? Is this consistent with physiological zinc levels (10-100 µM)?']",
+  "ideal": "[FILL: The quantitative answer plus interpretation.\nExample: 'Half-maximal binding occurs at approximately 3 µM zinc (interpolating between 1 and 10 µM). This is below the physiological range of 10-100 µM, suggesting the interaction is saturated under normal conditions.']",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "paper_to_experiment",
+    "step": 2,
+    "step_role": "Quantitative data interpretation connected to step 1",
+    "depends_on": "Must use step 1's mechanistic understanding to interpret the data",
+    "what_cascades": "Wrong concentration estimate → wrong experimental design downstream"
+  }
+}

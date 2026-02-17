@@ -1,0 +1,15 @@
+{
+  "id": "chain06_step2",
+  "category": "ChainTask",
+  "question": "[FILL: Ask the model to fix the protocol and predict the outcome.\nExample: 'You fix the blocking step (switching from milk to BSA). Now you see a strong band at ~42 kDa and a weaker band at ~44 kDa. Are these the expected sizes for phospho-ERK1/2? What do the relative intensities suggest about ERK1 vs ERK2 activation in your HeLa cells?']",
+  "ideal": "[FILL: Band interpretation.\nExample: 'Yes — ERK2 (MAPK1) is 42 kDa and ERK1 (MAPK3) is 44 kDa. The stronger 42 kDa band indicates ERK2 is more highly phosphorylated/activated than ERK1 in these cells. This is typical for HeLa cells, where ERK2 is the dominant isoform. The presence of both bands confirms the antibody is working correctly and detecting both isoforms.']",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "protocol_troubleshoot",
+    "step": 2,
+    "step_role": "Interpret experimental result after fixing the protocol",
+    "depends_on": "Must connect the fix from step 1 to the observed result",
+    "what_cascades": "Wrong band assignment → wrong downstream interpretation"
+  }
+}

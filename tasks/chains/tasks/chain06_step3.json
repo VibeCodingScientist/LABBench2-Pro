@@ -1,0 +1,15 @@
+{
+  "id": "chain06_step3",
+  "category": "ChainTask",
+  "question": "[FILL: Ask for a quantitative follow-up based on the result.\nExample: 'You want to quantify the ERK1/2 phosphorylation ratio across a time course (0, 5, 15, 30, 60 min after EGF stimulation). You will have 3 biological replicates per time point. Describe the quantification approach and the statistical test to determine which time point has peak activation.']",
+  "ideal": "[FILL: Quantification + stats plan.\nExample: 'Quantify band intensities using densitometry (ImageJ). Normalize phospho-ERK to total ERK (loading control) for each lane. Calculate phospho/total ratio for each replicate. For peak identification: one-way repeated measures ANOVA across the 5 time points, followed by Dunnett post-hoc test comparing each time point to t=0. Alternatively, fit a curve to the time series and identify the maximum. Report mean ± SEM for each time point with significance indicators.']",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "protocol_troubleshoot",
+    "step": 3,
+    "step_role": "Design quantitative follow-up from qualitative observation",
+    "depends_on": "Must build on the specific proteins and result pattern from steps 1-2",
+    "what_cascades": "Terminal step"
+  }
+}

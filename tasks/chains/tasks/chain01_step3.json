@@ -1,0 +1,15 @@
+{
+  "id": "chain01_step3",
+  "category": "ChainTask",
+  "question": "[FILL: Ask which statistical test to use for the follow-up experiment motivated by steps 1-2.\nExample: 'You want to test whether the zinc-dependent binding (half-max ~3 µM) differs significantly between wild-type protein X and a H142A mutant. You have 8 biological replicates per condition, continuous measurements. Which statistical test is appropriate and why?']",
+  "ideal": "[FILL: The correct test with justification.\nExample: 'An unpaired two-sample t-test (or Welch's t-test if variances are unequal). Two groups, continuous outcome, independent replicates. A Mann-Whitney U test would be an alternative if normality cannot be assumed with n=8.']",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "paper_to_experiment",
+    "step": 3,
+    "step_role": "Statistical reasoning grounded in the experimental context",
+    "depends_on": "Must reference the specific experimental setup from steps 1-2",
+    "what_cascades": "Wrong test choice → flawed experimental conclusions"
+  }
+}

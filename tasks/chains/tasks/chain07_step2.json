@@ -1,0 +1,15 @@
+{
+  "id": "chain07_step2",
+  "category": "ChainTask",
+  "question": "[FILL: Ask the model to design experiments to discriminate between its hypotheses.\nExample: 'You proposed several explanations for the ZEB1-KO migration paradox. Design ONE experiment that would definitively distinguish between the ZEB2-compensation hypothesis and the collective-vs-single-cell migration hypothesis. Specify the assay, controls, and expected results for each scenario.']",
+  "ideal": "[FILL: Discriminating experiment.\nExample: 'Transwell/Boyden chamber invasion assay through Matrigel (3D invasion, not 2D sheet migration). If ZEB2 compensation: ZEB1-KO cells should ALSO show increased invasion (ZEB2 drives both migration and invasion). If collective migration: ZEB1-KO cells should show DECREASED invasion (they lost mesenchymal phenotype, gain sheet migration but lose invasive capacity). Controls: WT cells, ZEB1-KO, ZEB1/ZEB2 double KO (tests compensation directly). Western blot for ZEB2, E-cadherin, vimentin to confirm EMT status.']",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "paradox_resolution",
+    "step": 2,
+    "step_role": "Design discriminating experiment between competing hypotheses",
+    "depends_on": "Must design experiment that distinguishes the specific hypotheses from step 1",
+    "what_cascades": "Bad experimental design → can't resolve the paradox"
+  }
+}

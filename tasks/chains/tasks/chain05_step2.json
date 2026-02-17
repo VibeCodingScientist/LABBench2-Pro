@@ -1,0 +1,15 @@
+{
+  "id": "chain05_step2",
+  "category": "ChainTask",
+  "question": "[FILL: Ask about the structural consequence of the mutation.\nExample: 'The PINK1 kinase domain (residues 156-509) has a typical bilobal kinase fold. Glycine 309 is in the activation loop. What is the structural consequence of replacing this conserved glycine with aspartate? How would you experimentally confirm the structural impact?']",
+  "ideal": "[FILL: Structural analysis + experimental approach.\nExample: 'Gly309 provides backbone flexibility critical for activation loop dynamics. Asp introduces a bulky, charged side chain that likely 1) sterically clashes with adjacent residues, 2) disrupts the DFG motif conformation, and 3) prevents proper activation loop phosphorylation at Ser228. Confirmation: Express WT and G309D PINK1, compare by circular dichroism (secondary structure), thermal shift assay (stability), and in vitro kinase assay (activity against ubiquitin substrate).']",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "genetics_to_therapy",
+    "step": 2,
+    "step_role": "Structural analysis of the specific mutation identified in step 1",
+    "depends_on": "Must analyze the specific G309D variant in the PINK1 kinase context from step 1",
+    "what_cascades": "Wrong structural model → wrong drug design rationale"
+  }
+}

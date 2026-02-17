@@ -117,8 +117,11 @@ done
 ###############################################################################
 log "Phase 4: Tier 3 — Compositional Chains"
 
-echo "Auto-generating chain definitions from DB tasks..."
-python -m src.tier3.gen_chains
+# Load hand-authored chain tasks into DB
+echo "Loading chain task definitions..."
+if [ -d "tasks/chains/tasks" ] && ls tasks/chains/tasks/*.json 1>/dev/null 2>&1; then
+    python -m src.tier1.run_eval --model "$MODEL" --tasks-dir tasks/chains/tasks --concurrency "$CONCURRENCY"
+fi
 
 echo "Running chains..."
 CHAIN_FILE="tasks/chains/chain_definitions.json"

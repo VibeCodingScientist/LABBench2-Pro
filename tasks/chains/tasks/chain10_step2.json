@@ -1,0 +1,15 @@
+{
+  "id": "chain10_step2",
+  "category": "ChainTask",
+  "question": "[FILL: Ask for meta-analytic reasoning.\nExample: 'Three additional studies emerge: Study C (n=300, AUC=0.78), Study D (n=150, AUC=0.85), Study E (n=800, AUC=0.65). Considering all 5 studies, what is your best estimate of the true predictive value of biomarker Z? How would you formally combine these results, and what does the pattern of results suggest about the likely source of heterogeneity?']",
+  "ideal": "[FILL: Meta-analytic reasoning.\nExample: 'A random-effects meta-analysis of the AUCs (weighted by sample size or inverse variance) would give a pooled estimate around AUC ~0.70-0.72. The pattern is clear: smaller studies (A: 0.89, D: 0.85) report higher AUCs than larger studies (B: 0.61, E: 0.65), classic evidence of small-study effects / publication bias / overfitting. I2 heterogeneity would be high (>75%). The true AUC is likely 0.65-0.72 — moderate but not the excellent discrimination Paper A claimed. A funnel plot would likely show asymmetry confirming bias.']",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "evidence_synthesis",
+    "step": 2,
+    "step_role": "Synthesize multiple studies using meta-analytic thinking",
+    "depends_on": "Must integrate the critical assessment from step 1 with the new data",
+    "what_cascades": "Wrong pooled estimate → wrong clinical utility assessment"
+  }
+}

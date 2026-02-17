@@ -1,0 +1,15 @@
+{
+  "id": "chain01_step4",
+  "category": "ChainTask",
+  "question": "[FILL: Ask the model to synthesize everything into testable hypotheses.\nExample: 'Based on your analysis — zinc mediates X-Y binding at physiological concentrations, half-max ~3 µM, testable via t-test with WT vs mutant — propose 3 testable hypotheses for how zinc dysregulation in Wilson disease might disrupt the X-Y signaling pathway.']",
+  "ideal": "[FILL: 3 specific, falsifiable hypotheses.\nExample: '1) Copper accumulation in Wilson disease displaces zinc from the His142/Cys205 coordination site, reducing X-Y binding affinity by >10-fold. 2) Hepatic zinc depletion secondary to copper overload drops local zinc below the 3 µM half-max threshold, effectively abolishing X-Y signaling. 3) The H142 residue undergoes copper-mediated oxidation in Wilson disease, permanently disrupting the zinc-binding site even after copper chelation therapy.']",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "paper_to_experiment",
+    "step": 4,
+    "step_role": "Hypothesis generation synthesizing all prior steps",
+    "depends_on": "Must integrate mechanism (step 1), quantitative threshold (step 2), and experimental approach (step 3)",
+    "what_cascades": "Terminal step — quality depends on everything above"
+  }
+}

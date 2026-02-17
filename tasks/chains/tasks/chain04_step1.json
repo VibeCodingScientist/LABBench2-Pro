@@ -1,0 +1,15 @@
+{
+  "id": "chain04_step1",
+  "category": "ChainTask",
+  "question": "[FILL: Present a claim with incomplete evidence and ask if it's supported.\nExample: 'A preprint claims that drug X reduces tumor growth by 40% in mice (n=5 per group, p=0.048). The study used a single tumor cell line (4T1) implanted subcutaneously. Is this sufficient evidence to conclude drug X is an effective anti-cancer agent?']",
+  "ideal": "[FILL: Critical evaluation.\nExample: 'No. Major limitations: 1) Marginal significance (p=0.048) with n=5 is fragile — a single outlier could flip the result. 2) Single cell line in one tumor type — no evidence of generalizability. 3) Subcutaneous xenograft may not reflect orthotopic tumor biology. 4) No dose-response relationship shown. This is preliminary evidence warranting further investigation, not a conclusion.']",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "critical_appraisal",
+    "step": 1,
+    "step_role": "Evaluate strength of evidence for a claim",
+    "depends_on": "nothing",
+    "what_cascades": "If model accepts weak evidence, it will draw wrong conclusions in later steps"
+  }
+}

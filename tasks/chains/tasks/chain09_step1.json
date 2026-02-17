@@ -1,0 +1,15 @@
+{
+  "id": "chain09_step1",
+  "category": "ChainTask",
+  "question": "[FILL: Present a gel/blot image description with ambiguity and ask for interpretation.\nExample: 'A Western blot for GAPDH (loading control, expected 37 kDa) shows: Lane 1 (WT): strong band at 37 kDa. Lane 2 (Treated): strong band at 37 kDa PLUS an unexpected band at ~25 kDa. Lane 3 (KO): very faint band at 37 kDa, no 25 kDa band. What could the 25 kDa band in Lane 2 represent?']",
+  "ideal": "[FILL: Diagnostic reasoning.\nExample: 'The 25 kDa band is likely a GAPDH degradation product caused by the treatment. Possibilities: 1) Caspase-mediated cleavage — GAPDH is a known caspase-3 substrate, cleaved during apoptosis. If the treatment induces apoptosis, this is expected. 2) Non-specific antibody cross-reactivity (less likely since it only appears in treated lane). 3) The treatment activates a protease that cleaves GAPDH. The faint 37 kDa band in KO lane suggests lower protein loading or reduced GAPDH expression, not relevant to the 25 kDa mystery.']",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "data_to_mechanism",
+    "step": 1,
+    "step_role": "Interpret ambiguous experimental data",
+    "depends_on": "nothing",
+    "what_cascades": "Wrong interpretation of the band → wrong mechanistic model"
+  }
+}

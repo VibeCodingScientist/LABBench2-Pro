@@ -1,0 +1,15 @@
+{
+  "id": "chain05_step1",
+  "category": "ChainTask",
+  "question": "[FILL: Present a clinical observation/phenotype.\nExample: 'A family presents with autosomal recessive early-onset Parkinson disease. Exome sequencing reveals a homozygous missense variant (p.Gly309Asp) in the PINK1 gene. What is the normal function of PINK1, and how might this variant cause disease?']",
+  "ideal": "[FILL: Gene function + pathogenic mechanism.\nExample: 'PINK1 is a mitochondrial kinase that phosphorylates ubiquitin and Parkin to initiate mitophagy of damaged mitochondria. G309D is in the kinase domain and likely disrupts ATP binding or substrate recognition, leading to accumulation of dysfunctional mitochondria, increased ROS, and selective loss of dopaminergic neurons.']",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "genetics_to_therapy",
+    "step": 1,
+    "step_role": "Identify gene function and disease mechanism from genetic finding",
+    "depends_on": "nothing",
+    "what_cascades": "Wrong pathway → wrong therapeutic targets downstream"
+  }
+}
