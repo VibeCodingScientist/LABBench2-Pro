@@ -12,7 +12,7 @@ import time
 
 from Bio import Entrez, Medline
 
-from src.config import NCBI_EMAIL
+from src.config import NCBI_API_KEY, NCBI_EMAIL
 
 HYPOTHESIS_RUBRIC = """Evaluate the proposed hypotheses on these criteria:
 1. Falsifiable: Each hypothesis must be testable with a concrete experiment
@@ -40,6 +40,10 @@ SEARCH_QUERIES = [
 def fetch_abstracts(email: str, count: int) -> list[dict]:
     """Fetch paper abstracts from PubMed via Entrez."""
     Entrez.email = email
+    if NCBI_API_KEY:
+        Entrez.api_key = NCBI_API_KEY  # 10 req/sec instead of 3
+
+    rate_delay = 0.12 if NCBI_API_KEY else 0.4
     papers = []
     per_query = max(count // len(SEARCH_QUERIES), 15)
 
@@ -56,7 +60,7 @@ def fetch_abstracts(email: str, count: int) -> list[dict]:
             if not ids:
                 continue
 
-            time.sleep(0.4)
+            time.sleep(rate_delay)
 
             # Fetch as Medline format (easy to parse)
             handle = Entrez.efetch(db="pubmed", id=ids, rettype="medline", retmode="text")
@@ -83,7 +87,7 @@ def fetch_abstracts(email: str, count: int) -> list[dict]:
                     "year": year,
                 })
 
-            time.sleep(0.4)
+            time.sleep(rate_delay)
 
         except Exception as e:
             print(f"  Warning: query '{query[:40]}...' failed: {e}")
