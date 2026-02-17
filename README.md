@@ -1,0 +1,212 @@
+# LABBench2-Pro
+
+A methodological audit and extension of [LABBench2](https://huggingface.co/datasets/futurehouse/labbench2) — FutureHouse's benchmark for evaluating LLMs on biology research tasks.
+
+LABBench2 established the standard for measuring how well frontier models handle real scientific work: literature comprehension, figure interpretation, sequence analysis, protocol reasoning. But benchmarks themselves need benchmarking. LABBench2-Pro identifies and addresses specific methodological gaps in the current evaluation framework.
+
+## Motivation
+
+Our [gap analysis](labbench2_pro_dev_plan.md) identified five categories of issues:
+
+1. **Scoring reliability** — LLM-as-judge grading introduces unquantified noise. Position bias (does answer order matter?), verbosity bias (are longer answers favored?), and inter-judge disagreement are never measured.
+
+2. **Statistical reporting** — Results are reported as point estimates without confidence intervals. With small per-category sample sizes, two models can appear different when their CIs overlap entirely.
+
+3. **Contamination risk** — No probes test whether models have memorized benchmark questions from training data.
+
+4. **Coverage gaps** — LABBench2 tests retrieval and comprehension but not statistical reasoning, uncertainty calibration, hypothesis generation, or structural biology interpretation.
+
+5. **Atomic-only evaluation** — Every task is independent. Real research requires multi-step reasoning where errors compound — reading a paper, interpreting its figures, choosing the right statistical test, designing a follow-up experiment.
+
+## What LABBench2-Pro Does
+
+### Tier 1: Methodological Audit of LABBench2
+
+Run frontier models against the existing LABBench2 categories, then apply rigorous statistical analysis that the original benchmark lacks:
+
+- **Bootstrap CIs** — BCa 95% confidence intervals on accuracy with pairwise significance tests (Bonferroni-corrected)
+- **IRT Analysis** — 2-parameter logistic Item Response Theory to identify low-discrimination items, compute test information functions, and recommend a pruned item set
+- **Judge Audit** — Run two LLM judges on the same responses, measure Cohen's kappa, test position bias (swap reference/response order) and verbosity bias (shorten responses, re-judge)
+- **Contamination Probes** — Cloze completion (can the model finish a truncated question?), reverse reconstruction (can it guess the question from the answer?), temporal split (chi-squared test on pre- vs post-cutoff accuracy)
+
+### Tier 2: New Task Categories (~550 tasks)
+
+Programmatically generated tasks with deterministic or rubric-graded ground truth:
+
+| Category | Count | Verification | Source |
+|---|---|---|---|
+| Statistical Reasoning | 200 | Programmatic (scipy) | Synthetic gene expression data |
+| Structure Analysis | 150 | Programmatic + LLM-judge | Real PDB structures (BioPython) + synthetic gel images |
+| Uncertainty Calibration | 100 | LLM-judge | LABBench2 questions with critical info stripped |
+| Hypothesis Generation | 100 | LLM-judge (rubric) | Real PubMed abstracts (NCBI Entrez) |
+
+### Tier 3: Compositional Chains
+
+Multi-step research workflows where each step depends on the previous answer. If the model gets step 1 wrong, it cascades:
+
+| Chain | Workflow | Steps |
+|---|---|---|
+| Paper to Experiment | Paper finding → data interpretation → stats test → hypothesis | 4 |
+| Structure to Drug | Protein structure → binding mechanism → SAR prediction → validation | 4 |
+| Stats Pipeline | Test selection → multiple testing correction → pathway interpretation | 3 |
+| Critical Appraisal | Evaluate weak evidence → integrate conflicting data → design definitive experiment | 3 |
+| Genetics to Therapy | Genetic finding → structural impact → therapeutic strategy | 3 |
+| Protocol Troubleshoot | Diagnose error → interpret fix → quantitative follow-up | 3 |
+| Paradox Resolution | Explain paradox → discriminating experiment → synthesize conclusion | 3 |
+| Sequence to Function | Identify protein → predict adaptations → design validation | 3 |
+| Data to Mechanism | Interpret ambiguous data → update with evidence → correct prior analysis | 3 |
+| Evidence Synthesis | Compare conflicting studies → meta-analysis → clinical recommendation | 3 |
+
+Plus: **feedback simulation** (does telling the model it was wrong improve the next step?) and **cost-accuracy Pareto frontier** analysis.
+
+## Architecture
+
+```
+labbench2-pro/
+├── src/
+│   ├── config.py              # Model registry, API keys, cost table
+│   ├── models.py              # Unified model caller (Anthropic/OpenAI/Google)
+│   ├── db.py                  # Thin asyncpg wrapper
+│   ├── cache.py               # Redis response cache
+│   ├── api.py                 # FastAPI REST endpoints
+│   │
+│   ├── tier1/                 # Methodological audit
+│   │   ├── run_eval.py        # Run models against tasks (HF or local)
+│   │   ├── grading.py         # Programmatic + LLM-judge grading
+│   │   ├── bootstrap_ci.py    # BCa CIs + pairwise tests
+│   │   ├── irt_analysis.py    # 2PL IRT + test information
+│   │   ├── judge_audit.py     # Inter-judge agreement + bias tests
+│   │   └── contamination.py   # Cloze, reverse, temporal probes
+│   │
+│   ├── tier2/                 # Task generation
+│   │   ├── gen_stats_tasks.py # Statistical reasoning (scipy ground truth)
+│   │   ├── gen_structure.py   # PDB parsing + gel images
+│   │   ├── gen_calibration.py # Uncertainty calibration
+│   │   ├── gen_hypothesis.py  # PubMed-based hypothesis tasks
+│   │   └── validate_tasks.py  # Schema validation
+│   │
+│   └── tier3/                 # Compositional chains
+│       ├── run_chains.py      # Execute chains, measure error propagation
+│       ├── feedback_sim.py    # Re-run with correctness signal
+│       ├── gen_chains.py      # Auto-generate chains (scaffolding)
+│       └── cost_tracker.py    # Pareto frontier + cost analysis
+│
+├── tasks/chains/              # Hand-authored chain definitions
+├── db/schema.sql              # PostgreSQL schema (5 tables)
+├── docker-compose.yml         # Postgres 16 + Redis 7
+└── run_all.sh                 # Single-command pipeline
+```
+
+No LangChain, no orchestration frameworks. Direct SDK calls, raw SQL, standalone scripts.
+
+## Quick Start
+
+### Prerequisites
+
+- Docker (for Postgres + Redis)
+- Python 3.11+
+- API keys: `ANTHROPIC_API_KEY` (required), `HF_TOKEN` (for LABBench2 datasets)
+
+### Setup
+
+```bash
+# Clone
+git clone https://github.com/VibeCodingScientist/LABBench2-Pro.git
+cd LABBench2-Pro
+
+# Environment
+cp .env.example .env
+# Edit .env — add your ANTHROPIC_API_KEY and HF_TOKEN
+
+# Install
+pip install -e .
+
+# Start services
+docker compose up -d
+```
+
+### Run the Full Pipeline
+
+```bash
+./run_all.sh --model claude-opus-4.6
+```
+
+This runs all 6 phases automatically:
+1. Start Postgres + Redis, apply schema
+2. Generate Tier 2 tasks (stats, structures, calibration, hypothesis)
+3. Run Tier 1 evals against LABBench2 categories from HuggingFace
+4. Run Tier 2 generated tasks through eval
+5. Run compositional chains
+6. Analysis: bootstrap CIs, IRT, judge audit, contamination probes, cost summary
+
+Results are stored in PostgreSQL. Resume-safe — if interrupted, re-running skips already-completed tasks.
+
+### Run Individual Components
+
+```bash
+# Single category eval
+python -m src.tier1.run_eval --model claude-opus-4.6 --category LitQA2 --concurrency 5
+
+# Bootstrap CIs for a category
+python -m src.tier1.bootstrap_ci --category LitQA2
+
+# IRT analysis across all results
+python -m src.tier1.irt_analysis
+
+# Judge audit (sample 50 responses)
+python -m src.tier1.judge_audit --category LitQA2 --sample-size 50
+
+# Contamination probes
+python -m src.tier1.contamination --model claude-opus-4.6
+
+# Generate tasks
+python -m src.tier2.gen_stats_tasks --output-dir tasks/stats_reasoning --count 200
+python -m src.tier2.gen_structure --output-dir tasks/structures --pdb-count 50 --gel-count 60
+
+# Run a specific chain
+python -m src.tier3.run_chains --model claude-opus-4.6 --chain paper_to_experiment
+
+# Cost summary
+python -m src.tier3.cost_tracker
+```
+
+### Query Results
+
+```bash
+# Direct SQL
+PGPASSWORD=dev psql -h localhost -U dev -d labbench2pro
+
+# Or start the API
+uvicorn src.api:app --host 0.0.0.0 --port 8000
+# GET /results/eval?category=LitQA2
+# GET /results/ci?category=LitQA2
+# GET /status
+```
+
+## Models
+
+Currently supported (Anthropic fully implemented, others stubbed pending API keys):
+
+| Model | Provider | Input $/1M | Output $/1M |
+|---|---|---|---|
+| claude-opus-4.6 | Anthropic | $15.00 | $75.00 |
+| claude-sonnet-4.5 | Anthropic | $3.00 | $15.00 |
+| gpt-5.2-pro | OpenAI | $2.50 | $10.00 |
+| gemini-3-pro | Google | $1.25 | $5.00 |
+
+## Design Principles
+
+- **Simplest thing that works.** No abstraction until it's needed twice.
+- **Every script runnable standalone.** No hidden dependencies between modules.
+- **Anthropic-first.** Fully wired and tested. Other providers are the same interface, just need API keys.
+- **Resume-safe.** Every eval checks the DB before calling the API. Interrupted runs pick up where they left off.
+- **Raw SQL, no ORM.** Five tables, four indexes. Schema changes = drop and recreate (results are reproducible).
+- **Cost-aware.** Every API call is tracked. Cost-accuracy Pareto frontier identifies dominated models.
+
+## Contributing
+
+The compositional chains need domain expertise. See [`tasks/chains/ALL_TEMPLATES.md`](tasks/chains/ALL_TEMPLATES.md) for the 10 chain templates with `[FILL:]` markers. The infrastructure is built — what's needed is real biology content.
+
+## License
+
+Research use. Not affiliated with FutureHouse.
