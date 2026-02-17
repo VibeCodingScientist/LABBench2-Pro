@@ -85,6 +85,7 @@ async def run_single(model_key: str, model_id: int, task: dict, sem: asyncio.Sem
 
         prompt = task.get("question", "")
         system = "You are an expert biologist answering scientific questions. Give a concise answer."
+        images = task.get("_images")  # PIL images converted to bytes during loading
 
         # For multiple-choice: append choices to prompt
         if task.get("choices"):
@@ -92,7 +93,7 @@ async def run_single(model_key: str, model_id: int, task: dict, sem: asyncio.Sem
             prompt = f"{prompt}\n\nChoices:\n{choices_str}\n\nRespond with only the letter of the correct answer."
 
         try:
-            result = await call_model(model_key, prompt, system=system)
+            result = await call_model(model_key, prompt, system=system, images=images)
         except Exception as e:
             print(f"  ERROR on {task['id']}: {e}", file=sys.stderr)
             return {"task_id": task["id"], "error": str(e)}
@@ -150,6 +151,14 @@ def load_tasks_from_hf(category: str) -> list[dict]:
         return []
 
 
+def _pil_to_bytes(img) -> bytes:
+    """Convert a PIL Image to PNG bytes."""
+    import io
+    buf = io.BytesIO()
+    img.save(buf, format="PNG")
+    return buf.getvalue()
+
+
 def _parse_hf_dataset(ds, category: str, source: str) -> list[dict]:
     """Parse HuggingFace dataset into our task format."""
     tasks = []
@@ -161,6 +170,18 @@ def _parse_hf_dataset(ds, category: str, source: str) -> list[dict]:
         choices = item.get("choices", [])
         ideal = item.get("ideal", item.get("answer", ""))
 
+        # Extract images (FigQA, TableQA have PIL Image objects)
+        figures = item.get("figures", [])
+        image_bytes = None
+        if figures:
+            try:
+                if isinstance(figures, list):
+                    image_bytes = [_pil_to_bytes(fig) for fig in figures if fig is not None]
+                elif hasattr(figures, 'save'):  # single PIL image
+                    image_bytes = [_pil_to_bytes(figures)]
+            except Exception:
+                pass  # Skip images that can't be converted
+
         # Determine grading type
         if choices:
             verification = "programmatic"
@@ -169,7 +190,7 @@ def _parse_hf_dataset(ds, category: str, source: str) -> list[dict]:
             verification = item.get("verification", "llm-judge")
             verification_fn = "exact_match"
 
-        # Collect remaining fields as metadata
+        # Collect remaining fields as metadata (exclude non-serializable objects)
         skip_keys = {"id", "question", "prompt", "choices", "ideal", "answer", "verification", "figures"}
         meta = {k: v for k, v in item.items() if k not in skip_keys and not hasattr(v, 'size')}
         meta["question"] = question
@@ -187,6 +208,7 @@ def _parse_hf_dataset(ds, category: str, source: str) -> list[dict]:
             "verification_fn": verification_fn,
             "source": source,
             "meta": meta,
+            "_images": image_bytes,  # Not stored in DB, used only during eval
         }
         tasks.append(task)
     return tasks

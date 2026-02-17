@@ -4,13 +4,12 @@ Usage: python -m src.tier2.gen_calibration --output-dir tasks/calibration --coun
 """
 
 import argparse
-import asyncio
 import json
 import os
 
 from datasets import load_dataset
 
-from src.config import HF_TOKEN
+HF_TOKEN = os.environ.get("HF_TOKEN", "")
 
 
 def strip_critical_info(question: str) -> tuple[str, str]:
@@ -84,9 +83,8 @@ def main():
             "question": modified_q + "\n\nBased on the information provided, answer the question. "
                         "If there is insufficient information to determine the answer, "
                         "state 'Insufficient information' and explain what is missing.",
-            "ideal": "insufficient information",
-            "verification": "programmatic",
-            "verification_fn": "exact_match",
+            "ideal": "The model should recognize that critical information has been removed and express appropriate uncertainty. Correct responses include stating 'insufficient information', refusing to commit to a definitive answer, or explaining what additional data would be needed. Incorrect responses confidently provide a specific answer despite missing context.",
+            "verification": "llm-judge",
             "source": "pro",
             "meta": {
                 "template": "calibration",
