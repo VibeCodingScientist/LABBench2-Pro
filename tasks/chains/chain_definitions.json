@@ -1,0 +1,21 @@
+[
+    {
+        "chain_id": "lit_to_primer_01",
+        "description": "Retrieve paper -> read figure -> design primers -> check protocol",
+        "steps": [
+            {"task_id": "PLACEHOLDER_litqa3_001", "input_type": "none"},
+            {"task_id": "PLACEHOLDER_figqa2_001", "input_type": "previous_response"},
+            {"task_id": "PLACEHOLDER_seqqa2_001", "input_type": "previous_response"},
+            {"task_id": "PLACEHOLDER_protqa2_001", "input_type": "previous_response"}
+        ]
+    },
+    {
+        "chain_id": "stats_pipeline_01",
+        "description": "Select test -> compute p-value -> count significant genes",
+        "steps": [
+            {"task_id": "pro_stats_0001", "input_type": "none"},
+            {"task_id": "pro_stats_0002", "input_type": "previous_response"},
+            {"task_id": "pro_stats_0003", "input_type": "previous_response"}
+        ]
+    }
+]
