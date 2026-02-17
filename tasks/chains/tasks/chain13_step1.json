@@ -1,0 +1,18 @@
+{
+  "id": "chain13_step1",
+  "category": "ChainTask",
+  "question": "You are conducting a GWAS meta-analysis for type 2 diabetes (T2D) risk, combining three cohorts: (1) European ancestry, n=50,000 cases + 100,000 controls; (2) East Asian ancestry, n=30,000 cases + 60,000 controls; (3) African ancestry, n=8,000 cases + 16,000 controls. Each cohort has been genotyped on different arrays and imputed to different reference panels. You have summary statistics (beta, SE, p-value, allele frequencies) for ~8 million variants from each cohort. The Open Targets association for T2D lists IFNAR2 (0.6094), IFNAR1 (0.6077), and IMPDH1 (0.6057) as top targets, suggesting immune pathways. What meta-analysis approach should you use, and why is a simple fixed-effects model insufficient here?",
+  "ideal": "Use a **random-effects meta-analysis** (specifically, the Han-Eskin model or METASOFT MRE) because: (1) **Effect size heterogeneity across ancestries** is expected — allele frequencies, LD patterns, and environmental modifiers differ between populations. A fixed-effects model assumes identical true effect sizes across studies, which is biologically implausible for a polygenic trait across diverse ancestries. (2) **Different LD patterns mean different causal variant tagging:** A lead SNP in Europeans may not tag the same causal variant in Africans. African populations have shorter LD blocks (due to deeper genetic diversity), providing better fine-mapping resolution but potentially different association statistics at the same SNP. (3) **Use inverse-variance weighted random-effects** (DerSimonian-Laird or REML-based), reporting both the pooled effect and heterogeneity metrics (I², Cochran's Q, τ²). For SNPs with I² > 50%, examine ancestry-specific effects — these are candidates for population-specific regulatory mechanisms. (4) **Trans-ancestry fine-mapping** should use tools like PAINTOR or MR-MEGA that explicitly model ancestral differences in LD. (5) **Do not simply combine summary statistics with fixed-effects METAL** — this inflates significance for SNPs with consistent effects while masking true signals that are ancestry-specific. The African cohort, despite being smallest, contributes disproportionate fine-mapping value due to shorter LD.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "stats_pipeline",
+    "chain_id": "chain13",
+    "topic": "GWAS meta-analysis for type 2 diabetes risk loci",
+    "step": 1,
+    "step_role": "Choose statistical framework",
+    "depends_on": "nothing — this is the seed question",
+    "what_cascades": "Wrong meta-analysis model → inflated or missed signals → wrong loci prioritization.",
+    "data_provenance": "- Open Targets T2D (EFO_0004220): top targets IFNAR2 (0.6094), IFNAR1 (0.6077), IMPDH1 (0.6057). Queried 2026-02-17.\n- ClinVar TP53 total variants: 3,912; pathogenic: 1,705 (queried 2026-02-17)"
+  }
+}

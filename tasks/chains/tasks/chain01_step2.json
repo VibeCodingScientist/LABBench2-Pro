@@ -1,15 +1,17 @@
 {
   "id": "chain01_step2",
   "category": "ChainTask",
-  "question": "[FILL: Present a figure/data and ask the model to interpret it in light of step 1's finding.\nExample: 'Given that zinc facilitates the X-Y interaction, the following dose-response data shows binding at zinc concentrations of 0, 0.1, 1, 10, 100 µM with percent binding of 2%, 8%, 31%, 78%, 95%. At what zinc concentration does binding reach half-maximal? Is this consistent with physiological zinc levels (10-100 µM)?']",
-  "ideal": "[FILL: The quantitative answer plus interpretation.\nExample: 'Half-maximal binding occurs at approximately 3 µM zinc (interpolating between 1 and 10 µM). This is below the physiological range of 10-100 µM, suggesting the interaction is saturated under normal conditions.']",
+  "question": "Given that SHP2 autoinhibition is released by bisphosphorylated peptides, the following dose-response data shows SHP2 phosphatase activity (fold over basal) upon titration of a bisphosphorylated IRS-1 pY1172/pY1222 peptide: [peptide] = 0, 0.01, 0.1, 0.5, 1, 5, 10, 50 µM; fold-activity = 1.0, 1.2, 2.8, 8.5, 18, 42, 51, 54. The maximum activation plateau is ~54-fold. At what peptide concentration is half-maximal activation achieved? The cellular concentration of IRS-1 phosphopeptide during insulin stimulation is estimated at 0.5–2 µM. Is SHP2 activation likely to be switch-like or graded in cells?",
+  "ideal": "Half-maximal activation (~27-fold) occurs between 0.5 and 1 µM peptide, approximately 0.7 µM by interpolation. Since the estimated cellular concentration range (0.5–2 µM) spans the EC50, SHP2 activation in cells is **graded**, not switch-like — small changes in receptor signaling will produce proportional changes in SHP2 activity. This is consistent with SHP2 acting as a signal amplitude modulator rather than a binary switch. A Hill coefficient could be estimated from the data; the steep rise between 0.1–5 µM suggests moderate cooperativity (n_H ≈ 1.5–2).",
   "verification": "llm-judge",
   "source": "pro-chain",
   "meta": {
     "chain": "paper_to_experiment",
+    "chain_id": "chain01",
+    "topic": "SHP2 allosteric activation in RASopathy signaling",
     "step": 2,
-    "step_role": "Quantitative data interpretation connected to step 1",
-    "depends_on": "Must use step 1's mechanistic understanding to interpret the data",
-    "what_cascades": "Wrong concentration estimate → wrong experimental design downstream"
+    "step_role": "Quantitative data interpretation",
+    "depends_on": "chain01_step1",
+    "what_cascades": "Wrong EC50 → wrong prediction about cellular regulation → wrong experimental design."
   }
 }

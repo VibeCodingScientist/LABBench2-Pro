@@ -1,0 +1,17 @@
+{
+  "id": "chain22_step3",
+  "category": "ChainTask",
+  "question": "You identify an alternative sgRNA that achieves 55% on-target editing at A6 with only 3% bystander at A8 (acceptable). However, you need >50% editing for therapeutic efficacy, and the 55% is right at the margin. Design a manufacturing process for a clinical-grade base-edited T cell product that reliably achieves >50% editing across patient-derived cells, accounting for donor-to-donor variability. Include: starting material, critical process parameters, in-process controls, release criteria, and the key risk.",
+  "ideal": "**Manufacturing process:**\n\n**Starting material:** Leukapheresis product (>2×10⁹ PBMCs). CD4+ T cell isolation by CliniMACS negative selection. Minimum 2×10⁸ CD4+ T cells.\n\n**Critical process parameters (CPPs):**\n1. **Activation:** Anti-CD3/CD28 (TransAct or Dynabeads), 72h, verify >80% CD25+/Ki-67+ before electroporation (in-process QC gate — do NOT proceed if <80% activated)\n2. **Electroporation:** MaxCyte ExPERT (clinical-grade platform), ABE8e mRNA 2 µg + modified sgRNA 3 µg per 1×10⁶ cells. Process 2×10⁸ cells in ~200 reactions.\n3. **Post-EP culture:** 5 days in X-VIVO 15 + 5% human AB serum + IL-2 (100 U/mL) + IL-7 (10 ng/mL) to promote survival and expansion.\n4. **Expected yield:** 4-8× expansion = 0.8-1.6×10⁹ edited cells. Dose: 1×10⁸ to 1×10⁹.\n\n**In-process controls:**\n- Day 0: Cell count, viability (>90%)\n- Day 3 (pre-EP): Activation markers (CD25, Ki-67 >80% gate)\n- Day 3 (4h post-EP): Viability check (>65% gate)\n- Day 5: Editing efficiency by ddPCR (faster than Sanger) — must be >50% at target, <5% at A8 bystander\n- Day 8: Final harvest\n\n**Release criteria:**\n- Editing at A6: >50% (by amplicon NGS, 10,000× depth)\n- Bystander A8: <5%\n- Viability: >70%\n- Sterility: negative (14-day BacT)\n- Endotoxin: <5 EU/kg\n- Mycoplasma: negative\n- CD4+ purity: >90%\n- Residual ABE8e mRNA: below LOQ (RT-qPCR)\n\n**Key risk:** **Donor-to-donor variability.** T cell activation kinetics, electroporation efficiency, and editing rates vary significantly between donors (typical range: 40-75% editing for the same protocol). The 55% average means some donors will fall below 50%. Mitigation: (1) Include a \"rescue electroporation\" step — if day 5 ddPCR shows <45% editing, perform a second electroporation on day 5 (cells are still dividing). (2) Develop a predictive model: correlate pre-EP T cell activation markers (Ki-67%, CD25 MFI) with editing efficiency across 20 donor validation runs to identify donors likely to fail. (3) Bank a backup unedited cell product for every patient in case of manufacturing failure.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "protocol_troubleshoot",
+    "chain_id": "chain22",
+    "topic": "CRISPR base editing efficiency in primary T cells",
+    "step": 3,
+    "step_role": "Quantitative follow-up",
+    "depends_on": "chain22_step2",
+    "what_cascades": "Terminal step."
+  }
+}

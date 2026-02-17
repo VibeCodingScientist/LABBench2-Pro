@@ -1,15 +1,18 @@
 {
   "id": "chain06_step3",
   "category": "ChainTask",
-  "question": "[FILL: Ask for a quantitative follow-up based on the result.\nExample: 'You want to quantify the ERK1/2 phosphorylation ratio across a time course (0, 5, 15, 30, 60 min after EGF stimulation). You will have 3 biological replicates per time point. Describe the quantification approach and the statistical test to determine which time point has peak activation.']",
-  "ideal": "[FILL: Quantification + stats plan.\nExample: 'Quantify band intensities using densitometry (ImageJ). Normalize phospho-ERK to total ERK (loading control) for each lane. Calculate phospho/total ratio for each replicate. For peak identification: one-way repeated measures ANOVA across the 5 time points, followed by Dunnett post-hoc test comparing each time point to t=0. Alternatively, fit a curve to the time series and identify the maximum. Report mean ± SEM for each time point with significance indicators.']",
+  "question": "You want to quantify how different KRAS mutations affect BRAF binding efficiency. You will express FLAG-KRAS (WT, G12V, G12C, G12D, G13D, Q61H) with HA-BRAF, perform co-IP under your optimized conditions, and compare the amount of BRAF co-immunoprecipitated. Describe the quantification strategy: normalization, controls, number of replicates, and the correct statistical test. How would you present this data?",
+  "ideal": "**Quantification:** Densitometry of anti-HA (BRAF) and anti-FLAG (KRAS) bands using ImageJ/ImageStudio. Calculate **binding efficiency ratio** = (HA-BRAF band intensity in IP) / (FLAG-KRAS band intensity in IP) for each mutant. This normalizes for IP efficiency differences.\n\n**Essential controls:** (1) Input blots for both FLAG-KRAS and HA-BRAF to confirm equal expression across conditions. (2) Empty vector FLAG-IP (background subtraction). (3) FLAG-KRAS-S17N (dominant-negative, GDP-locked) as negative control — should show minimal BRAF binding.\n\n**Replicates:** Minimum 4 biological replicates (independent transfections on different days). All 6 mutants + WT + S17N run on the same blot per replicate to minimize blot-to-blot variability.\n\n**Statistical test:** One-way ANOVA with Dunnett's post-hoc test comparing each mutant to WT-KRAS. Check normality (Shapiro-Wilk) and homoscedasticity (Levene's test) on the ratio data; if violated, use Kruskal-Wallis with Dunn's post-hoc. With 8 groups and 4 replicates, report effect sizes (fold-change vs. WT) alongside p-values.\n\n**Presentation:** Bar graph showing mean binding efficiency ratio ± SEM for each KRAS variant, ordered by binding strength. Include individual data points overlaid (n=4 is too few for box plots). Include a representative western blot panel below the quantification graph. Report: \"G12V showed 4.2±0.6-fold enrichment of BRAF compared to WT (p=0.003, Dunnett's test).\"",
   "verification": "llm-judge",
   "source": "pro-chain",
   "meta": {
     "chain": "protocol_troubleshoot",
+    "chain_id": "chain06",
+    "topic": "Co-immunoprecipitation of KRAS-BRAF interaction",
     "step": 3,
-    "step_role": "Design quantitative follow-up from qualitative observation",
-    "depends_on": "Must build on the specific proteins and result pattern from steps 1-2",
-    "what_cascades": "Terminal step"
+    "step_role": "Quantitative follow-up",
+    "depends_on": "chain06_step2",
+    "what_cascades": "Terminal step.",
+    "data_provenance": "| Data Type | Identifier | Details | Query Date |\n|-----------|-----------|---------|------------|\n| PDB | [1UWH](https://www.rcsb.org/structure/1UWH) | Wild-type BRAF structure | 2026-02-17 |\n| UniProt | [P01116](https://www.uniprot.org/uniprotkb/P01116) | KRAS, 189 aa, Switch I region residues 29–35, effector domain 29–40 | 2026-02-17 |\n| Gene | KRAS | Mutations: G12V, G12C, G12D, G13D, Q61H, S17N (dominant-negative) | 2026-02-17 |\n| Gene | BRAF | Predicted MW 84.4 kDa, phosphosites S446/S447/T599/S602 | 2026-02-17 |"
   }
 }

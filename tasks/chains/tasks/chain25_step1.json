@@ -1,0 +1,17 @@
+{
+  "id": "chain25_step1",
+  "category": "ChainTask",
+  "question": "Moderate exercise is immunostimulatory — it increases circulating NK cells, improves vaccine responses, and reduces infection risk. However, marathon runners and ultra-endurance athletes report 2-6× higher rates of upper respiratory tract infections (URTI) in the 1-2 weeks following a race compared to sedentary controls. This \"open window\" hypothesis suggests intense exercise transiently suppresses immunity. But recent re-analyses challenge this: URTI symptoms in runners may not be infections at all. A study of 155 marathon runners with post-race \"cold symptoms\" found that <30% had confirmed viral pathogens (by multiplex PCR); the majority had elevated markers of airway inflammation (IL-6, IL-8, neutrophil elastase) without viral etiology. Propose at least 3 hypotheses for why marathon runners get URTI symptoms that are NOT infections, ranked by biological plausibility.",
+  "ideal": "**Hypothesis 1 (Most plausible): Exercise-induced airway inflammation and epithelial damage.** Prolonged heavy breathing (>3 hours at 60-80% VO2max) exposes airway epithelium to massive volumes of air (increasing ventilation from ~6 L/min to >100 L/min). This causes: (1) airway drying and cooling (especially in cold weather), leading to epithelial cell damage and osmotic stress, (2) mechanical shear stress from turbulent airflow, (3) inhalation of pollutants, allergens, and particulates at greatly increased rates. Damaged airway epithelium releases DAMPs (damage-associated molecular patterns), IL-33, and thymic stromal lymphopoietin (TSLP), triggering local inflammation (neutrophil infiltration, mucus hypersecretion) that mimics URTI symptoms without any pathogen.\n\n**Hypothesis 2 (Plausible): Stress hormone-mediated mucosal immune redistribution.** Marathon running causes sustained elevation of cortisol (3-5×), catecholamines (10-20×), and IL-6 (up to 100×). Cortisol causes transient lymphopenia (1-2h post-exercise) by redistributing lymphocytes from blood to tissues (mucosal surfaces, lungs, gut). This \"immune cell trafficking\" to mucosal sites could cause transient local inflammation as immune cells extravasate into tissues — producing sore throat, nasal congestion, and cough. The lymphopenia is not immunosuppression but immune redistribution. Symptoms resolve within 24-72h as cortisol normalizes.\n\n**Hypothesis 3 (Emerging): Reactivation of latent herpesviruses.** Intense physiological stress can reactivate latent viruses (EBV, CMV, HSV-1) from lymphoid reservoirs. EBV reactivation (detectable by PCR as viral DNA in saliva) occurs in ~20% of marathon runners post-race. Subclinical viral shedding may produce mild pharyngitis without classical \"infection\" (multiplex PCR panels might not test for herpesviruses, or viral loads are below detection).\n\n**Hypothesis 4 (Possible): Exercise-induced bronchoconstriction (EIB).** 10-50% of endurance athletes develop EIB, triggered by airway cooling/drying. Symptoms (cough, wheeze, chest tightness) overlap with URTI. Often undiagnosed in recreational runners.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "paradox_resolution",
+    "chain_id": "chain25",
+    "topic": "Exercise-induced immunosuppression in marathon runners",
+    "step": 1,
+    "step_role": "Explain paradoxical result",
+    "depends_on": "nothing — this is the seed question",
+    "what_cascades": "Wrong explanation → wrong intervention recommendations for athletes."
+  }
+}

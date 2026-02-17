@@ -1,0 +1,18 @@
+{
+  "id": "chain18_step4",
+  "category": "ChainTask",
+  "question": "Design a preclinical evaluation plan for a next-generation Mpro inhibitor (Compound Y, non-covalent, extended S3/S4 binding) against both wild-type and E166V Mpro. Include resistance profiling, antiviral efficacy, and a key pharmacological challenge specific to oral antivirals.",
+  "ideal": "(1) **Biochemical potency against mutant panel:** FRET-based Mpro enzymatic assay against WT, E166V, L167F, E166V/L167F double mutant, and SARS-CoV-1 Mpro (pan-CoV assessment). Success: Ki <10 nM for WT, <50 nM for single mutants, <200 nM for double. Cross-reactivity with human cathepsin L, caspase-3, and SARS-CoV-2 PLpro <1 µM (selectivity window >100×). (2) **Cellular antiviral assay:** CPE assay in Vero E6-TMPRSS2 cells with WT SARS-CoV-2 and reverse-genetics E166V mutant virus. EC50 measurement with CC50 for selectivity index (SI). Success: EC50 <100 nM, SI >100. (3) **Resistance profiling:** Serial passage of SARS-CoV-2 in VeroE6 cells with escalating Compound Y concentrations (starting at 0.5× EC50, doubling every 3 passages, 20 passages total). WGS of resistant viruses at passages 10, 15, 20. Compare mutation spectrum to nirmatrelvir-selected resistance. Success: >15 passages to achieve >10× EC50 shift (vs. ~8 passages for nirmatrelvir). (4) **PK challenge — oral bioavailability without boosting:** Nirmatrelvir requires ritonavir boosting (CYP3A4 inhibition) which causes extensive drug-drug interactions. Compound Y must achieve oral bioavailability >30% without a booster. Rat PK study: IV (1 mg/kg) and PO (10 mg/kg), measure Cmax, AUC, t½, F. Design Compound Y to avoid CYP3A4 as primary clearance route (assess metabolic soft spots by liver microsome stability across species). Success: F >30%, t½ >4h, allowing BID or TID dosing without ritonavir.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "structure_to_drug",
+    "chain_id": "chain18",
+    "topic": "SARS-CoV-2 main protease inhibition by nirmatrelvir",
+    "step": 4,
+    "step_role": "Experimental validation plan",
+    "depends_on": "chain18_step3",
+    "what_cascades": "Terminal step.",
+    "data_provenance": "- ChEMBL CHEMBL4802135 (nirmatrelvir): multiple IC50 values (0.79-145 nM range across assays). Queried 2026-02-17.\n- PDB 7SI9: Mpro + nirmatrelvir, 2.0 Å. PDB 8DCZ: Mpro M165Y mutant + nirmatrelvir, 2.38 Å. Queried 2026-02-17."
+  }
+}

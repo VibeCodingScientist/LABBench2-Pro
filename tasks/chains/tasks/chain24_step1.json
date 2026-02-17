@@ -1,0 +1,18 @@
+{
+  "id": "chain24_step1",
+  "category": "ChainTask",
+  "question": "PCSK9 (proprotein convertase subtilisin/kexin type 9; UniProt Q8NBP7, 692 aa) is secreted by hepatocytes and binds to the LDL receptor (LDLR) on the cell surface, promoting LDLR endocytosis and lysosomal degradation. This reduces LDLR recycling and increases plasma LDL-cholesterol. The crystal structure of PCSK9 (PDB: 2P4E, resolution 1.98 Å) reveals three domains: prodomain/inhibitor I9 (77-149), peptidase S8 catalytic domain (155-461), and a C-terminal V-domain. The PCSK9:EGF-A complex (PDB: 3BPS, resolution 2.41 Å) shows how PCSK9 binds the EGF-A repeat of LDLR. ClinVar lists 1,322 pathogenic PCSK9 variants. Open Targets ranks PCSK9 as the top target for total cholesterol measurement (score 0.7534, EFO_0004574). Loss-of-function PCSK9 mutations are associated with 28-40% lower LDL-C and 88% lower coronary heart disease risk. How do PCSK9 inhibitors (evolocumab, alirocumab) reduce LDL-C, and what is the key structural detail that makes antibody-based inhibition effective?",
+  "ideal": "PCSK9 inhibitors are monoclonal antibodies that bind to PCSK9 in the circulation and prevent it from engaging the LDLR EGF-A domain. With PCSK9 blocked: (1) LDLR is internalized with LDL particles in clathrin-coated pits as normal, (2) in the acidic endosome (pH ~5.5), without PCSK9 bound, the LDLR-LDL complex dissociates (LDL→lysosome for degradation), but (3) LDLR recycles back to the cell surface instead of being directed to the lysosome. This increases LDLR surface density 2-3 fold, dramatically enhancing hepatic LDL clearance.\n\n**Key structural detail:** The PCSK9:LDLR interaction is pH-dependent and relatively weak at neutral pH (Kd ~170-600 nM at pH 7.4). At endosomal pH (~5.5), the affinity increases ~50-fold due to protonation of His residues at the interface (His226 on PCSK9 contacts Asp299 on EGF-A; protonation strengthens this salt bridge). This means PCSK9 primarily acts in the endosome, not at the surface. The antibodies (evolocumab/alirocumab) bind PCSK9 with much higher affinity (Kd ~10-100 pM) than the PCSK9-LDLR interaction, effectively sequestering PCSK9 before it can engage LDLR. The antibody epitope overlaps with the LDLR-binding surface on PCSK9, providing direct steric competition.\n\n**Genetic validation:** The human genetics are remarkable — PCSK9 loss-of-function is one of the best-validated drug targets in cardiovascular medicine. Individuals with nonsense mutations (e.g., Y142X, C679X in African Americans) have 28-40% lower LDL and ~88% lower CHD risk with no apparent adverse effects, providing a lifetime \"natural experiment\" proving safety and efficacy.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "paper_to_experiment",
+    "chain_id": "chain24",
+    "topic": "PCSK9 and LDL receptor regulation in cardiovascular disease",
+    "step": 1,
+    "step_role": "Extract key finding from literature",
+    "depends_on": "nothing — this is the seed question",
+    "what_cascades": "Wrong mechanism → misunderstand pH-dependent biology.",
+    "data_provenance": "- PDB 2P4E: Queried 2026-02-17, resolution 1.98 Å, released 2007-04-10. Title: \"Crystal Structure of PCSK9\"\n- PDB 3BPS: Queried 2026-02-17, resolution 2.41 Å, released 2008-02-12. Title: \"PCSK9:EGF-A complex\"\n- UniProt Q8NBP7 (PCSK9): 692 aa. Domains: Inhibitor I9 (77-149), Peptidase S8 (155-461). Active site: charge relay at 186, 226. Queried 2026-02-17.\n- ClinVar PCSK9: 1,322 pathogenic variants (queried 2026-02-17)\n- Open Targets: PCSK9-total cholesterol (EFO_0004574) 0.7534, APOB 0.7389, LDLR 0.7306 (queried 2026-02-17, verified 2026-02-17 16:45)"
+  }
+}

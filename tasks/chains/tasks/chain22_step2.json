@@ -1,0 +1,17 @@
+{
+  "id": "chain22_step2",
+  "category": "ChainTask",
+  "question": "After optimization (72h activation, modified mRNA 2 µg, chemically modified sgRNA, 1×10⁶ cells per reaction), your new results show 62% A-to-G editing at the target position (A6 of protospacer). However, amplicon deep sequencing reveals: (a) Target A6: 62% A-to-G (desired edit), (b) Bystander A4: 28% A-to-G (unintended), (c) Bystander A8: 15% A-to-G (unintended). The bystander edits at A4 and A8 result in amino acid changes — A4 edit causes a synonymous mutation (silent), but the A8 edit causes a missense change (Thr→Ala) in a conserved residue. How do you assess the significance of these bystander edits for clinical translation?",
+  "ideal": "**Assessment by bystander position:**\n\n**A4 (28% editing, synonymous):** Low clinical concern. The synonymous change doesn't alter the protein sequence. However: (1) verify it doesn't affect mRNA splicing (check for ESE/ESS disruption using ESEfinder), (2) it changes the DNA sequence which could theoretically affect chromatin accessibility or TF binding if in a regulatory element (unlikely in coding region). **Acceptable for clinical translation.**\n\n**A8 (15% editing, Thr→Ala missense):** **Significant concern.** (1) The Thr→Ala change removes a hydroxyl group from a conserved residue — this could affect protein folding, stability, or post-translational modification (if the Thr is a phosphorylation site). (2) 15% of the cell product would carry this unintended missense mutation. In a cell therapy product of ~10⁸ cells, that's ~15 million cells with a potentially deleterious edit. (3) **Must determine:** Is this Thr a known phosphorylation site (check PhosphoSitePlus)? Is it at a protein-protein interface? What is the conservation score (ConSurf)?\n\n**Mitigation strategies:**\n1. **sgRNA redesign:** Try alternative sgRNAs that shift the editing window to include A6 but exclude A8. ABE8e's window is positions 3-9; if A6 is at position 6 and A8 at position 8, using a different PAM that shifts A6 to position 4 would move A8 to position 6 (still in window — won't help) or to position 10 (outside window — would help). Systematically screen all available PAMs.\n2. **Use a narrower-window ABE:** ABE8e has a broad editing window. ABE7.10 or engineered variants (e.g., ABE8e-V106W \"SpABE8e\") have narrower windows that could edit A6 while sparing A8.\n3. **If bystander is unavoidable:** Perform functional assays — express the Thr→Ala variant in cells and assess: protein expression level, localization, and function in the relevant pathway. If the missense is truly neutral, proceed with documentation for regulatory filing.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "protocol_troubleshoot",
+    "chain_id": "chain22",
+    "topic": "CRISPR base editing efficiency in primary T cells",
+    "step": 2,
+    "step_role": "Interpret corrected result",
+    "depends_on": "chain22_step1",
+    "what_cascades": "Undetected deleterious bystander → patient safety risk."
+  }
+}

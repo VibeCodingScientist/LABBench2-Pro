@@ -1,0 +1,18 @@
+{
+  "id": "chain15_step1",
+  "category": "ChainTask",
+  "question": "Cystic fibrosis (CF) is caused by mutations in CFTR (UniProt P13569, 1480 aa), which functions as a chloride and bicarbonate channel. The cryo-EM structure of dephosphorylated, ATP-free human CFTR (PDB: 5UAK, resolution 3.87 Å) reveals two ABC transmembrane domains (TMD1: residues 81-365; TMD2: 859-1155) and two ABC transporter/nucleotide-binding domains (NBD1: 423-646; NBD2: 1219-1480). ClinVar lists 2,152 pathogenic CFTR variants out of 6,170 total. The F508del mutation (deletion of phenylalanine at position 508 in NBD1) accounts for ~70% of CF alleles worldwide. Open Targets confirms CFTR as the primary cystic fibrosis target. What are the two distinct molecular consequences of F508del, and why does this make it harder to treat than a simple channel-gating mutation like G551D?",
+  "ideal": "F508del causes **two distinct molecular defects** that require different pharmacological corrections:\n\n**(1) Protein folding/trafficking defect (Class II):** Phe508 is located on the surface of NBD1, at the interface between NBD1 and intracellular loop 4 (ICL4) of TMD2. It participates in hydrophobic packing interactions critical for the NBD1-ICL4 interface. Deleting F508 disrupts this interface, causing: (a) local NBD1 misfolding with reduced thermal stability (ΔTm ≈ -6°C), (b) failure to properly assemble the NBD1-TMD2 domain interface, and (c) recognition by ER quality control (calnexin/calreticulin cycle, CHIP E3 ligase) → ubiquitination → proteasomal degradation. Result: <2% of F508del-CFTR reaches the cell surface.\n\n**(2) Channel gating defect (Class III):** The small fraction of F508del-CFTR that escapes ER degradation and reaches the plasma membrane has severely impaired channel gating — reduced open probability (Po) ~10% of WT due to disrupted NBD1-NBD2 dimerization needed for channel opening.\n\n**Comparison to G551D:** G551D is a pure Class III (gating) mutation — the protein folds normally and traffics to the surface, but the channel doesn't open properly. A single drug (potentiator, e.g., ivacaftor) that enhances gating is sufficient. F508del requires **triple combination therapy:** corrector 1 (elexacaftor, stabilizes NBD1-TMD interface) + corrector 2 (tezacaftor, stabilizes NBD1 fold) + potentiator (ivacaftor, enhances gating of rescued protein). This explains why Trikafta (elexacaftor/tezacaftor/ivacaftor) was the breakthrough — single agents failed because they addressed only one of the two defects.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "genetics_to_therapy",
+    "chain_id": "chain15",
+    "topic": "CFTR F508del in cystic fibrosis",
+    "step": 1,
+    "step_role": "Gene function and disease mechanism",
+    "depends_on": "nothing — this is the seed question",
+    "what_cascades": "Wrong defect classification → wrong therapeutic logic.",
+    "data_provenance": "- PDB 5UAK: Queried 2026-02-17, resolution 3.87 Å, released 2017-01-18, cryo-EM. Title: \"Dephosphorylated, ATP-free human cystic fibrosis transmembrane conductance regulator (CFTR)\"\n- UniProt P13569 (CFTR): 1480 aa. Domains: ABC TMD1 (81-365), ABC transporter 1 (423-646), ABC TMD2 (859-1155). Queried 2026-02-17.\n- ClinVar CFTR: 2,152 pathogenic variants, 6,170 total variants (queried 2026-02-17 15:55 UTC)\n- ChEMBL CHEMBL2010601 (ivacaftor): max_phase = 4. Queried 2026-02-17.\n- Clinical trial NCT05668741: VX-522 in CF, Phase 1/2, RECRUITING (queried 2026-02-17)"
+  }
+}

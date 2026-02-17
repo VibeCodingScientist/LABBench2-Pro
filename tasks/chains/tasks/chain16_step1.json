@@ -1,0 +1,17 @@
+{
+  "id": "chain16_step1",
+  "category": "ChainTask",
+  "question": "You are performing ChIP-seq for the repressive histone mark H3K27me3 in mouse embryonic stem cells (mESCs) to map Polycomb-repressed domains. Your protocol: crosslink with 1% formaldehyde 10 min, sonicate to 200-500 bp, immunoprecipitate with anti-H3K27me3 antibody (Cell Signaling #9733) overnight at 4°C with protein A/G beads, wash 4× with RIPA buffer, reverse crosslinks, purify DNA, library prep, sequence 40M reads. **Result:** The sequencing data shows: (a) only 2.8% of reads map to known H3K27me3-enriched regions (expected: >20%), (b) the FRiP (Fraction of Reads in Peaks) is 0.04 (expected: >0.15), (c) MACS2 calls only 1,200 broad peaks (expected: >15,000 broad domains), (d) input control looks normal. Antibody lot was validated by western blot (correct band at ~17 kDa). What is the most likely cause of failure?",
+  "ideal": "The most likely cause is **over-sonication destroying the H3K27me3 epitope and/or fragmenting chromatin below the optimal size for broad mark ChIP.** H3K27me3 is a **broad histone mark** covering large genomic domains (often 10-100 kb), fundamentally different from sharp transcription factor binding sites. Several specific issues:\n\n1. **Sonication for broad marks should produce larger fragments (500-1000 bp)**, not 200-500 bp. The 200-500 bp range is optimal for transcription factor ChIP-seq. Broad marks like H3K27me3 require larger fragments because: (a) larger fragments improve signal-to-noise for diffuse enrichment, (b) excessive sonication can destroy histone modifications or cross-epitope relationships.\n\n2. **4× RIPA washes are too stringent for histone ChIP.** RIPA contains 0.1% SDS + 0.5% deoxycholate, which can strip weakly bound chromatin. H3K27me3 ChIP should use milder wash buffers (low-salt wash, LiCl wash, TE — the standard histone ChIP wash series).\n\n3. **Crosslinking may also be an issue:** 10 min at 1% formaldehyde is standard for TF-ChIP but may be excessive for histone ChIP (where histones are already tightly bound to DNA). Over-crosslinking reduces sonication efficiency and can mask epitopes.\n\n**Fix:** (1) Reduce sonication to produce 500-1000 bp fragments (or use MNase digestion for native ChIP). (2) Switch to milder washes (150 mM NaCl, no SDS). (3) Reduce crosslinking to 5 min or try native ChIP (no crosslinking — histones don't need it). (4) Consider CUT&Tag as an alternative — it's specifically designed for histone marks and requires far fewer cells.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "protocol_troubleshoot",
+    "chain_id": "chain16",
+    "topic": "ChIP-seq for H3K27me3 in embryonic stem cells",
+    "step": 1,
+    "step_role": "Diagnose protocol error",
+    "depends_on": "nothing — this is the seed question",
+    "what_cascades": "Wrong diagnosis → continued failure → project delay."
+  }
+}

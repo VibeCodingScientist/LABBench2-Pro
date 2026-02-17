@@ -1,0 +1,18 @@
+{
+  "id": "chain11_step4",
+  "category": "ChainTask",
+  "question": "Design a preclinical strategy to evaluate combination therapy of sotorasib + a SOS1 inhibitor to overcome resistance mechanism (B) from Step 3 (SOS1 upregulation shifting KRAS toward GTP-bound state). Specify cell models, assays, dosing strategy, and quantitative success criteria.",
+  "ideal": "(1) **Cell models:** NCI-H358 (KRAS G12C, NSCLC), MIA PaCa-2 (KRAS G12C, pancreatic). Generate sotorasib-resistant clones by dose escalation over 3-6 months. Characterize resistance: WES for secondary mutations, RNA-seq for bypass pathway activation, western blot for SOS1/pERK/pAKT levels. Select clones with confirmed SOS1 upregulation (>3-fold by western). (2) **Combination viability assay:** 8×8 dose matrix of sotorasib (0.3–1000 nM) × SOS1 inhibitor (0.1–3000 nM) in resistant and parental lines, 72h CellTiter-Glo. Calculate Bliss synergy scores. Success: Bliss excess >0.15 at clinically relevant concentrations. (3) **Target engagement:** In resistant cells treated with combination, measure: (a) RAS-GTP pulldown (RBD assay) — success: >70% reduction in RAS-GTP vs. sotorasib alone; (b) pERK/pAKT western — success: suppression to <20% of vehicle. (4) **In vivo:** Resistant NCI-H358 xenograft, 4 arms (n=10): vehicle, sotorasib 30 mg/kg QD, SOS1i 100 mg/kg BID, combination. 28-day study. Success: combination achieves >60% TGI when single agents show <20% TGI. Monitor body weight for tolerability.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "structure_to_drug",
+    "chain_id": "chain11",
+    "topic": "KRAS G12C covalent inhibition by sotorasib",
+    "step": 4,
+    "step_role": "Experimental validation plan",
+    "depends_on": "chain11_step3",
+    "what_cascades": "Terminal step.",
+    "data_provenance": "- ChEMBL CHEMBL4535757 sotorasib: MIA PaCa-2 IC50 = 5 nM (CHEMBL4357260), NCI-H358 IC50 = 30 nM (CHEMBL4701895), NCI-H358 IC50 = 16 nM (CHEMBL4735450). Queried 2026-02-17."
+  }
+}

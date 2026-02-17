@@ -1,0 +1,18 @@
+{
+  "id": "chain11_step1",
+  "category": "ChainTask",
+  "question": "The crystal structure of KRAS G12C covalently bound to sotorasib (AMG 510) was determined by X-ray diffraction (PDB: 6OIM, resolution 1.65 Å). KRAS is a 189-amino acid GTPase (UniProt P01116). Unlike the EGFR kinase domain in Chain 2, KRAS has historically been considered \"undruggable.\" What structural feature of the G12C mutation specifically enables covalent inhibitor design? Identify the binding pocket sotorasib occupies and explain why this pocket is absent in wild-type KRAS-GTP.",
+  "ideal": "The G12C mutation replaces the small glycine at position 12 with a cysteine, introducing a nucleophilic thiol group adjacent to the P-loop (phosphate-binding loop, residues 10-17). Sotorasib exploits this by forming an **irreversible covalent bond with Cys12** via a Michael acceptor warhead. The compound binds in the **Switch II pocket (S-IIP)**, a cryptic pocket beneath the switch II region (residues 60-75) that is only accessible in the GDP-bound (inactive) conformation. In the GTP-bound state, switch II is ordered and occluded against the effector-binding surface, closing this pocket. In WT KRAS, even in the GDP state, glycine-12 provides no covalent handle — the pocket can open transiently but no selective anchor exists. The S-IIP strategy means sotorasib is a **mutation-selective, conformation-selective** inhibitor: it traps KRAS G12C in the inactive GDP-bound state, preventing GTP loading and downstream RAS-MAPK signaling.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "structure_to_drug",
+    "chain_id": "chain11",
+    "topic": "KRAS G12C covalent inhibition by sotorasib",
+    "step": 1,
+    "step_role": "Identify structural features",
+    "depends_on": "nothing — this is the seed question",
+    "what_cascades": "Wrong pocket identification → wrong understanding of selectivity → wrong resistance predictions.",
+    "data_provenance": "- PDB 6OIM: Queried 2026-02-17, resolution 1.65 Å, released 2019-11-06, X-ray diffraction. Title: \"Crystal Structure of human KRAS G12C covalently bound to AMG 510\"\n- UniProt P01116 (KRAS): 189 aa, queried 2026-02-17\n- ChEMBL CHEMBL4535757 (sotorasib): IC50 = 68 nM (GTPase KRas, assay CHEMBL4357259); IC50 = 30 nM (KRAS, assay CHEMBL4701894); cellular IC50 = 5 nM (MIA PaCa-2, assay CHEMBL4357260)\n- Open Targets: KRAS-NSCLC association score = 0.8325 (queried 2026-02-17)"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "id": "chain27_step2",
+  "category": "ChainTask",
+  "question": "Subsequent trials tested combination approaches in BRAF V600E melanoma:\n\n| Trial | Treatment | N | Median PFS | Median OS | HR (OS) |\n|---|---|---|---|---|---|\n| BRIM-3 | Vemurafenib mono | 675 | 5.3 mo | 13.6 mo | ref |\n| coBRIM | Vemurafenib + cobimetinib | 495 | 12.3 mo | 22.5 mo | 0.70 |\n| COMBI-d | Dabrafenib + trametinib | 423 | 11.0 mo | 25.1 mo | 0.71 |\n| KEYNOTE-022 | Dabrafenib + trametinib + pembrolizumab | 120 | 16.9 mo | 32.7 mo | ~0.56 |\n\n(a) What is the pattern in PFS and OS across generations of therapy? (b) Is there diminishing returns with each additional agent? (c) How would you estimate the relative contribution of each drug component?",
+  "ideal": "**(a) Progressive improvement with each generation:**\n- Monotherapy: PFS 5.3 mo, OS 13.6 mo\n- BRAF+MEK: PFS 11-12 mo, OS 22-25 mo (PFS ~2.2×, OS ~1.7×)\n- BRAF+MEK+PD-1: PFS 16.9 mo, OS 32.7 mo (PFS ~1.4× over doublet, OS ~1.4×)\n\n**(b) Diminishing marginal returns:** Each additional agent provides less absolute PFS gain:\n- Adding MEK to BRAF: +6.3 months PFS (massive improvement)\n- Adding PD-1 to BRAF+MEK: +5.3 months PFS (substantial but smaller)\nThe OS gains are more proportional because immunotherapy provides long-term survival \"tails\" (patients who become long-term survivors, visible only in OS data). The PFS benefit may understate the immunotherapy contribution because some patients develop durable immune responses that aren't captured by RECIST-based PFS.\n\n**(c) Relative contribution estimation:**\nThis requires caution because trials have different populations and timeframes. However, using a framework:\n- BRAF inhibitor alone: blocks primary driver → dramatic initial response but short duration\n- Adding MEK inhibitor: blocks the most common resistance escape (MAPK reactivation) → doubles PFS\n- Adding anti-PD-1: adds an entirely orthogonal mechanism (immune-mediated tumor killing) that can produce durable responses independent of targeted therapy resistance\n\nA formal approach: Construct a network meta-analysis (NMA) using the BRAF-mono arm as common comparator. Estimate indirect comparison of doublet vs. triplet adjusting for cross-trial differences. The \"components analysis\" approach (factorial trials like KEYNOTE-022 which randomized to doublet±pembrolizumab) directly estimates the pembrolizumab contribution: OS HR for adding pembrolizumab ≈ 0.56/0.71 ≈ 0.79 (roughly 21% further mortality reduction from immunotherapy addition).\n\n**Key insight:** Targeted therapy and immunotherapy address DIFFERENT failure modes. Targeted therapy extends the time before resistant clones dominate. Immunotherapy provides a separate mechanism that can eliminate resistant clones if the immune system recognizes them. The optimal strategy likely involves all three simultaneously, not sequentially.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "evidence_synthesis",
+    "chain_id": "chain27",
+    "topic": "BRAF V600E inhibition in melanoma: lessons from vemurafenib resistance",
+    "step": 2,
+    "step_role": "Meta-analytic reasoning",
+    "depends_on": "chain27_step1",
+    "what_cascades": "Wrong component attribution → wrong trial design."
+  }
+}

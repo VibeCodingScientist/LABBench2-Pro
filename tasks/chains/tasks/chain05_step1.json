@@ -1,15 +1,17 @@
 {
   "id": "chain05_step1",
   "category": "ChainTask",
-  "question": "[FILL: Present a clinical observation/phenotype.\nExample: 'A family presents with autosomal recessive early-onset Parkinson disease. Exome sequencing reveals a homozygous missense variant (p.Gly309Asp) in the PINK1 gene. What is the normal function of PINK1, and how might this variant cause disease?']",
-  "ideal": "[FILL: Gene function + pathogenic mechanism.\nExample: 'PINK1 is a mitochondrial kinase that phosphorylates ubiquitin and Parkin to initiate mitophagy of damaged mitochondria. G309D is in the kinase domain and likely disrupts ATP binding or substrate recognition, leading to accumulation of dysfunctional mitochondria, increased ROS, and selective loss of dopaminergic neurons.']",
+  "question": "A consanguineous family presents with autosomal recessive early-onset Parkinsonism (onset age 28–32 in two siblings). Whole-exome sequencing reveals both affected siblings are homozygous for PINK1 c.926G>A (p.Gly309Asp). ClinVar lists 87 pathogenic PINK1 variants associated with young adult-onset Parkinsonism (Open Targets association score: 0.838). UniProt (Q9BXM7) annotates PINK1 as a serine/threonine kinase with the kinase domain spanning residues 156–511, active site at Asp362, and ATP-binding residues at 162–170 and 186. What is the normal function of PINK1 in mitochondrial quality control, and how would the Gly309Asp mutation within the kinase domain be expected to cause disease?",
+  "ideal": "PINK1 is a mitochondrial-targeted serine/threonine kinase that acts as a sensor of mitochondrial damage. Under normal conditions, PINK1 is imported into healthy mitochondria and rapidly degraded by PARL protease. When mitochondrial membrane potential collapses (ΔΨm loss), PINK1 import stalls, causing it to accumulate on the outer mitochondrial membrane (OMM). There, PINK1 autophosphorylates and then phosphorylates both ubiquitin (at Ser65) and the E3 ubiquitin ligase Parkin (at Ser65 of its Ubl domain), activating Parkin's ubiquitin ligase activity. Activated Parkin ubiquitinates OMM proteins (MFN1/2, VDAC, Miro), recruiting autophagy receptors (NDP52, OPTN) for mitophagy — the selective degradation of damaged mitochondria.\n\n**Gly309Asp impact:** Gly309 is in the activation loop of the kinase domain (within the 156–511 kinase domain, near the DFG motif critical for kinase activation). Glycine's flexibility allows the activation loop to adopt the conformations needed for catalysis. Aspartate at this position introduces: (1) a bulky, charged side chain causing steric clash that rigidifies the activation loop, (2) disruption of the DFG motif positioning needed for Mg²⁺/ATP coordination, and (3) impaired autophosphorylation and substrate phosphorylation. Loss of PINK1 kinase activity → failure to activate Parkin → accumulation of damaged mitochondria → chronic oxidative stress → selective death of dopaminergic neurons in the substantia nigra (which have high metabolic demand and low antioxidant capacity).",
   "verification": "llm-judge",
   "source": "pro-chain",
   "meta": {
     "chain": "genetics_to_therapy",
+    "chain_id": "chain05",
+    "topic": "PINK1 mutation in early-onset Parkinsonism",
     "step": 1,
-    "step_role": "Identify gene function and disease mechanism from genetic finding",
-    "depends_on": "nothing",
-    "what_cascades": "Wrong pathway → wrong therapeutic targets downstream"
+    "step_role": "Gene function and disease mechanism",
+    "depends_on": "nothing — this is the seed question",
+    "what_cascades": "Wrong pathway → wrong structural analysis → wrong therapeutic targets."
   }
 }

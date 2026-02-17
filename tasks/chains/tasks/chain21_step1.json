@@ -1,0 +1,18 @@
+{
+  "id": "chain21_step1",
+  "category": "ChainTask",
+  "question": "Dravet syndrome is a severe epileptic encephalopathy caused by heterozygous loss-of-function mutations in SCN1A, encoding the Nav1.1 voltage-gated sodium channel. The cryo-EM structure of Nav1.1 with beta4 subunit (PDB: 7DTD, resolution 3.3 Å) shows the channel architecture. UniProt P35498 lists SCN1A as 2,009 amino acids with an IQ domain (residues 1915-1944). ClinVar reports 2,858 pathogenic SCN1A variants out of 5,158 total. Why does LOSS of function of a sodium channel cause GAIN of neuronal excitability (seizures)? This seems paradoxical — explain the cell-type-specific mechanism.",
+  "ideal": "**This is one of the most important paradoxes in epilepsy genetics.** The resolution lies in cell-type-specific expression:\n\nNav1.1 (SCN1A) is **preferentially expressed in GABAergic inhibitory interneurons**, particularly parvalbumin-positive (PV+) fast-spiking interneurons in the cortex and hippocampus. These interneurons fire at very high frequencies (up to 200-300 Hz) and require robust sodium currents for sustained rapid firing. They provide critical feedforward and feedback inhibition to excitatory pyramidal neurons, maintaining the excitation-inhibition (E/I) balance.\n\n**Loss-of-function mechanism in Dravet:**\n1. SCN1A haploinsufficiency (50% reduction in Nav1.1) reduces sodium current density in PV+ interneurons\n2. Interneurons cannot sustain high-frequency firing → reduced GABA release\n3. Pyramidal neurons, which primarily use Nav1.2 and Nav1.6 (both intact), maintain normal excitability\n4. The E/I balance shifts toward excitation → seizures, cognitive impairment\n\n**Why this explains the clinical phenotype:** Onset is typically at 6-12 months (when Nav1.1 replaces Nav1.3 as the dominant interneuron sodium channel during development). Fever-triggered seizures occur because temperature-dependent channel kinetics are more disrupted in haploinsufficient interneurons. Status epilepticus risk is high because once interneuron firing fails, there is no brake on excitatory network activity.\n\n**Critical therapeutic implication:** Traditional sodium channel blockers (carbamazepine, phenytoin) — which are first-line for many epilepsies — are **CONTRAINDICATED** in Dravet because they further reduce the already-compromised Nav1.1 function, worsening seizures. Treatment must avoid sodium channel blockade and instead enhance GABAergic function or reduce excitation through other mechanisms.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "genetics_to_therapy",
+    "chain_id": "chain21",
+    "topic": "SCN1A loss-of-function in Dravet syndrome",
+    "step": 1,
+    "step_role": "Gene function and disease mechanism",
+    "depends_on": "nothing — this is the seed question",
+    "what_cascades": "Wrong cell-type mechanism → wrong drug selection → patient harm.",
+    "data_provenance": "- PDB 7DTD: Queried 2026-02-17, resolution 3.3 Å, released 2021-04-07, cryo-EM. Title: \"Voltage-gated sodium channel Nav1.1 and beta4\"\n- UniProt P35498 (SCN1A): 2,009 aa, IQ domain (1915-1944). Queried 2026-02-17.\n- ClinVar SCN1A: 2,858 pathogenic variants, 5,158 total (queried 2026-02-17 15:55 UTC)\n- Clinical trial NCT06598449: Fenfluramine in children with Dravet, Phase IV, RECRUITING (queried 2026-02-17)"
+  }
+}

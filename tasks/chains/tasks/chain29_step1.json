@@ -1,0 +1,17 @@
+{
+  "id": "chain29_step1",
+  "category": "ChainTask",
+  "question": "You have single-cell RNA-seq data (10x Chromium, 3' gene expression) from tumor biopsies of 8 melanoma patients: 4 responders and 4 non-responders to anti-PD-1 therapy. After quality control and filtering (removing doublets, low-quality cells, dead cells), you have 42,000 cells with 2,000 median genes per cell. You want to identify CD8+ T cell states that are enriched in responders vs. non-responders. What is the appropriate computational and statistical pipeline? Why is differential expression between responders and non-responders at the single-cell level statistically problematic?",
+  "ideal": "**Pipeline:**\n1. **Preprocessing:** Scanpy or Seurat. Normalize (scran or SCTransform), select 2,000 HVGs, PCA (50 components), batch correction (Harmony or scVI) across patients.\n2. **Clustering:** Build KNN graph → Leiden clustering → annotate clusters using known markers (CD8+ T cells: CD8A, CD8B, GZMB; exhausted: PDCD1, LAG3, HAVCR2, TOX; memory: IL7R, TCF7; effector: PRF1, GZMA).\n3. **Sub-clustering CD8+ T cells:** Extract CD8+ cells, re-normalize, re-cluster to identify fine-grained states (naive, effector, memory, exhausted, progenitor-exhausted, terminally exhausted).\n4. **Differential abundance testing:** For each CD8+ sub-cluster, compare the PROPORTION of that cluster between responders and non-responders.\n\n**Why single-cell DE between conditions is problematic:**\nThe fundamental issue is **pseudoreplication.** Each patient contributes thousands of cells, but cells from the same patient are NOT independent observations — they share genetic background, tumor microenvironment, treatment timing, and technical batch effects. If you run a Wilcoxon test comparing 20,000 CD8+ cells from responders vs. 18,000 from non-responders, the effective sample size is n=4 vs. n=4 (patients), not 20K vs. 18K. The inflated sample size produces absurdly small p-values for biologically trivial differences.\n\n**Correct approaches:**\n1. **Pseudobulk DE:** Aggregate expression per patient per cluster (sum or mean), then run DESeq2/edgeR on the pseudobulk matrix with n=4 vs. n=4. This correctly uses patients as the unit of replication.\n2. **Mixed-effects models:** MAST (Model-based Analysis of Single-cell Transcriptomics) with patient as a random effect, condition as fixed effect. This accounts for within-patient correlation.\n3. **Differential abundance:** Use Milo (milopy) or DA-seq to test whether neighborhoods in the UMAP are enriched in responders. These use patient-level replication for statistical testing.\n4. **For abundance:** Use a beta-binomial regression or Dirichlet-multinomial model with patient-level proportions.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "stats_pipeline",
+    "chain_id": "chain29",
+    "topic": "Single-cell RNA-seq analysis of tumor-infiltrating lymphocytes in melanoma",
+    "step": 1,
+    "step_role": "Choose statistical framework",
+    "depends_on": "nothing — this is the seed question",
+    "what_cascades": "Pseudoreplication → false discoveries → wrong biomarker → failed validation."
+  }
+}

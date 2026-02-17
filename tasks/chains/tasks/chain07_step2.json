@@ -1,15 +1,17 @@
 {
   "id": "chain07_step2",
   "category": "ChainTask",
-  "question": "[FILL: Ask the model to design experiments to discriminate between its hypotheses.\nExample: 'You proposed several explanations for the ZEB1-KO migration paradox. Design ONE experiment that would definitively distinguish between the ZEB2-compensation hypothesis and the collective-vs-single-cell migration hypothesis. Specify the assay, controls, and expected results for each scenario.']",
-  "ideal": "[FILL: Discriminating experiment.\nExample: 'Transwell/Boyden chamber invasion assay through Matrigel (3D invasion, not 2D sheet migration). If ZEB2 compensation: ZEB1-KO cells should ALSO show increased invasion (ZEB2 drives both migration and invasion). If collective migration: ZEB1-KO cells should show DECREASED invasion (they lost mesenchymal phenotype, gain sheet migration but lose invasive capacity). Controls: WT cells, ZEB1-KO, ZEB1/ZEB2 double KO (tests compensation directly). Western blot for ZEB2, E-cadherin, vimentin to confirm EMT status.']",
+  "question": "Your top two hypotheses are: (H1) collective migration — ZEB1-KO cells migrate faster as a sheet but are less invasive individually, and (H2) ZEB2 compensation — ZEB2 upregulation drives a hybrid EMT state with enhanced motility. Design ONE experiment that cleanly distinguishes H1 from H2. Specify: assay, cell lines/conditions, controls, readouts, and the expected result pattern for each hypothesis.",
+  "ideal": "**Experiment: 3D Matrigel Transwell invasion assay with ZEB2 perturbation**\n\n**Cell lines/conditions (all in parallel):**\n1. A549 WT (parental)\n2. A549 ZEB1-KO\n3. A549 ZEB1/ZEB2 double-KO\n4. A549 ZEB1-KO + siZEB2 (transient, to confirm genetic KO result)\n\n**Assay:** 8 µm pore Transwell inserts coated with 1 mg/mL Matrigel. Plate 5×10⁴ cells in serum-free media in upper chamber, 10% FBS in lower chamber as chemoattractant. 24h incubation. Fix, stain (crystal violet), count invaded cells per field (10 fields). n=4 biological replicates.\n\n**Additional readouts:** (a) Western blot for ZEB2, E-cadherin, vimentin, N-cadherin in all conditions. (b) Parallel wound-healing assay on same cells for direct comparison.\n\n**Expected results if H1 (collective migration) is correct:**\n- Wound healing: ZEB1-KO > WT (as observed). Double-KO similar or even faster (more epithelial).\n- Matrigel invasion: ZEB1-KO **<** WT (reduced invasion despite faster wound closure). Double-KO even lower.\n- Markers: ZEB1-KO shows E-cadherin UP, vimentin DOWN. ZEB2 levels unchanged or modest increase.\n\n**Expected results if H2 (ZEB2 compensation) is correct:**\n- Wound healing: ZEB1-KO > WT (as observed). Double-KO **<** WT (reverts phenotype).\n- Matrigel invasion: ZEB1-KO **≥** WT (maintained or increased). Double-KO << WT (collapses).\n- Markers: ZEB1-KO shows ZEB2 strongly UP (>3-fold), partial E-cadherin restoration, vimentin maintained.\n\n**Key discriminator:** The Matrigel invasion result for ZEB1-KO is decisive. H1 predicts invasion goes DOWN (migration ≠ invasion). H2 predicts invasion stays UP or increases (ZEB2 drives both).",
   "verification": "llm-judge",
   "source": "pro-chain",
   "meta": {
     "chain": "paradox_resolution",
+    "chain_id": "chain07",
+    "topic": "CRISPR KO of ZEB1 paradoxically increases migration",
     "step": 2,
-    "step_role": "Design discriminating experiment between competing hypotheses",
-    "depends_on": "Must design experiment that distinguishes the specific hypotheses from step 1",
-    "what_cascades": "Bad experimental design → can't resolve the paradox"
+    "step_role": "Design discriminating experiment",
+    "depends_on": "chain07_step1",
+    "what_cascades": "Bad experiment → can't resolve paradox."
   }
 }

@@ -1,0 +1,17 @@
+{
+  "id": "chain12_step4",
+  "category": "ChainTask",
+  "question": "Based on your analysis — JAK2 V617F drives MPN through constitutive JH1 activation via JH2 interface disruption, ruxolitinib inhibits WT and mutant JAK2 equally (causing anemia), and allele burden trajectory may predict response — propose 3 approaches to develop a mutation-selective JAK2 V617F inhibitor that spares wild-type JAK2 and thus preserves normal erythropoiesis.",
+  "ideal": "(1) **Target the JH2-JH1 interface directly:** Design compounds that stabilize the autoinhibitory JH2-JH1 interaction in the WT conformation. V617F disrupts this interface, so molecules that bind and stabilize the WT interface would preferentially inhibit cells lacking functional autoinhibition (i.e., V617F-expressing cells would still escape, requiring careful design). Alternatively, target the unique V617F-disrupted interface as a neo-pocket. (2) **Mutant-selective type II inhibitor:** Exploit the possibility that V617F alters the DFG motif equilibrium in JH1. If V617F shifts JH1 toward the DFG-out state more than WT (due to altered JH2 regulation), a type II inhibitor optimized for this specific DFG-out geometry could achieve selectivity. Analogous to how ponatinib selectively inhibits BCR-ABL T315I. Screen using differential scanning calorimetry (DSC) comparing compound binding to V617F vs. WT JH1-JH2 constructs. (3) **PROTAC degrader approach:** Design a PROTAC that binds JAK2 and recruits an E3 ligase (e.g., cereblon via thalidomide analog). If the PROTAC achieves preferential degradation of V617F JAK2 — exploiting different surface accessibility or stability of the mutant — it could selectively deplete the oncogenic protein. Even if binding affinity is similar, degradation kinetics may differ due to conformational differences affecting ubiquitination sites. This approach is being explored for several \"undruggable\" targets and would convert a pathway inhibitor into a mutation-specific one.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "paper_to_experiment",
+    "chain_id": "chain12",
+    "topic": "JAK2 V617F in myeloproliferative neoplasms",
+    "step": 4,
+    "step_role": "Hypothesis generation",
+    "depends_on": "chain12_step3",
+    "what_cascades": "Terminal step."
+  }
+}

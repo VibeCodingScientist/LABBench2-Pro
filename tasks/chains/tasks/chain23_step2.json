@@ -1,0 +1,17 @@
+{
+  "id": "chain23_step2",
+  "category": "ChainTask",
+  "question": "Compared to CMY-2 (the most common plasmid AmpC), this novel enzyme has three mutations near the active site: (1) G183D (in the Ω-loop), (2) N289S (near the R2 side-chain binding pocket), (3) T314A (in the KTG motif region, now KAG). MIC testing shows this isolate has: meropenem MIC = 16 µg/mL (resistant, breakpoint ≥4), ceftazidime MIC = 128 µg/mL (resistant), ceftazidime-avibactam MIC = 4 µg/mL (susceptible, breakpoint ≤8). Based on these mutations and the MIC profile, what is the likely extended-spectrum phenotype of this enzyme?",
+  "ideal": "**(1) G183D (Ω-loop):** The Ω-loop forms one wall of the active site and determines substrate specificity. Glycine-to-aspartate introduces a negative charge and larger side chain. In Class A β-lactamases, Ω-loop mutations are associated with **extended-spectrum activity** (e.g., ESBL phenotype). In AmpC, Ω-loop mutations can widen the active site cavity, accommodating the bulkier R1 side chains of carbapenems. **Prediction: This mutation likely contributes to the carbapenem-hydrolytic activity.**\n\n**(2) N289S (R2 pocket):** The R2 pocket accommodates the C3/C4 substituents of β-lactams. Asparagine-to-serine is a subtle change (both polar, serine is smaller). A smaller residue expands the R2 pocket, potentially improving accommodation of the 6α-1R-hydroxyethyl group of carbapenems (which causes steric clash in standard AmpC). **Prediction: Contributes to carbapenem hydrolysis.**\n\n**(3) T314A (KTG → KAG):** Threonine-to-alanine removes a hydroxyl that normally hydrogen-bonds with substrate. This may reduce catalytic efficiency against standard cephalosporins (consistent with the relatively normal ceftazidime MIC of 128 — high but not exceptionally elevated for an AmpC) while not affecting carbapenem hydrolysis.\n\n**Overall phenotype:** This is likely an **extended-spectrum AmpC (ESAC)** — an AmpC with acquired carbapenemase activity through active-site mutations, analogous to how TEM-1 evolved into TEM-type ESBLs. The susceptibility to ceftazidime-avibactam (MIC 4) is informative: avibactam is a diazabicyclooctane inhibitor that covalently inactivates both Class A and Class C β-lactamases. This confirms the enzyme is a serine β-lactamase (not a metallo-β-lactamase, which avibactam cannot inhibit). Treatment: ceftazidime-avibactam is appropriate for this isolate.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "sequence_to_function",
+    "chain_id": "chain23",
+    "topic": "Novel AmpC β-lactamase from carbapenem-resistant Enterobacteriaceae",
+    "step": 2,
+    "step_role": "Predict functional consequences of sequence differences",
+    "depends_on": "chain23_step1",
+    "what_cascades": "Wrong resistance mechanism → wrong antibiotic → treatment failure → patient death."
+  }
+}

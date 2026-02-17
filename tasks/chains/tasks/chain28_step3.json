@@ -1,0 +1,17 @@
+{
+  "id": "chain28_step3",
+  "category": "ChainTask",
+  "question": "Design a comprehensive characterization experiment for this novel CRISPR effector to determine: (a) its nuclease activity and substrate preference, (b) its PAM requirement, (c) its temperature optimum, and (d) whether it has potential as a genome editing tool. Include controls and key success criteria.",
+  "ideal": "**Phase 1 — Biochemical characterization (in vitro):**\n\n**Expression:** Codon-optimize for *E. coli*, clone into pET-based system with MBP-His₆ tag, express at 18°C (despite being a thermophilic protein, soluble expression in *E. coli* often requires low temperature). Purify: Ni-NTA → MBP cleavage (TEV protease) → ion exchange → SEC. Confirm monodisperse peak.\n\n**(a) Nuclease activity:**\n- Reconstitute RNP with in vitro transcribed crRNA (from the native CRISPR array, first 3 spacers)\n- Substrates: dsDNA plasmid, ssDNA, ssRNA, dsRNA (test all — some Cas12 variants have collateral ssDNA/RNA cleavage)\n- Conditions: Buffer with 5 mM MgCl₂, test at 37°C, 55°C, 65°C, 78°C (native), 85°C\n- Readout: Agarose gel for plasmid linearization (dsDNA nicking or cutting)\n- Controls: No crRNA (tests non-specific nuclease), catalytic dead (D576A) mutant, SpCas12a + matched crRNA\n- **Success:** Clean dsDNA linearization dependent on crRNA + correct spacer complementarity\n\n**(b) PAM determination — PAM depletion assay:**\n- Construct plasmid library with a fixed target sequence (matching spacer 1) flanked by 7N randomized PAM (4⁷ = 16,384 variants)\n- Incubate library with purified RNP at 65°C for 1h\n- Run cut plasmids on gel, extract uncut band (PAMs that were NOT recognized)\n- Deep sequence the uncut fraction\n- PAMs enriched in uncut = NOT recognized; PAMs depleted from uncut = recognized\n- **Expected:** A 2-4 nt PAM with GC-rich preference\n\n**(c) Temperature optimum:**\n- Activity assay (plasmid linearization) across 25-95°C range (5°C increments)\n- Quantify by gel densitometry → plot activity vs. temperature\n- Measure thermal stability by DSF (Tm)\n- **Expected:** Activity optimum 65-80°C, Tm >85°C. >50% activity retained at 70°C.\n\n**(d) Genome editing potential:**\n- Humanize: Codon optimize for human cells, add 2× NLS (N and C terminal)\n- Test in HEK293T at 37°C: RNP delivery targeting AAVS1 safe harbor locus\n- Readout: T7E1 assay and amplicon NGS for indel frequency\n- Compare to SpCas12a targeting adjacent site\n- **Success criteria:** >10% indel frequency at 37°C would be remarkable for a thermophilic enzyme (most lose significant activity). If <5% at 37°C, test at 42°C (mild hyperthermia) or use the effector for in vitro diagnostics instead.\n- **Key experiment:** If the zinc finger domain contributes to specificity, compare on-target/off-target ratio (GUIDE-seq or CIRCLE-seq) to SpCas12a. Predict: higher specificity (fewer off-targets) due to dual recognition (guide + zinc finger).",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "sequence_to_function",
+    "chain_id": "chain28",
+    "topic": "Identifying a novel CRISPR-Cas effector from metagenomic data",
+    "step": 3,
+    "step_role": "Design validation experiment",
+    "depends_on": "chain28_step2",
+    "what_cascades": "Terminal step."
+  }
+}

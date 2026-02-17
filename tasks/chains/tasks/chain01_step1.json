@@ -1,15 +1,17 @@
 {
   "id": "chain01_step1",
   "category": "ChainTask",
-  "question": "[FILL: Describe a specific paper finding about a protein-protein interaction.\nExample: 'A 2023 study in Cell found that protein X binds receptor Y with Kd = 2.3 nM, but only when zinc ions are present. What is the role of zinc in this interaction?']",
-  "ideal": "[FILL: The correct mechanistic answer.\nExample: 'Zinc acts as an allosteric cofactor that stabilizes the binding interface between X and Y by coordinating residues His142 and Cys205.']",
+  "question": "A 2021 study in *Nature* (LaRochelle et al.) found that the protein tyrosine phosphatase SHP2 (encoded by *PTPN11*; PDB: 2SHP) exists in an autoinhibited conformation where the N-SH2 domain occludes the catalytic PTP domain. Binding of bisphosphorylated peptides from receptors like PDGFR releases autoinhibition, increasing catalytic activity >50-fold. What is the structural mechanism of SHP2 autoinhibition, and why does the gain-of-function mutation E76K (found in juvenile myelomonocytic leukemia) bypass this regulation?",
+  "ideal": "In the autoinhibited state, the D'E loop of the N-SH2 domain inserts into the PTP active site, blocking substrate access. The E76 residue forms a salt bridge with K366 in the PTP domain that stabilizes this closed conformation. The E76K mutation eliminates this salt bridge and introduces charge repulsion (both now lysine), destabilizing the autoinhibited state and shifting the equilibrium toward the open, constitutively active form. This results in hyperactive RAS-MAPK signaling independent of upstream receptor activation.",
   "verification": "llm-judge",
   "source": "pro-chain",
   "meta": {
     "chain": "paper_to_experiment",
+    "chain_id": "chain01",
+    "topic": "SHP2 allosteric activation in RASopathy signaling",
     "step": 1,
     "step_role": "Extract key finding from literature",
     "depends_on": "nothing — this is the seed question",
-    "what_cascades": "If the model misunderstands the mechanism, all downstream steps will use wrong reasoning"
+    "what_cascades": "If the model misunderstands the autoinhibition mechanism, it cannot interpret dose-response data or design experiments correctly."
   }
 }

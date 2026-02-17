@@ -1,15 +1,18 @@
 {
   "id": "chain05_step3",
   "category": "ChainTask",
-  "question": "[FILL: Ask for therapeutic strategy based on the mechanism.\nExample: 'Given that PINK1 G309D likely has reduced kinase activity and impaired mitophagy, propose two distinct therapeutic strategies: one targeting the PINK1-Parkin pathway directly, and one targeting downstream consequences. For each, name a specific drug or compound class and explain the rationale.']",
-  "ideal": "[FILL: Two therapeutic strategies.\nExample: '1) Direct pathway rescue: Kinetin triphosphate (KTP), a neo-substrate that can be phosphorylated by even partially active PINK1, activating Parkin-dependent mitophagy. Rationale: bypasses the reduced kinase activity by providing an easier substrate. 2) Downstream: Mitochondria-targeted antioxidant (MitoQ or SS-31/elamipretide) to reduce ROS from accumulated damaged mitochondria. Rationale: addresses the proximate cause of neuronal death while the underlying mitophagy defect persists.']",
+  "question": "Given that PINK1-G309D causes loss of kinase activity, failure to phosphorylate ubiquitin/Parkin, and impaired mitophagy, propose two therapeutic strategies: one targeting the PINK1-Parkin pathway directly (upstream), and one targeting downstream consequences of mitophagy failure. For each, name specific compounds (existing or in development), explain their mechanism, and identify a key limitation.",
+  "ideal": "**Strategy 1 — Upstream: Bypass PINK1 with kinetin triphosphate (KTP)**\nKTP is a neo-substrate that can be utilized by partially active PINK1 mutants with reduced catalytic efficiency. It is the triphosphate form of kinetin (N6-furfuryladenosine), a cytokinin that is converted intracellularly to KTP by adenosine kinase pathway. KTP has been shown to enhance residual PINK1 activity and restore Parkin activation in cells expressing hypomorphic PINK1 mutants. Kinetin itself is orally bioavailable and crosses the BBB.\n**Key limitation:** Requires residual PINK1 kinase activity — if G309D is truly catalytically dead (rather than reduced), KTP cannot help. Must empirically test whether G309D retains any measurable activity that KTP can amplify. If not, this strategy fails for this specific mutation.\n\n**Strategy 2 — Downstream: Mitochondria-targeted antioxidant MitoQ or elamipretide (SS-31/Bendavia)**\nMitoQ (mitoquinone) is a ubiquinone derivative conjugated to a triphenylphosphonium cation that accumulates ~500-fold in mitochondria driven by membrane potential. It scavenges reactive oxygen species at the inner mitochondrial membrane, directly addressing the oxidative stress caused by accumulated damaged mitochondria. SS-31 (elamipretide) targets cardiolipin in the inner mitochondrial membrane, stabilizing electron transport chain complexes and reducing electron leak/ROS production. SS-31 has reached Phase III trials for mitochondrial myopathy (NCT03323749).\n**Key limitation:** These address symptoms (ROS damage) not cause (mitophagy failure). Damaged mitochondria still accumulate, with potential for mitochondrial DNA mutations, impaired calcium buffering, and bioenergetic failure. Long-term efficacy uncertain — may slow progression but not halt it. Also does not address non-oxidative consequences of mitophagy failure (e.g., inflammation from mtDNA release activating cGAS-STING).",
   "verification": "llm-judge",
   "source": "pro-chain",
   "meta": {
     "chain": "genetics_to_therapy",
+    "chain_id": "chain05",
+    "topic": "PINK1 mutation in early-onset Parkinsonism",
     "step": 3,
-    "step_role": "Propose therapeutic strategies grounded in the mechanism from steps 1-2",
-    "depends_on": "Must target the specific pathway disruption identified in steps 1-2",
-    "what_cascades": "Terminal step"
+    "step_role": "Therapeutic strategy",
+    "depends_on": "chain05_step2",
+    "what_cascades": "Terminal step.",
+    "data_provenance": "| Data Type | Identifier | Details | Query Date |\n|-----------|-----------|---------|------------|\n| UniProt | [Q9BXM7](https://www.uniprot.org/uniprotkb/Q9BXM7) | PINK1, kinase domain 156–511, active site Asp362, ATP-binding 162–170/186 | 2026-02-17 |\n| ClinVar | PINK1 | 87 pathogenic variants, young adult-onset Parkinsonism | 2026-02-17 |\n| Open Targets | PINK1-Parkinsonism | Association score: 0.838 | 2026-02-17 |\n| Variant | c.926G>A (p.Gly309Asp) | Homozygous, in activation loop of kinase domain | 2026-02-17 |\n| Compound | Kinetin (KTP) | Neo-substrate enhancing residual PINK1 activity | 2026-02-17 |\n| Compound | MitoQ | Mitochondria-targeted antioxidant | 2026-02-17 |\n| Clinical Trial | [NCT03323749](https://clinicaltrials.gov/ct2/show/NCT03323749) | SS-31 (elamipretide) Phase III, mitochondrial myopathy | 2026-02-17 |"
   }
 }

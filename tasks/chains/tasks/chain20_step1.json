@@ -1,0 +1,18 @@
+{
+  "id": "chain20_step1",
+  "category": "ChainTask",
+  "question": "Two pivotal trials established FLT3 inhibitors in AML treatment:\n\n**RATIFY (New England Journal of Medicine, 2017):** Midostaurin + standard chemotherapy (7+3) vs. placebo + chemo in newly diagnosed FLT3-mutated AML. n=717. Median OS: 74.7 months (midostaurin) vs. 25.6 months (placebo). HR=0.78, p=0.009.\n\n**ADMIRAL (New England Journal of Medicine, 2019):** Gilteritinib monotherapy vs. salvage chemotherapy in relapsed/refractory FLT3-mutated AML. n=371. Median OS: 9.3 months (gilteritinib) vs. 5.6 months (chemo). HR=0.64, p<0.001.\n\nChEMBL data shows gilteritinib IC50 = 0.41 nM against FLT3 (CHEMBL3706339) vs. midostaurin IC50 ~10-500 nM (a multi-kinase inhibitor). FLT3 is the third-ranked target for AML in Open Targets (score 0.8219). ClinVar lists 50 pathogenic FLT3 variants. PDB: 6JQR shows FLT3 bound to gilteritinib (resolution 2.2 Å, released 2019). Can you conclude that gilteritinib is the superior FLT3 inhibitor based on these trials?",
+  "ideal": "**No — these trials answer different clinical questions and cannot be directly compared:**\n\n1. **Different disease settings:** RATIFY tested front-line combination (midostaurin + chemo); ADMIRAL tested single-agent gilteritinib in relapsed/refractory disease. Comparing OS across disease settings is like comparing survival in localized vs. metastatic cancer — the denominators are fundamentally different.\n\n2. **Different comparators:** RATIFY's control arm included standard chemotherapy (which alone has ~40% long-term survival). ADMIRAL's control arm was salvage chemotherapy (historically <10% long-term survival). The absolute survival benefit is much smaller in RATIFY (improvement over an already effective backbone) but impacts a much larger proportion of patients.\n\n3. **Different FLT3 mutation types:** Both trials included FLT3-ITD and TKD mutations, but the relative proportions and prognostic impact differ. FLT3-ITD with high allelic ratio has particularly poor prognosis — the distribution of this subtype across trials affects outcomes.\n\n4. **Gilteritinib IS more FLT3-selective:** IC50 = 0.41 nM (FLT3) vs. midostaurin which is a multi-kinase inhibitor with modest FLT3 potency. However, midostaurin's multi-kinase activity (PKC, VEGFR, KIT, PDGFR) may contribute to its efficacy through non-FLT3 mechanisms, especially in combination with chemotherapy.\n\n5. **The correct comparison:** To determine if gilteritinib is superior to midostaurin in the front-line setting, you need the **ongoing QuANTUM-First or HOVON 156 trials** testing gilteritinib + chemo vs. midostaurin + chemo head-to-head.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "evidence_synthesis",
+    "chain_id": "chain20",
+    "topic": "FLT3 inhibitors in AML: gilteritinib vs. midostaurin",
+    "step": 1,
+    "step_role": "Compare conflicting papers",
+    "depends_on": "nothing — this is the seed question",
+    "what_cascades": "Inappropriate cross-trial comparison → wrong treatment algorithm.",
+    "data_provenance": "- PDB 6JQR: Queried 2026-02-17, resolution 2.2 Å, released 2019-11-20. Title: \"Crystal structure of FLT3 in complex with gilteritinib\"\n- ChEMBL CHEMBL3301622 (gilteritinib): FLT3 IC50 = 0.41 nM (CHEMBL3706339), AXL IC50 = 1.0 nM (CHEMBL3811320), ALK IC50 = 1.5 nM (CHEMBL3706338), max_phase = 4. Queried 2026-02-17.\n- UniProt P36888 (FLT3): 993 aa. Domains: Ig-like C2-type (253-343), Protein kinase (610-943), Active site at 811. Queried 2026-02-17.\n- ClinVar FLT3: 50 pathogenic variants (queried 2026-02-17)\n- Open Targets AML: CEBPA 0.8444, DNMT3A 0.8296, FLT3 0.8219 (queried 2026-02-17)"
+  }
+}

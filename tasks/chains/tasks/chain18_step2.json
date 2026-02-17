@@ -1,0 +1,18 @@
+{
+  "id": "chain18_step2",
+  "category": "ChainTask",
+  "question": "Nirmatrelvir uses a nitrile warhead to form a reversible covalent bond with Cys145. Compare this to sotorasib's irreversible covalent bond with KRAS Cys12 (from Chain 11). Why was reversible covalent binding chosen for nirmatrelvir instead of irreversible? What are the pharmacological consequences of this design choice?",
+  "ideal": "**Reversible vs. irreversible covalent: different targets, different strategies:**\n\n**(1) Target biology dictates strategy:**\n- **KRAS G12C (sotorasib, irreversible):** KRAS is a human protein mutated in cancer. The Cys12 is unique to the mutant — irreversible binding provides maximum target engagement and selectivity (WT KRAS has Gly12, no cysteine). Irreversible binding is acceptable because: (a) only tumor cells express the target, (b) sustained target engagement is desired (KRAS is long-lived, t½ ~24h), (c) no off-target cysteine reactivity concern at therapeutic doses.\n- **Mpro (nirmatrelvir, reversible):** Mpro is a viral protease in an acute infection. Cysteine proteases with active-site cysteines are common in human biology (cathepsins, caspases, deubiquitinases). An irreversible warhead risks cross-reactivity with human cysteine proteases, causing toxicity. Reversible binding provides: (a) selectivity via binding kinetics — the nitrile forms a stable but dissociable thioimidate, so selectivity comes from prolonged residence time in the specific Mpro pocket rather than permanent modification, (b) safety margin — if the compound dissociates from an off-target, no permanent damage occurs.\n\n**(2) Pharmacological consequences:**\n- **Nirmatrelvir requires sustained plasma concentrations** above the IC50 because the drug-target complex is in dynamic equilibrium. This is why Paxlovid co-administers ritonavir (CYP3A4 inhibitor) to boost nirmatrelvir levels. Without boosting, nirmatrelvir's half-life (~5h) is insufficient for sustained target coverage.\n- **Sotorasib's pharmacology is dose-schedule flexible** — even if plasma levels drop, the drug remains bound to its target. Twice-daily dosing was later shown to be equally effective as once-daily, consistent with covalent pharmacology.\n\n**(3) Resistance implications:**\n- Reversible inhibitors face easier resistance development — mutations that reduce binding affinity directly reduce efficacy. For nirmatrelvir, mutations at E166V and L167F in Mpro have been reported to reduce binding.\n- Irreversible inhibitors require mutations that eliminate the covalent residue (Cys→Ser/Ala), which may compromise protein function if the cysteine is essential.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "structure_to_drug",
+    "chain_id": "chain18",
+    "topic": "SARS-CoV-2 main protease inhibition by nirmatrelvir",
+    "step": 2,
+    "step_role": "Explain binding mechanism",
+    "depends_on": "chain18_step1",
+    "what_cascades": "Wrong understanding of covalent pharmacology → wrong design strategy.",
+    "data_provenance": "- ChEMBL CHEMBL4535757 (sotorasib): IC50 = 68 nM KRAS G12C (CHEMBL4357259). ChEMBL CHEMBL4802135 (nirmatrelvir): IC50 = 0.79 nM Mpro (CHEMBL5112747). Queried 2026-02-17.\n- PDB 7SI9: resolution 2.0 Å, PDB 6OIM: resolution 1.65 Å. Both queried 2026-02-17."
+  }
+}

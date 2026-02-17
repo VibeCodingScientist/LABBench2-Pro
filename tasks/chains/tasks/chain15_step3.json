@@ -1,0 +1,17 @@
+{
+  "id": "chain15_step3",
+  "category": "ChainTask",
+  "question": "Next-generation CFTR modulators aim to achieve >80% of WT function for F508del patients. The current Trikafta achieves ~50%. What specific molecular targets within the CFTR folding/trafficking pathway could a fourth drug component address to close this gap? Propose two distinct strategies with mechanisms and measurable endpoints.",
+  "ideal": "**Strategy 1 — Enhance ER proteostasis to reduce F508del degradation:**\nThe remaining F508del-CFTR that isn't rescued by Trikafta is being degraded by the CHIP/Hsp70-mediated ER quality control pathway. Inhibiting CHIP (STUB1) E3 ligase activity or modulating Hsp70/Hsp90 chaperone interactions could increase the fraction of F508del-CFTR that escapes ER retention. Specifically, small-molecule inhibitors of the Hsp70-CHIP interaction would block ubiquitination of partially misfolded CFTR without globally disrupting protein homeostasis. **Endpoint:** Measure F508del-CFTR surface expression by cell-surface biotinylation in primary human bronchial epithelial cells (HBE) from F508del homozygous patients. Success: Trikafta + CHIP inhibitor achieves >70% of WT surface CFTR (vs. ~50% with Trikafta alone). Monitor unfolded protein response (UPR) markers to ensure no proteotoxic stress.\n\n**Strategy 2 — Stabilize rescued F508del-CFTR at the plasma membrane:**\nEven CFTR that reaches the surface with Trikafta has reduced stability and is endocytosed and degraded faster than WT (half-life ~4h vs. ~16h for WT). A \"stabilizer\" that enhances CFTR-NHERF1 PDZ interaction (the C-terminal PDZ-binding motif DTRL anchors CFTR to the apical membrane via NHERF1/EBP50 scaffold) or inhibits endocytic retrieval could extend surface residence time. **Endpoint:** Measure CFTR surface half-life by pulse-chase surface biotinylation. Success: half-life increased from ~4h to >10h. Functional confirmation: Ussing chamber short-circuit current (Isc) in HBE monolayers showing sustained chloride secretion over 24h (currently declines as rescued CFTR is internalized).",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "genetics_to_therapy",
+    "chain_id": "chain15",
+    "topic": "CFTR F508del in cystic fibrosis",
+    "step": 3,
+    "step_role": "Therapeutic strategy",
+    "depends_on": "chain15_step2",
+    "what_cascades": "Terminal step."
+  }
+}

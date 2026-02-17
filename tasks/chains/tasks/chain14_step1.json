@@ -1,0 +1,18 @@
+{
+  "id": "chain14_step1",
+  "category": "ChainTask",
+  "question": "The Clarity AD trial (Phase III, n=1,795) reported that lecanemab, an anti-amyloid-beta antibody, slowed cognitive decline by 27% compared to placebo on the CDR-SB score (Clinical Dementia Rating-Sum of Boxes) over 18 months in early Alzheimer's disease. The difference was: lecanemab CDR-SB change = +1.21; placebo = +1.66; difference = -0.45 points (p<0.001). Amyloid PET showed significant plaque reduction. However, CDR-SB ranges from 0-18, and the minimal clinically important difference (MCID) is debated (0.5-1.0 points). Cryo-EM structures of amyloid-beta fibrils exist (PDB structure 9CZI, 3.0 Å resolution, tau paired helical filaments in AD brains). ClinVar lists 131 pathogenic APP variants and 196 pathogenic PSEN1 variants. Is the 27% slowing clinically meaningful?",
+  "ideal": "**This requires nuanced evaluation — the statistical significance is clear but clinical meaningfulness is debatable:**\n\n**Arguments FOR clinical meaningfulness:**\n1. The 27% relative reduction is consistent and reproducible (similar to donanemab trial results), establishing the amyloid hypothesis has therapeutic validity.\n2. The effect appears to increase over time — the divergence between curves is widening at 18 months, suggesting longer treatment may yield larger absolute differences.\n3. Subgroup analyses show larger effects in ApoE4 carriers and earlier-stage patients.\n4. Biomarker confirmation: amyloid plaque reduction, p-tau reduction, and plasma biomarker changes provide mechanistic validation.\n\n**Arguments AGAINST clinical meaningfulness:**\n1. **Absolute difference of 0.45 CDR-SB points is below the commonly cited MCID of 0.5-1.0.** On an 18-point scale, 0.45 points may not be perceptible to patients or caregivers.\n2. **No functional milestone delayed:** The trial did not demonstrate delay in progression from MCI to dementia, ability to maintain ADLs, or delay of institutionalization.\n3. **Safety trade-off:** ARIA-E (amyloid-related imaging abnormalities, edema) occurred in 12.6% of lecanemab vs. 1.7% placebo. ARIA-H (hemorrhage) in 17.3% vs. 9.0%. Three deaths potentially linked to treatment (ARIA-related brain hemorrhage, including one on anticoagulants).\n4. **Cost-benefit:** At ~$26,500/year plus monitoring MRIs, the cost per QALY likely exceeds $100-200K for a 0.45-point CDR-SB difference.\n\n**Conclusion:** The evidence establishes proof-of-concept for anti-amyloid therapy but does not yet demonstrate clinically meaningful individual patient benefit. The 27% number is statistically robust but may be misleading — \"27% slower decline\" sounds dramatic while \"0.45 CDR-SB points on an 18-point scale\" sounds modest.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "critical_appraisal",
+    "chain_id": "chain14",
+    "topic": "Lecanemab efficacy in early Alzheimer's disease",
+    "step": 1,
+    "step_role": "Evaluate strength of evidence",
+    "depends_on": "nothing — this is the seed question",
+    "what_cascades": "Uncritical acceptance → wrong framework for interpreting combination trial data.",
+    "data_provenance": "- PDB 9CZI: Queried 2026-02-17, resolution 3.0 Å, released 2024-10-02, cryo-EM. Title: \"Paired helical tau filaments in dominantly inherited Alzheimer disease with cotton wool plaques\"\n- ClinVar APP: 131 pathogenic variants; PSEN1: 196 pathogenic variants (queried 2026-02-17 15:55 UTC)\n- Clinical trial NCT05999084: Lecanemab registry, RECRUITING (queried 2026-02-17)\n- Clinical trial NCT06602258: E2814 + lecanemab, Phase II, ACTIVE_NOT_RECRUITING (queried 2026-02-17)"
+  }
+}

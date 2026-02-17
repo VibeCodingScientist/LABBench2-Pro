@@ -1,0 +1,18 @@
+{
+  "id": "chain20_step3",
+  "category": "ChainTask",
+  "question": "Based on your synthesis — FLT3 inhibitors work best with intensive chemotherapy, modestly as monotherapy in R/R, and poorly with low-intensity backbones — a tumor board asks: A 72-year-old patient with newly diagnosed FLT3-ITD+ AML (allelic ratio 0.8, NPM1 co-mutation, no adverse cytogenetics) with ECOG PS 1, creatinine 1.4, ejection fraction 50%. Is this patient fit for intensive chemotherapy + FLT3 inhibitor, or should they receive a low-intensity regimen? What FLT3 inhibitor would you recommend and why?",
+  "ideal": "**Assessment: This patient is in the \"gray zone\" — potentially fit for intensive therapy with careful evaluation.**\n\n**Favorable factors:** ECOG 1, NPM1 co-mutation (favorable prognosis), no adverse cytogenetics. NPM1+/FLT3-ITD+ with allelic ratio <0.5 is favorable risk; allelic ratio 0.8 shifts to intermediate risk (ELN 2022). Age 72 alone does not preclude intensive therapy.\n\n**Concerning factors:** Age 72 increases treatment-related mortality (TRM) with 7+3 (~10-15% vs. ~5% in younger patients). Creatinine 1.4 suggests mild renal impairment (estimate GFR). EF 50% is borderline for anthracycline use (daunorubicin in 7+3).\n\n**Recommendation:**\n1. **Geriatric assessment** (gait speed, ADLs, Charlson comorbidity index) should guide fitness determination, not age alone.\n2. **If deemed fit:** 7+3 + **midostaurin** (RATIFY-based, FDA-approved front-line) or 7+3 + **quizartinib** (QuANTUM-First, recently approved, more FLT3-selective). Between these: **quizartinib** is preferred because (a) it has higher FLT3 selectivity, (b) it demonstrated improvement in both FLT3-ITD and high allelic ratio subgroups, (c) the survival benefit was clear even in older patients (60-75 subgroup analysis).\n3. **Consider dose-reduced 7+3** (\"5+2\") to mitigate anthracycline cardiac risk given EF 50%.\n4. **If deemed unfit by geriatric assessment:** Venetoclax + azacitidine (standard of care for unfit AML) + consider adding gilteritinib — although LACEWING was negative, venetoclax-based combinations have different synergy biology than azacitidine alone, and ongoing trials are exploring this.\n5. **Plan for maintenance FLT3 inhibitor** after remission — RATIFY showed most benefit was in the maintenance phase.\n6. **Molecular monitoring:** PCR-based FLT3-ITD and NPM1 MRD at cycles 2, 4, and post-consolidation. If MRD-negative for NPM1, excellent prognosis. If MRD-positive, consider allogeneic transplant if fit.\n\n**Do NOT give:** Gilteritinib monotherapy front-line — LACEWING's failure applies even more strongly to monotherapy; reserve gilteritinib for R/R setting where ADMIRAL demonstrated benefit.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "evidence_synthesis",
+    "chain_id": "chain20",
+    "topic": "FLT3 inhibitors in AML: gilteritinib vs. midostaurin",
+    "step": 3,
+    "step_role": "Clinical recommendation",
+    "depends_on": "chain20_step2",
+    "what_cascades": "Terminal step.",
+    "data_provenance": "- PDB 6JQR: FLT3 + gilteritinib, 2.2 Å, 2019. Queried 2026-02-17.\n- ChEMBL CHEMBL3301622 (gilteritinib): FLT3 IC50 = 0.41 nM (CHEMBL3706339). ChEMBL CHEMBL941 (imatinib for comparison): ABL1 IC50 = 40 nM. Queried 2026-02-17.\n- ChEMBL CHEMBL1171837 (ponatinib): ABL1 IC50 = 8.6 nM (CHEMBL1176860). Queried 2026-02-17.\n- ClinVar FLT3: 50 pathogenic; DNMT3A: 352 pathogenic; NPM1: 29 pathogenic (queried 2026-02-17)\n- Open Targets AML: FLT3 0.8219, DNMT3A 0.8296, CEBPA 0.8444 (queried 2026-02-17)\n- Clinical trial NCT05193448: Gilteritinib real-world, COMPLETED. NCT03839771: Enasidenib/Ivosidenib + chemo, Phase III, ACTIVE_NOT_RECRUITING (queried 2026-02-17)"
+  }
+}

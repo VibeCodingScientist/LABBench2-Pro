@@ -1,15 +1,17 @@
 {
   "id": "chain02_step1",
   "category": "ChainTask",
-  "question": "[FILL: Ask about a protein's structure from PDB data.\nExample: 'The crystal structure of human carbonic anhydrase II (PDB: 1CA2) contains a zinc ion in the active site. How many protein chains are in this structure, and what amino acids coordinate the catalytic zinc?']",
-  "ideal": "[FILL: Structural facts.\nExample: 'One chain. The catalytic zinc is coordinated by three histidine residues: His94, His96, and His119, plus a water/hydroxide molecule.']",
+  "question": "The crystal structure of the EGFR kinase domain bound to erlotinib (PDB: 1M17) was solved by X-ray diffraction. The EGFR kinase domain adopts an active conformation. How many protein chains are in the asymmetric unit? Identify the gatekeeper residue and the key residues forming the ATP-binding pocket that make direct contacts with erlotinib. Why is the gatekeeper residue clinically important?",
+  "ideal": "The asymmetric unit contains **one** protein chain (chain A). The gatekeeper residue is **Thr790** (T790). Erlotinib binds in the ATP-binding cleft, forming: (1) a hydrogen bond from the quinazoline N1 to the backbone NH of **Met793** in the hinge region, (2) the aniline ring extends toward the hydrophobic back pocket near **Leu788** and **Thr854**, and (3) the ethynyl-phenyl group points toward solvent. The gatekeeper T790 is clinically critical because the T790M mutation introduces a bulkier methionine side chain that sterically clashes with erlotinib and increases ATP affinity ~5-fold, conferring resistance in ~60% of EGFR-mutant NSCLC patients who progress on first-generation TKIs. (Source: Open Targets EGFR-NSCLC association score = 0.885.)",
   "verification": "llm-judge",
   "source": "pro-chain",
   "meta": {
     "chain": "structure_to_drug",
+    "chain_id": "chain02",
+    "topic": "EGFR kinase domain inhibition and resistance",
     "step": 1,
-    "step_role": "Identify structural features of a drug target",
-    "depends_on": "nothing",
-    "what_cascades": "Wrong active site residues → wrong binding analysis → wrong drug design"
+    "step_role": "Identify structural features",
+    "depends_on": "nothing — this is the seed question",
+    "what_cascades": "Wrong gatekeeper residue or wrong binding contacts → wrong resistance mechanism → wrong drug design."
   }
 }

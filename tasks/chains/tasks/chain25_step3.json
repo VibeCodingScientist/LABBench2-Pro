@@ -1,0 +1,17 @@
+{
+  "id": "chain25_step3",
+  "category": "ChainTask",
+  "question": "Results from your study (60 runners, 20 controls):\n\n| Marker | Pre-race | 1h post | 6h | 24h | 72h | Controls |\n|---|---|---|---|---|---|---|\n| Serum CC16 (ng/mL) | 4.2 | 18.6*** | 12.1** | 6.8* | 4.5 | 4.0 |\n| Cortisol (µg/dL) | 12 | 38*** | 22** | 14 | 12 | 11 |\n| Blood lymphocytes (×10³/µL) | 2.1 | 0.8*** | 1.6* | 2.3 | 2.2 | 2.0 |\n| Nasal neutrophils (%) | 5% | 12% | 35%*** | 42%*** | 18%* | 6% |\n| Nasal IL-33 (pg/mL) | 15 | 85*** | 62*** | 28* | 16 | 14 |\n| URTI symptoms (% runners) | 0% | — | — | 38% | 42% | 5% |\n\nCorrelation analysis: Symptom severity at 24-72h correlated with: CC16 at 1h (r=0.68, p<0.001), cortisol at 1h (r=0.22, p=0.09), lymphocyte nadir (r=-0.15, p=0.24).\n\nWhich hypothesis is supported? What should marathon runners do to prevent post-race \"infections\"?",
+  "ideal": "**H1 (epithelial damage) is strongly supported:**\n\n- Serum CC16 is dramatically elevated at 1h (4.4× baseline), confirming airway epithelial barrier disruption.\n- Nasal IL-33 (an epithelial alarmin released upon damage) peaks at 1h (5.7× baseline), driving the subsequent neutrophilic inflammation.\n- The neutrophilic infiltration peaks at 24h (35-42%), which is when symptoms peak — consistent with sterile inflammation kinetics (not viral infection, which takes 24-72h for replication).\n- **CC16 at 1h predicts symptoms at 24-72h (r=0.68)** — the strongest correlation by far. Cortisol does not significantly correlate (r=0.22, p=0.09), and lymphocyte nadir is irrelevant (r=-0.15, NS).\n- H2 (redistribution) does occur (lymphopenia at 1h, cortisol elevation) but does NOT drive symptoms. The immune redistribution is a real phenomenon but a bystander effect.\n\n**Practical recommendations for marathon runners:**\n1. **\"URTI\" symptoms are NOT infections** — antibiotics are useless and inappropriate. Anti-inflammatory approaches are warranted.\n2. **Pre-race:** Nasal saline gel or barrier spray (e.g., Pretz, Nasaleze) to protect epithelium from drying.\n3. **During race:** Maintain hydration to minimize airway drying. Consider wearing a light buff/neck gaiter in cold weather to warm and humidify inspired air.\n4. **Post-race:** Short course of intranasal corticosteroid (fluticasone) or nasal saline irrigation may reduce the sterile inflammatory response. NSAIDs (ibuprofen) may help if not contraindicated.\n5. **Reframe the \"open window\":** The post-marathon vulnerability is not immune suppression — it is airway epithelial injury. Training the airway (progressive exposure to high-ventilation exercise) may build epithelial resilience, similar to how calluses protect skin.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "paradox_resolution",
+    "chain_id": "chain25",
+    "topic": "Exercise-induced immunosuppression in marathon runners",
+    "step": 3,
+    "step_role": "Synthesize conclusion from results",
+    "depends_on": "chain25_step2",
+    "what_cascades": "Terminal step."
+  }
+}

@@ -1,15 +1,17 @@
 {
   "id": "chain05_step2",
   "category": "ChainTask",
-  "question": "[FILL: Ask about the structural consequence of the mutation.\nExample: 'The PINK1 kinase domain (residues 156-509) has a typical bilobal kinase fold. Glycine 309 is in the activation loop. What is the structural consequence of replacing this conserved glycine with aspartate? How would you experimentally confirm the structural impact?']",
-  "ideal": "[FILL: Structural analysis + experimental approach.\nExample: 'Gly309 provides backbone flexibility critical for activation loop dynamics. Asp introduces a bulky, charged side chain that likely 1) sterically clashes with adjacent residues, 2) disrupts the DFG motif conformation, and 3) prevents proper activation loop phosphorylation at Ser228. Confirmation: Express WT and G309D PINK1, compare by circular dichroism (secondary structure), thermal shift assay (stability), and in vitro kinase assay (activity against ubiquitin substrate).']",
+  "question": "Gly309 is located in the activation loop of the PINK1 kinase domain. The activation loop in kinases must undergo a conformational change from the \"DFG-out\" (inactive) to \"DFG-in\" (active) state for catalysis. What specific structural consequences would you predict for the G309D mutation? How would you experimentally confirm the structural and functional impact? Propose 3 complementary experiments with expected results for both WT and G309D PINK1.",
+  "ideal": "**Predicted structural consequences:**\n- G309D introduces steric clash in the activation loop, preventing the DFG-in conformation needed for ATP positioning and substrate access\n- The aspartate's negative charge may create electrostatic repulsion with nearby acidic residues (Asp362 at the active site), destabilizing the catalytic architecture\n- The mutation likely reduces thermal stability of the kinase domain by introducing strain in a conformational hinge region\n\n**Three experiments:**\n1. **Differential scanning fluorimetry (DSF/Thermal shift):** Express and purify PINK1 kinase domain (residues 156–511) WT and G309D from insect cells. Measure Tm in presence/absence of ATP analog (AMP-PNP). **Expected:** WT Tm ~48°C, +4°C with AMP-PNP (ligand stabilization). G309D Tm ~42°C (destabilized), minimal shift with AMP-PNP (cannot bind ATP properly).\n\n2. **In vitro kinase assay:** Measure phosphorylation of ubiquitin-Ser65 (the physiological substrate) using Phos-tag SDS-PAGE or anti-pSer65-Ub antibody. **Expected:** WT shows robust ubiquitin phosphorylation (Km_ATP ~50 µM); G309D shows <5% of WT activity, with dramatically increased Km_ATP (>500 µM) reflecting disrupted ATP binding.\n\n3. **Cellular mitophagy assay:** Express WT or G309D PINK1 in PINK1-KO HeLa cells, treat with CCCP (10 µM, 2h) to depolarize mitochondria. Measure Parkin recruitment (GFP-Parkin translocation to mitochondria by confocal) and mitophagy (mt-Keima or mitoQC reporter). **Expected:** WT: >80% cells show Parkin translocation; G309D: <10%, similar to PINK1-KO. Mitophagy flux reduced >5-fold in G309D.",
   "verification": "llm-judge",
   "source": "pro-chain",
   "meta": {
     "chain": "genetics_to_therapy",
+    "chain_id": "chain05",
+    "topic": "PINK1 mutation in early-onset Parkinsonism",
     "step": 2,
-    "step_role": "Structural analysis of the specific mutation identified in step 1",
-    "depends_on": "Must analyze the specific G309D variant in the PINK1 kinase context from step 1",
-    "what_cascades": "Wrong structural model → wrong drug design rationale"
+    "step_role": "Structural consequence of mutation",
+    "depends_on": "chain05_step1",
+    "what_cascades": "Wrong structural model → wrong therapeutic strategy."
   }
 }

@@ -1,0 +1,17 @@
+{
+  "id": "chain29_step2",
+  "category": "ChainTask",
+  "question": "Your pseudobulk DE analysis (DESeq2, n=4 vs. n=4 patients) on the \"progenitor-exhausted\" CD8+ T cell cluster (TCF7+PD-1+, 3,200 cells) identifies 156 differentially expressed genes (FDR <0.05) between responders and non-responders. Your PI wants to perform pathway enrichment on these 156 genes AND correlate the proportion of this cluster with response AND test 12 clinical variables (age, sex, tumor burden, prior therapy, etc.) as confounders. (a) How many total statistical tests are you now performing? (b) Should you correct across all analyses or within each analysis? (c) A reviewer later asks: \"With only n=4 per group, are your 156 DE genes reliable?\"",
+  "ideal": "**(a) Total tests:**\n- Pseudobulk DE: ~15,000 genes tested → 156 hits at FDR <0.05 (already corrected)\n- Pathway enrichment: ~5,000 GO terms tested → BH-corrected within\n- Proportion correlation: 1 test (cluster proportion vs. response)\n- Clinical confounders: 12 variables, each tested for association with response and with cluster proportion = 24+ tests\n\nTotal across all analyses: ~20,000+ tests, but they're organized in modules.\n\n**(b) Correction strategy:** Correct **within each analysis module**, not across all simultaneously. Rationale: (1) The DE analysis and pathway analysis are sequential (pathway depends on DE results) — they're one analytical unit, already FDR-corrected. (2) The confounder analysis is a separate question (asking \"is the biological finding robust to confounders?\"), and should be Bonferroni-corrected within (0.05/12 ≈ 0.004 for each clinical variable). (3) Cross-module correction (e.g., correcting pathway p-values together with clinical confounder p-values) would be overly conservative and scientifically meaningless — these test different hypotheses.\n\n**(c) Are 156 DE genes reliable with n=4?** This is the critical question:\n- **Statistical concern:** With n=4 per group, power is severely limited. DESeq2 with 4 vs. 4 has ~20-30% power to detect a 2-fold change. The 156 genes likely represent only the largest effect sizes — many true DE genes are missed (high false negative rate). However, the 156 hits at FDR<0.05 are unlikely to be false positives — FDR is well-calibrated even at small sample sizes (it may be conservative, not liberal).\n- **Biological concern:** Inter-patient variation in the CD8+ transcriptome is enormous. 4 patients per group may not represent the true responder/non-responder distinction if there are subtypes within each group.\n- **Recommendation:** (1) Report the 156 genes as \"discovery\" findings requiring validation. (2) Validate the top 20 genes by orthogonal methods (CITE-seq, flow cytometry) in an independent cohort. (3) Use gene set enrichment analysis (GSEA, pre-ranked) as a complement to thresholded DE — it captures coordinated pathway-level changes with better power than single-gene tests.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "stats_pipeline",
+    "chain_id": "chain29",
+    "topic": "Single-cell RNA-seq analysis of tumor-infiltrating lymphocytes in melanoma",
+    "step": 2,
+    "step_role": "Multiple testing correction",
+    "depends_on": "chain29_step1",
+    "what_cascades": "Over-interpreting underpowered results → non-reproducible findings."
+  }
+}

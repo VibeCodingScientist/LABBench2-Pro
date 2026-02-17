@@ -1,0 +1,17 @@
+{
+  "id": "chain27_step3",
+  "category": "ChainTask",
+  "question": "A 55-year-old patient presents with BRAF V600E metastatic melanoma, ECOG PS 0, no brain metastases, LDH normal. Treatment options include: (a) BRAF+MEK (dabrafenib+trametinib), (b) anti-PD-1 monotherapy (pembrolizumab or nivolumab), (c) anti-PD-1 + anti-CTLA-4 (nivolumab+ipilimumab), (d) BRAF+MEK+anti-PD-1 triplet. Based on your evidence synthesis, which would you recommend first-line and why? Address both rapid response need and long-term survival.",
+  "ideal": "**Recommended: (c) Nivolumab + ipilimumab (nivo+ipi) as preferred first-line, with BRAF+MEK as rescue.**\n\n**Rationale:**\n1. **Immunotherapy first, targeted therapy at progression.** The DREAMseq trial (ECOG-ACRIN EA6134) directly tested sequencing: anti-PD-1+anti-CTLA-4 first → BRAF+MEK at progression vs. BRAF+MEK first → immunotherapy at progression. 2-year OS was **72% for immunotherapy-first vs. 52% for targeted-therapy-first.** This is the most important data point: sequence matters, and immunotherapy first is superior.\n\n2. **Why nivo+ipi over pembrolizumab alone:** In BRAF V600E melanoma, nivo+ipi achieves higher response rates (~60% vs. ~42%) and more durable responses than anti-PD-1 alone. The 5-year OS for nivo+ipi is ~50-60% across CheckMate trials.\n\n3. **Why NOT the BRAF+MEK+anti-PD-1 triplet:** While the triplet has the best PFS/OS numbers, it comes with significantly higher toxicity (grade 3-4 AEs ~73% for KEYNOTE-022 triplet vs. ~55% for nivo+ipi vs. ~30% for dabrafenib+trametinib). In a PS 0 patient with normal LDH (good prognosis features), maximum front-line intensity may not be needed, and toxicity from the triplet may compromise the patient's ability to receive subsequent lines.\n\n4. **When to use BRAF+MEK first instead:**\n   - Symptomatic, high-volume disease requiring rapid response (BRAF+MEK response rate >60% with rapid onset within 2 weeks, vs. immunotherapy which may take 2-3 months)\n   - Brain metastases (BRAF+MEK has better CNS penetration)\n   - High LDH (poor prognosis, may not survive long enough for immunotherapy to work)\n\n5. **For this specific patient** (PS 0, no brain mets, normal LDH = favorable prognosis): nivo+ipi first-line, accepting the ~55% grade 3-4 toxicity rate (mostly manageable immune-related AEs). If progression after immunotherapy, switch to dabrafenib+trametinib. This sequence maximizes long-term survival probability.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "evidence_synthesis",
+    "chain_id": "chain27",
+    "topic": "BRAF V600E inhibition in melanoma: lessons from vemurafenib resistance",
+    "step": 3,
+    "step_role": "Clinical recommendation",
+    "depends_on": "chain27_step2",
+    "what_cascades": "Terminal step."
+  }
+}

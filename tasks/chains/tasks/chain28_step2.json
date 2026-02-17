@@ -1,0 +1,17 @@
+{
+  "id": "chain28_step2",
+  "category": "ChainTask",
+  "question": "Compared to SpCas12a (Acidaminococcus sp., the most widely used Cas12a ortholog), this hot-spring effector has these notable features: (1) The RuvC catalytic residues are D576, E688, D891 — conserved in position but with a unique insertion of 47 amino acids between the D576 and E688 residues (Cas12a has ~30 aa between equivalent residues). (2) The N-terminal unknown domain (residues 1-320) contains a putative zinc finger motif (CxxC...CxxC). (3) The PAM-interacting domain (predicted, C-terminal) has basic residues (Arg, Lys) at positions that align with Cas12a's PAM-recognition arginines but is divergent in sequence. How might each feature affect this effector's properties as a genome editing tool?",
+  "ideal": "**(1) 47-aa insertion between RuvC catalytic residues:**\nThe RuvC domain cleaves DNA by a two-metal-ion mechanism where D576, E688, and D891 coordinate Mg²⁺ ions. The 47-aa insertion (vs. ~30 aa in Cas12a) between the first two catalytic residues likely forms an **expanded loop that contacts the non-target strand DNA.** This could: (a) alter the geometry of non-target strand loading and cleavage, potentially changing the stagger between nicks on the two strands (Cas12a creates staggered cuts with 5-nt 5' overhangs; this effector might produce different overhangs), (b) the loop could be an insertion site for engineering — it's distal from catalytic residues, so modifications might be tolerated, enabling domain fusions without disrupting nuclease activity, (c) the larger insertion may slow catalysis (more conformational rearrangement needed) but increase specificity (more contacts with DNA).\n\n**(2) N-terminal zinc finger domain (residues 1-320):**\nCxxC...CxxC zinc finger motifs mediate DNA or protein binding. In a CRISPR effector, this could serve as: (a) **additional DNA-binding domain** that contacts sequences flanking the target, providing a \"second address\" for target recognition — this would dramatically increase specificity beyond guide-RNA complementarity alone, (b) **protein-protein interaction domain** for recruiting host factors (rare in CRISPR effectors but found in some type III systems), (c) **self-targeting prevention** — zinc finger binding to host DNA could prevent autoimmunity against the CRISPR array itself.\nFor genome editing: If the zinc finger provides additional specificity, this effector could be inherently more specific than Cas9/Cas12a, reducing off-target effects without requiring high-fidelity engineering.\n\n**(3) Divergent PAM-interacting domain:**\nThe PAM (protospacer adjacent motif) determines which sequences can be targeted. Divergent basic residues suggest a **different PAM requirement** than Cas12a's TTTV. Given the AT-rich genomes of extremophilic organisms, the PAM may be GC-rich (complementary environmental pressure). For genome editing: a different PAM expands the targetable sequence space. Characterizing the PAM experimentally (using a PAM depletion assay with a randomized PAM library) is a priority.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "sequence_to_function",
+    "chain_id": "chain28",
+    "topic": "Identifying a novel CRISPR-Cas effector from metagenomic data",
+    "step": 2,
+    "step_role": "Predict functional consequences of sequence differences",
+    "depends_on": "chain28_step1",
+    "what_cascades": "Wrong feature predictions → wrong characterization priorities."
+  }
+}

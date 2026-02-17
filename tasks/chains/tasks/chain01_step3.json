@@ -1,15 +1,17 @@
 {
   "id": "chain01_step3",
   "category": "ChainTask",
-  "question": "[FILL: Ask which statistical test to use for the follow-up experiment motivated by steps 1-2.\nExample: 'You want to test whether the zinc-dependent binding (half-max ~3 µM) differs significantly between wild-type protein X and a H142A mutant. You have 8 biological replicates per condition, continuous measurements. Which statistical test is appropriate and why?']",
-  "ideal": "[FILL: The correct test with justification.\nExample: 'An unpaired two-sample t-test (or Welch's t-test if variances are unequal). Two groups, continuous outcome, independent replicates. A Mann-Whitney U test would be an alternative if normality cannot be assumed with n=8.']",
+  "question": "You want to test whether the E76K mutation shifts the EC50 for peptide-induced SHP2 activation compared to wild-type. You will measure phosphatase activity at 8 peptide concentrations (0–50 µM), 4 biological replicates per condition, for both WT and E76K SHP2. You expect E76K to have a lower EC50 (left-shifted curve) and possibly higher basal activity. What is the appropriate statistical framework to compare the dose-response curves and specifically test for EC50 differences?",
+  "ideal": "Fit four-parameter log-logistic dose-response models (bottom, top, EC50, Hill slope) to each dataset using nonlinear least-squares regression (e.g., `drc` package in R or `scipy.optimize.curve_fit`). Compare models using an extra-sum-of-squares F-test: fit a shared model (same EC50 for both) vs. separate models (different EC50s). The F-test p-value tells you whether allowing separate EC50s significantly improves the fit. Report EC50 ± 95% CI for each variant. Do **not** use t-tests on individual concentrations — this ignores the dose-response structure and inflates multiple comparisons. For the basal activity comparison specifically (0 µM), a Welch's t-test on the 4 replicates is appropriate.",
   "verification": "llm-judge",
   "source": "pro-chain",
   "meta": {
     "chain": "paper_to_experiment",
+    "chain_id": "chain01",
+    "topic": "SHP2 allosteric activation in RASopathy signaling",
     "step": 3,
-    "step_role": "Statistical reasoning grounded in the experimental context",
-    "depends_on": "Must reference the specific experimental setup from steps 1-2",
-    "what_cascades": "Wrong test choice → flawed experimental conclusions"
+    "step_role": "Statistical test selection",
+    "depends_on": "chain01_step2",
+    "what_cascades": "Using point-by-point t-tests instead of curve-fitting → miss the EC50 shift → wrong mechanistic conclusion."
   }
 }

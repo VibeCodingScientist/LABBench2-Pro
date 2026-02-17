@@ -1,15 +1,18 @@
 {
   "id": "chain07_step3",
   "category": "ChainTask",
-  "question": "[FILL: Present the experimental results and ask for conclusion.\nExample: 'You performed the invasion assay. Results: ZEB1-KO cells showed 60% DECREASED Matrigel invasion vs. WT (p<0.01), while ZEB1/ZEB2 double KO showed 80% decreased invasion. ZEB1-KO cells had restored E-cadherin expression and reduced vimentin. Which hypothesis does this support, and what is the broader implication for using wound healing assays to study EMT?']",
-  "ideal": "[FILL: Conclusion integrating all evidence.\nExample: 'The data strongly support the collective migration hypothesis. ZEB1-KO cells are MORE migratory in 2D (wound healing) but LESS invasive in 3D (Matrigel), consistent with restored epithelial phenotype enabling fast sheet migration but losing mesenchymal invasion capacity. The ZEB2 compensation hypothesis is weakened because double KO further reduces invasion rather than rescuing it. Broader implication: wound healing assays are misleading for studying EMT — they measure collective 2D migration, not the mesenchymal single-cell invasion that is clinically relevant for metastasis. Studies should use 3D invasion assays when evaluating EMT regulators.']",
+  "question": "Results from your experiment:\n\n| Condition | Wound closure (% of WT) | Matrigel invasion (% of WT) | E-cadherin | Vimentin | ZEB2 |\n|---|---|---|---|---|---|\n| WT | 100% | 100% | Low | High | Moderate |\n| ZEB1-KO | 210% | 38% (p<0.01) | High | Low | 1.3× (NS) |\n| Double-KO | 190% | 15% (p<0.001) | High | Very low | N/A |\n\nWhich hypothesis is supported? What does this mean for the interpretation of wound-healing assays in EMT research? What would you recommend to the field?",
+  "ideal": "**H1 (collective migration) is strongly supported:**\n- ZEB1-KO cells are 2.1× faster in wound healing but only 38% as invasive through Matrigel — a clear dissociation between 2D migration and 3D invasion.\n- ZEB2 is NOT significantly upregulated (1.3×, NS), ruling out H2. The double-KO further reduces invasion (15%) without reducing wound closure speed (190%), confirming that the epithelial phenotype drives fast sheet migration but not matrix invasion.\n- Marker pattern is cleanly epithelial: E-cadherin restored, vimentin reduced. This is a collective epithelial migration phenotype.\n\n**Implications for EMT research:**\n1. **Wound-healing/scratch assays are misleading for EMT studies.** They measure 2D collective migration, which is *enhanced* by epithelial cell-cell adhesion, creating the paradox where EMT reversal appears to increase \"migration.\"\n2. **The field should use 3D invasion assays (Matrigel Transwell, spheroid invasion, collagen gel invasion) as the primary readout** for EMT-driven motility. Wound-healing assays should be clearly labeled as measuring \"collective migration\" not \"invasive potential.\"\n3. **EMT is not a single program.** Cells can be highly migratory (epithelial sheet migration) without being invasive (mesenchymal single-cell invasion). This distinction has clinical implications: metastatic potential correlates with invasion, not 2D migration speed.\n4. **Recommendation:** Papers studying EMT effects on motility should include both wound-healing AND Transwell invasion. Reports of \"increased migration\" upon MET (mesenchymal-to-epithelial transition) likely reflect this collective migration artifact.",
   "verification": "llm-judge",
   "source": "pro-chain",
   "meta": {
     "chain": "paradox_resolution",
+    "chain_id": "chain07",
+    "topic": "CRISPR KO of ZEB1 paradoxically increases migration",
     "step": 3,
-    "step_role": "Synthesize experimental results into a conclusion",
-    "depends_on": "Must evaluate results against hypotheses from step 1 and experiment from step 2",
-    "what_cascades": "Terminal step"
+    "step_role": "Synthesize conclusion from results",
+    "depends_on": "chain07_step2",
+    "what_cascades": "Terminal step.",
+    "data_provenance": "| Data Type | Identifier | Details | Query Date |\n|-----------|-----------|---------|------------|\n| Gene | ZEB1 | EMT transcription factor, represses CDH1 (E-cadherin) | 2026-02-17 |\n| Gene | ZEB2 | Paralog of ZEB1, non-redundant target profiles | 2026-02-17 |\n| Cell Line | A549 | Lung adenocarcinoma, CRISPR ZEB1 knockout | 2026-02-17 |\n| Assay | Wound-healing | ZEB1-KO: 2.1× faster closure (p<0.001, n=6) | 2026-02-17 |\n| Assay | Matrigel Transwell | ZEB1-KO: 38% of WT invasion (p<0.01) | 2026-02-17 |"
   }
 }

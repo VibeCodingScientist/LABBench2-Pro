@@ -1,0 +1,17 @@
+{
+  "id": "chain22_step1",
+  "category": "ChainTask",
+  "question": "You are using an adenine base editor (ABE8e) to install a clinically relevant A-to-G edit in primary human CD4+ T cells for a cell therapy application. Your protocol: isolate CD4+ T cells from PBMCs (negative selection), activate with anti-CD3/CD28 Dynabeads (48h), electroporate ABE8e mRNA (1 µg) + synthetic sgRNA (3 µg) using a Lonza 4D-Nucleofector (program EO-115), culture in complete RPMI + IL-2 (30 U/mL) for 5 days, harvest and assess editing by Sanger sequencing + EditR/ICE analysis. **Result:** Sanger sequencing shows only 8% A-to-G editing at the target adenine (expected: >60% for ABE8e in this cell type). Cell viability post-electroporation is 72% (acceptable). The sgRNA was validated in HEK293T cells with 78% editing. What are the most likely causes of low editing in primary T cells?",
+  "ideal": "Several factors likely contribute, ranked by impact:\n\n**1. (Most likely) T cell activation state and cell cycle:** ABE8e functions optimally in actively dividing cells because base editing requires DNA replication for permanent incorporation of the edit. Although you activated with CD3/CD28 beads for 48h, **peak T cell division occurs 48-72h post-activation.** Electroporating at exactly 48h means many cells haven't entered S phase yet. Additionally, 48h of activation may be insufficient for some T cell subsets (especially memory T cells) to fully enter cell cycle. **Fix:** Electroporate at 72h post-activation when >80% of cells are in active division (confirm by Ki-67 staining or CFSE dilution).\n\n**2. mRNA degradation and expression kinetics:** ABE8e mRNA must be translated, folded, and form a complex with sgRNA intracellularly. In primary T cells (which have robust innate immune sensors), unmodified mRNA triggers TLR7/8 and RIG-I, leading to: (a) IFN-I response that inhibits translation, (b) rapid mRNA degradation. **Fix:** Use N1-methylpseudouridine-modified mRNA and ensure 5'-cap (CleanCap) to minimize innate immune activation.\n\n**3. sgRNA design and modification:** In primary T cells, unmodified sgRNA is rapidly degraded by RNases. **Fix:** Use chemically modified sgRNA with 2'-O-methyl and phosphorothioate linkages at both 3' and 5' ends (standard for Synthego/IDT synthetic guides). If you used in vitro transcribed sgRNA, this is likely a major issue.\n\n**4. Electroporation parameters:** EO-115 is a standard T cell program, but cell density matters. If too many cells were electroporated (>2×10⁶ per 20 µL cuvette), field distribution is uneven. ABE8e mRNA (large, ~5 kb) requires efficient delivery. **Fix:** Optimize cell density to 1×10⁶ cells/reaction, consider increasing mRNA to 2-3 µg.\n\n**5. Editing window mismatch:** ABE8e has a narrow editing window (positions 3-9 of the protospacer, counting from the PAM-distal end). If the target adenine is outside this window, editing will be low regardless of delivery. Verify the target A is within the editing window.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "protocol_troubleshoot",
+    "chain_id": "chain22",
+    "topic": "CRISPR base editing efficiency in primary T cells",
+    "step": 1,
+    "step_role": "Diagnose protocol error",
+    "depends_on": "nothing — this is the seed question",
+    "what_cascades": "Wrong diagnosis → continued low editing → failed cell therapy manufacturing."
+  }
+}

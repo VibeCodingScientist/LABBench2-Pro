@@ -1,0 +1,18 @@
+{
+  "id": "chain21_step3",
+  "category": "ChainTask",
+  "question": "Given that Dravet syndrome involves interneuron-specific Nav1.1 loss-of-function, propose two therapeutic strategies: one currently approved and one in development. For each, explain the mechanism, key evidence, and a limitation.",
+  "ideal": "**Strategy 1 — Approved: Fenfluramine (Fintepla)**\n**Mechanism:** Fenfluramine acts through two complementary mechanisms: (1) It releases serotonin (5-HT) from presynaptic vesicles and inhibits reuptake, increasing 5-HT levels. 5-HT activates 5-HT2C receptors on GABAergic interneurons, enhancing their excitability — partially compensating for the Nav1.1 deficit by depolarizing interneurons through a non-sodium-channel mechanism. (2) It also has direct positive modulation of sigma-1 receptors, which may have independent anti-seizure effects.\n**Evidence:** Phase III trial (NCT03936777) showed 62% median seizure frequency reduction vs. 1% placebo. FDA-approved 2020 for Dravet (age ≥2 years). Some patients achieve >75% seizure reduction.\n**Limitation:** (1) Historical association with cardiac valvulopathy (at higher doses for obesity treatment) requires echocardiographic monitoring every 6 months, adding burden and cost. (2) Does not address the underlying Nav1.1 deficiency — it's a compensatory mechanism that may lose efficacy if interneurons degenerate over time. (3) ~30% of patients are non-responders.\n\n**Strategy 2 — In development: SCN1A antisense oligonucleotide (TANGO approach)**\n**Mechanism:** Targeted Augmentation of Nuclear Gene Output (TANGO). SCN1A has a naturally occurring non-productive splice variant (NMD-inducing poison exon). An antisense oligonucleotide (ASO) blocks inclusion of this poison exon, increasing productive SCN1A mRNA and Nav1.1 protein from the wild-type allele. This directly addresses haploinsufficiency by upregulating the functional allele from ~50% to potentially ~75-100% of normal.\n**Evidence:** Preclinical data in Scn1a+/- mice shows increased Nav1.1 protein and reduced seizure susceptibility. STK-001 (Stoke Therapeutics) is in Phase I/II clinical trials. This approach is mutation-agnostic — works for any heterozygous loss-of-function SCN1A mutation (>80% of Dravet patients).\n**Limitation:** (1) Requires intrathecal injection (IT) every few months — invasive, especially for young children. (2) Distribution of ASOs throughout the CNS is uneven — brainstem and spinal cord are well-penetrated, but cortical delivery may be insufficient. (3) Risk of increasing Nav1.1 in excitatory neurons (where it's normally low) could theoretically have paradoxical effects, though preclinical data suggests this is not a major issue. (4) Long-term safety of chronic IT ASO administration in children is unknown.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "genetics_to_therapy",
+    "chain_id": "chain21",
+    "topic": "SCN1A loss-of-function in Dravet syndrome",
+    "step": 3,
+    "step_role": "Therapeutic strategy",
+    "depends_on": "chain21_step2",
+    "what_cascades": "Terminal step.",
+    "data_provenance": "- Clinical trial NCT06598449: Fenfluramine Phase IV, RECRUITING (queried 2026-02-17)\n- Clinical trial NCT03936777: Fenfluramine Phase III in Dravet, COMPLETED (queried 2026-02-17)\n- Clinical trial NCT03467113: ZX008 (fenfluramine) Phase I, COMPLETED (queried 2026-02-17)\n- ClinVar SCN1A: 2,858 pathogenic / 5,158 total (queried 2026-02-17)\n- PDB 7DTD: Nav1.1+β4, 3.3 Å, cryo-EM, 2021 (queried 2026-02-17)"
+  }
+}

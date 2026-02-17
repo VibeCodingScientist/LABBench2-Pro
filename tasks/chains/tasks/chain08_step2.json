@@ -1,15 +1,17 @@
 {
   "id": "chain08_step2",
   "category": "ChainTask",
-  "question": "[FILL: Ask about functional implications of specific sequence features.\nExample: 'You identified this as a [family] protein. Compared to the human homolog, this deep-sea variant has the following substitutions in the active site: [list 2-3 specific mutations]. Given that this organism lives at 4C and 200 atm pressure, how might these substitutions represent cold/pressure adaptations?']",
-  "ideal": "[FILL: Structure-function reasoning about adaptations.\nExample: 'The [mutation 1] likely increases backbone flexibility at low temperature by replacing a bulky residue with a smaller one, maintaining catalytic activity when thermal motion is reduced. The [mutation 2] may strengthen hydrophobic packing to resist pressure-induced unfolding. These are consistent with known psychrophilic enzyme adaptations: increased flexibility, reduced proline content, fewer salt bridges.']",
+  "question": "Compared to mesophilic *Lactobacillus* LDH (optimal activity at 37°C), this deep-sea *Shewanella* LDH has three notable substitutions in the active site vicinity: (1) Pro135→Gly (in a loop near the active site), (2) Ile250→Val (in the hydrophobic core near the subunit interface), (3) Ala→Ser at position 222 (on the surface near the active site entrance). The organism lives at 4°C and 500 atm pressure. How might each substitution represent a cold adaptation, pressure adaptation, or both? Use principles of psychrophilic enzyme biochemistry to explain.",
+  "ideal": "**(1) Pro135→Gly: Cold adaptation.** Proline restricts backbone flexibility (locked φ angle). Replacing it with glycine (maximal backbone freedom) increases local flexibility in the loop near the active site. Psychrophilic enzymes systematically replace Pro with Gly/Ala in regions requiring conformational change during catalysis, enabling the protein to maintain sufficient dynamics at low temperatures where thermal energy is limited. This is one of the most well-documented cold adaptation strategies.\n\n**(2) Ile250→Val: Primarily cold adaptation, possibly pressure-relevant.** Both are hydrophobic and branched, but valine is smaller (one fewer CH₂). In the hydrophobic core near the subunit interface, this creates slightly looser packing, reducing van der Waals stabilization. This **lowers the energy barrier for conformational fluctuations** at 4°C. However, reduced core volume is counterproductive under pressure (pressure favors smaller total volume). This mutation may represent a **trade-off** — the cold-adaptation benefit outweighs the pressure cost, or other substitutions compensate.\n\n**(3) Ala222→Ser: Pressure adaptation.** Adding a hydroxyl group on the surface near the active site entrance increases **hydration** — water molecules form hydrogen bonds with Ser that are more compressible than the cavity that would exist with Ala. Under high pressure, water-filled hydrogen bond networks have smaller molar volume than hydrophobic surfaces with excluded-volume cavities. Surface polar substitutions are a hallmark of piezophilic (pressure-adapted) enzymes. This also slightly increases the solvent-accessible surface area, facilitating pressure-resistant solvation.\n\n**Summary:** The organism faces two competing challenges — cold demands flexibility, pressure demands reduced compressible volume. Substitutions 1 and 2 primarily serve cold adaptation (increased flexibility), while substitution 3 serves pressure adaptation (improved hydration). This mixed strategy is typical of psychropiezophilic enzymes.",
   "verification": "llm-judge",
   "source": "pro-chain",
   "meta": {
     "chain": "sequence_to_function",
+    "chain_id": "chain08",
+    "topic": "Psychrophilic lactate dehydrogenase from a deep-sea organism",
     "step": 2,
-    "step_role": "Predict functional consequences of sequence variation",
-    "depends_on": "Must use the protein family identification from step 1",
-    "what_cascades": "Wrong adaptation reasoning → wrong biochemical predictions"
+    "step_role": "Predict functional consequences of sequence differences",
+    "depends_on": "chain08_step1",
+    "what_cascades": "Wrong adaptation reasoning → wrong biochemical predictions → wrong experimental expectations."
   }
 }

@@ -1,0 +1,17 @@
+{
+  "id": "chain21_step2",
+  "category": "ChainTask",
+  "question": "A Dravet patient has the de novo missense mutation SCN1A R1648H (in the S4 voltage-sensing segment of domain IV). S4 segments contain positively charged arginine/lysine residues at every third position that act as voltage sensors — they move outward in response to depolarization, initiating channel opening (activation). Predict the biophysical consequence of R1648H on channel gating, explain how this leads to loss of function in the context of fast-spiking interneurons, and propose how to experimentally validate this using patch-clamp electrophysiology.",
+  "ideal": "**Predicted biophysical consequence:** R1648H neutralizes a positive charge in the DIV S4 voltage sensor (arginine → histidine, which is mostly uncharged at physiological pH). This will: (1) **Shift the voltage-dependence of inactivation** — DIV S4 movement is specifically coupled to fast inactivation (not activation). Neutralizing a charge reduces the voltage sensitivity of DIV S4, causing: (a) accelerated entry into inactivation (faster inactivation kinetics), and (b) hyperpolarized shift in the voltage-dependence of steady-state inactivation (V½ inactivation shifts negative by ~10-15 mV). (2) **Slowed recovery from inactivation** — the channel stays inactivated longer between action potentials.\n\n**Impact on fast-spiking interneurons:** PV+ interneurons fire at 200+ Hz, with ~3-5 ms between action potentials. At each spike, Nav1.1 channels must: activate → inactivate → recover from inactivation → be available for the next spike. If recovery from inactivation is slowed (due to R1648H), channels accumulate in the inactivated state during high-frequency firing. After 10-20 spikes, insufficient channels are available → depolarization block → interneuron falls silent. Pyramidal neurons firing at <50 Hz are minimally affected because they have much longer inter-spike intervals for recovery.\n\n**Experimental validation:**\n1. **Heterologous expression:** Transfect HEK293T with WT or R1648H Nav1.1 (+ β1 subunit). Whole-cell voltage-clamp at 22°C.\n2. **Steady-state inactivation:** Step to conditioning potentials (-120 to -20 mV, 500 ms) then test pulse to 0 mV. Fit Boltzmann. **Predict:** WT V½ ≈ -65 mV; R1648H V½ ≈ -78 mV (negative shift).\n3. **Recovery from inactivation:** Two-pulse protocol: 500 ms at 0 mV (inactivate) → variable recovery interval at -80 mV (1-100 ms) → test pulse. **Predict:** WT τ_recovery ≈ 5 ms; R1648H ≈ 12 ms.\n4. **High-frequency train:** Inject a train of 200 brief current pulses at 200 Hz in current-clamp (or in iPSC-derived interneurons expressing R1648H). **Predict:** WT maintains firing throughout; R1648H shows progressive amplitude reduction and depolarization block after ~15 spikes.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "genetics_to_therapy",
+    "chain_id": "chain21",
+    "topic": "SCN1A loss-of-function in Dravet syndrome",
+    "step": 2,
+    "step_role": "Structural consequence of mutation",
+    "depends_on": "chain21_step1",
+    "what_cascades": "Wrong biophysical prediction → wrong therapeutic rationale."
+  }
+}

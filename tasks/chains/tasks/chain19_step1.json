@@ -1,0 +1,18 @@
+{
+  "id": "chain19_step1",
+  "category": "ChainTask",
+  "question": "A CML patient in chronic phase responds to imatinib (400 mg QD) with complete hematologic response at 3 months and complete cytogenetic response at 12 months. At 24 months, BCR-ABL transcript levels (measured by qPCR, international scale) begin rising: 0.01% IS at 12 months → 0.1% at 18 months → 1.2% at 24 months → 5.8% at 30 months. Bone marrow cytogenetics at 30 months shows 35% Philadelphia-chromosome positive metaphases. Imatinib trough level is 1,200 ng/mL (therapeutic range 1,000-3,000 ng/mL). ChEMBL data shows imatinib IC50 = 40 nM against ABL1 (CHEMBL846551), 240 nM against PDGFRβ (CHEMBL763440), and 260 nM against KIT (CHEMBL766073). The crystal structure of ABL kinase with imatinib (PDB: 1IEP, resolution 2.1 Å; also PDB: 2HYY, 2.4 Å) shows imatinib binding in the DFG-out inactive conformation. List the 3 most likely causes of this rising BCR-ABL, ranked by probability.",
+  "ideal": "**1. (Most likely) Acquired BCR-ABL kinase domain mutation:** The kinetic pattern — initial excellent response followed by gradual molecular relapse while maintaining therapeutic drug levels — is classic for emergence of a resistant clone. The most common mutations are: T315I (gatekeeper, ~15% of resistant cases), Y253H, E255K/V, F359V. **T315I is the most clinically significant** because it confers resistance to all first- and second-generation TKIs except ponatinib. The threonine-to-isoleucine substitution at the gatekeeper position eliminates a critical hydrogen bond between T315's hydroxyl and imatinib's aminopyrimidine, while the bulky isoleucine creates steric clash in the binding pocket.\n\n**2. (Possible) BCR-ABL amplification/overexpression:** Increased BCR-ABL copy number (by gene amplification or isodicentric Philadelphia chromosome) can overwhelm imatinib binding capacity. Even at therapeutic levels, if BCR-ABL protein exceeds the drug's stoichiometric capacity, kinase activity resumes. Distinguishable from point mutations by FISH (multiple BCR-ABL signals) or by mutation screening showing WT sequence.\n\n**3. (Less likely given trough levels) Non-compliance or drug interaction:** Although trough is 1,200 ng/mL (in range), this is a single measurement. Intermittent non-compliance or new medications inducing CYP3A4 (rifampin, St. John's wort, phenytoin) could cause periodic subtherapeutic levels allowing clonal expansion. However, the trough level argues against this.\n\n**Recommended next step:** ABL1 kinase domain mutation analysis by Sanger sequencing or next-generation sequencing (NGS with >1% sensitivity threshold).",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "data_to_mechanism",
+    "chain_id": "chain19",
+    "topic": "Imatinib resistance in CML: BCR-ABL T315I gatekeeper mutation",
+    "step": 1,
+    "step_role": "Interpret ambiguous data",
+    "depends_on": "nothing — this is the seed question",
+    "what_cascades": "Wrong diagnosis → wrong second-line therapy selection.",
+    "data_provenance": "- PDB 1IEP: Queried 2026-02-17, resolution 2.1 Å, released 2001-04-18. Title: \"Crystal structure of the c-Abl kinase domain in complex with STI-571.\"\n- PDB 2HYY: resolution 2.4 Å, released 2007-01-16. Title: \"Human Abl kinase domain in complex with imatinib.\"\n- ChEMBL CHEMBL941 (imatinib): IC50 = 40 nM ABL1 (CHEMBL846551), 240 nM PDGFRβ (CHEMBL763440), 260 nM KIT (CHEMBL766073), max_phase = 4. Queried 2026-02-17.\n- ClinVar ABL1: 94 pathogenic variants (queried 2026-02-17)\n- UniProt P00533 (EGFR): kinase domain 712-979. For comparison with ABL gatekeeper mechanism."
+  }
+}

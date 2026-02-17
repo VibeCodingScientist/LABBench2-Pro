@@ -1,0 +1,17 @@
+{
+  "id": "chain20_step2",
+  "category": "ChainTask",
+  "question": "Additional data is now available on FLT3 inhibitors in AML:\n\n| Trial | Drug | Setting | N | Median OS (drug) | Median OS (control) | HR |\n|---|---|---|---|---|---|---|\n| RATIFY | Midostaurin + chemo | Front-line | 717 | 74.7 mo | 25.6 mo | 0.78 |\n| ADMIRAL | Gilteritinib mono | R/R | 371 | 9.3 mo | 5.6 mo | 0.64 |\n| QuANTUM-First | Quizartinib + chemo | Front-line | 539 | 31.9 mo | 15.1 mo | 0.78 |\n| LACEWING | Gilteritinib + azacitidine | Unfit elderly | 123 | 9.82 mo | 8.87 mo | 0.916 |\n\n(a) What pattern emerges across these four trials? (b) Why did the LACEWING trial fail while RATIFY and QuANTUM-First succeeded? (c) How would you formally assess whether FLT3 inhibitor efficacy depends on the backbone chemotherapy intensity?",
+  "ideal": "**(a) Pattern:** FLT3 inhibitors provide clear benefit when **combined with intensive chemotherapy** (HR 0.78 in both RATIFY and QuANTUM-First), moderate benefit as **monotherapy vs. salvage chemo** (HR 0.64 in ADMIRAL), but **minimal benefit with low-intensity backbone** (HR 0.916 in LACEWING). This suggests FLT3 inhibitors amplify the effect of cytotoxic chemotherapy rather than being sufficient as single pathway-targeted agents.\n\n**(b) LACEWING failure:** Several factors: (1) The elderly unfit population has AML with different biology — more adverse cytogenetics, more secondary AML, more co-mutations (DNMT3A, TET2, ASXL1) that drive chemoresistance independent of FLT3. (2) Azacitidine is a low-intensity agent that induces differentiation/apoptosis through epigenetic mechanisms — it may not synergize with FLT3 inhibition the same way cytotoxic 7+3 does. (3) FLT3 mutation is a proliferative driver; cytotoxic chemotherapy attacks the proliferating population and FLT3 inhibitors prevent regrowth — this synergy requires the chemotherapy to generate a significant cell kill, which azacitidine doesn't achieve. (4) Small sample size (n=123) limited power to detect modest benefits.\n\n**(c) Formal analysis approach:**\n- **Meta-regression:** Random-effects meta-analysis with log(HR) as the outcome and **backbone intensity** (intensive chemo, low-intensity, monotherapy) as a categorical moderator variable. Test whether the moderator explains heterogeneity in treatment effect.\n- If only 4 studies are available, this is underpowered for formal meta-regression (k<10 rule). Instead: (1) present a forest plot stratified by backbone intensity with subgroup interaction test, (2) use individual patient data (IPD) meta-analysis if available — model OS with treatment × backbone interaction term in a Cox model.\n- The hypothesis predicts: intensive chemo backbone → HR ~0.75-0.80; low-intensity backbone → HR ~0.90-1.0; monotherapy → intermediate (HR ~0.65 but in a population with much shorter survival).",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "evidence_synthesis",
+    "chain_id": "chain20",
+    "topic": "FLT3 inhibitors in AML: gilteritinib vs. midostaurin",
+    "step": 2,
+    "step_role": "Meta-analytic reasoning",
+    "depends_on": "chain20_step1",
+    "what_cascades": "Wrong pattern identification → wrong treatment algorithm for elderly patients."
+  }
+}

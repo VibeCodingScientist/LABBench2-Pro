@@ -1,0 +1,17 @@
+{
+  "id": "chain23_step1",
+  "category": "ChainTask",
+  "question": "A clinical microbiology lab isolates a carbapenem-resistant *Klebsiella pneumoniae* from a bloodstream infection. WGS reveals a plasmid-borne gene encoding a novel protein. BLAST analysis shows 72% identity to AmpC β-lactamase from *Citrobacter freundii* and 68% identity to CMY-2 β-lactamase. The protein is 381 amino acids. What protein family does this belong to, what is its catalytic mechanism, and which conserved motifs would you expect to find?",
+  "ideal": "This belongs to the **Class C (AmpC) serine β-lactamase** family (Ambler classification), specifically a **plasmid-mediated cephalosporinase** related to the CMY family. Class C β-lactamases are serine hydrolases that inactivate β-lactam antibiotics by cleaving the β-lactam ring.\n\n**Catalytic mechanism:** (1) The catalytic serine (typically Ser64 in AmpC numbering) performs a nucleophilic attack on the β-lactam carbonyl carbon, forming a covalent acyl-enzyme intermediate. (2) A water molecule activated by Tyr150 (acting as a general base, assisted by Lys67) hydrolyzes the acyl-enzyme, regenerating the active site.\n\n**Conserved motifs expected:**\n1. **S-x-x-K motif** (Ser64-X-X-Lys67): Contains the catalytic serine. The lysine activates the serine and stabilizes the transition state.\n2. **Y-A-N motif** (Tyr150-Ala-Asn): Tyr150 acts as the general base for deacylation. This is the defining motif that distinguishes Class C from Class A β-lactamases (which use Glu166).\n3. **K-T-G motif** (Lys315-Thr-Gly): Part of the Ω-loop, involved in substrate recognition.\n4. **H-x-x-P-Q-x** motif in the H-10 helix region, contributes to the oxyanion hole.\n\n**Clinical significance:** Plasmid-mediated AmpC enzymes (like CMY-2) confer resistance to: all penicillins, cephalosporins (including 3rd-gen ceftriaxone/ceftazidime), and are NOT inhibited by clavulanate or sulbactam (unlike Class A enzymes). They may show partial activity against carbapenems if combined with porin loss (OmpK35/36 mutations), explaining the carbapenem resistance phenotype.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "sequence_to_function",
+    "chain_id": "chain23",
+    "topic": "Novel AmpC β-lactamase from carbapenem-resistant Enterobacteriaceae",
+    "step": 1,
+    "step_role": "Identify protein from sequence",
+    "depends_on": "nothing — this is the seed question",
+    "what_cascades": "Wrong family assignment → wrong resistance profile prediction → wrong antibiotic selection."
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "id": "chain14_step2",
+  "category": "ChainTask",
+  "question": "A subsequent real-world evidence study (n=3,200 patients across 45 US memory clinics, 12-month follow-up) reports: CDR-SB change in lecanemab-treated patients = +1.8 (vs. +1.66 for placebo in Clarity AD at 18 months). ARIA-E rate = 15.8% (vs. 12.6% in the trial). 22% of patients discontinued within 6 months (infusion burden, ARIA, or lack of perceived benefit). The study notes that real-world patients are older (mean 78 vs. 72 in Clarity AD), have more comorbidities, and 34% are on anticoagulants. How does this change your assessment?",
+  "ideal": "**This substantially weakens the real-world case for lecanemab:**\n\n1. **Worse outcomes than placebo arm of Clarity AD:** Real-world lecanemab patients declined +1.8 CDR-SB in 12 months, which extrapolates to ~2.7 at 18 months — *worse* than the Clarity AD placebo arm (+1.66 at 18 months). However, this comparison is confounded by the older, sicker real-world population who would be expected to decline faster regardless.\n\n2. **Higher ARIA rate (15.8% vs. 12.6%)** likely reflects older patients with more cerebrovascular disease and anticoagulant use. The 34% on anticoagulants is alarming given the 3 ARIA-related deaths in Clarity AD included anticoagulated patients.\n\n3. **High discontinuation (22% by 6 months)** reveals a practical effectiveness-efficacy gap. Intent-to-treat efficacy trials capture a best-case scenario; real-world adherence is worse.\n\n4. **Selection bias:** Real-world patients were not selected by biomarker-confirmed early AD — some may have mixed dementia, vascular contributions, or more advanced disease, all of which would dilute amyloid-specific effects.\n\n5. **Updated conclusion:** The Clarity AD trial result may be valid for its narrow population (biomarker-confirmed early AD, age ~72, no anticoagulants) but does not generalize well. The 0.45 CDR-SB benefit may not manifest in typical clinical patients. Treatment guidelines should emphasize strict patient selection criteria matching trial eligibility.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "critical_appraisal",
+    "chain_id": "chain14",
+    "topic": "Lecanemab efficacy in early Alzheimer's disease",
+    "step": 2,
+    "step_role": "Integrate contradictory evidence",
+    "depends_on": "chain14_step1",
+    "what_cascades": "Failure to account for efficacy-effectiveness gap → inappropriate treatment recommendations."
+  }
+}

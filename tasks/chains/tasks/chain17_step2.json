@@ -1,0 +1,17 @@
+{
+  "id": "chain17_step2",
+  "category": "ChainTask",
+  "question": "Your top hypothesis is that PD-1 blockade activates Tregs more than effectors in HPD-prone tumors. Your secondary hypothesis is Fc-mediated effector T cell depletion. Design ONE experiment using patient samples (pre- and post-treatment biopsies) that distinguishes these two mechanisms. Specify: sample requirements, assays, controls, and the expected result pattern for each hypothesis.",
+  "ideal": "**Experiment: Multi-parameter flow cytometry + spatial transcriptomics on matched pre/post-treatment biopsies**\n\n**Samples:** Pre-treatment biopsy (baseline) and on-treatment biopsy (cycle 2, day 1, ~3 weeks post-first dose) from: (a) 15 HPD patients, (b) 15 responders, (c) 15 progressive disease (non-HPD). All receiving anti-PD-1 monotherapy.\n\n**Panel 1 — Flow cytometry (dissociated tumor):**\n- Treg panel: CD3/CD4/CD8/CD25/FoxP3/CTLA-4/Ki-67/PD-1\n- Effector panel: CD3/CD8/granzyme B/IFN-γ/PD-1/TIM-3/LAG-3/KLRG1\n- Absolute counts per gram of tumor (critical — ratios alone are insufficient)\n\n**Panel 2 — Spatial transcriptomics (10x Visium or MERFISH):**\n- Map spatial distribution of Tregs (FOXP3+), CD8+ effectors (CD8A/GZMB), and macrophages (CD68/CD163) relative to tumor nests\n\n**Expected if H1 (Treg activation) is correct:**\n- HPD post-treatment: ↑ absolute Treg count (>2-fold), ↑ Treg Ki-67+ (proliferating), ↑ Treg:CD8 ratio\n- Effector CD8+ count maintained or slightly increased but unchanged Ki-67/granzyme B (activated but suppressed)\n- Spatial: Tregs migrate INTO tumor nests post-treatment, surrounding CD8+ T cells\n- Responders: ↑ CD8+ count and Ki-67, Treg count stable or decreased\n\n**Expected if H2 (Fc-mediated CD8 depletion) is correct:**\n- HPD post-treatment: ↓ absolute CD8+ T cell count (>50% reduction), especially PD-1hi effectors\n- Treg count unchanged or proportionally increased (because CD8+ depleted, ratio changes)\n- Spatial: CD8+ T cells depleted from tumor margins where they interface with FcR+ macrophages\n- Key discriminator: **absolute CD8+ count.** H1 predicts stable/increased CD8; H2 predicts decreased CD8.\n\n**Critical control:** Include patients on anti-PD-1 with different Fc engineering (e.g., Fc-silent anti-PD-1 in clinical trials) — if HPD rate drops with Fc-silent antibodies, H2 is supported.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "paradox_resolution",
+    "chain_id": "chain17",
+    "topic": "PD-1 blockade accelerates tumor growth (hyperprogression)",
+    "step": 2,
+    "step_role": "Design discriminating experiment",
+    "depends_on": "chain17_step1",
+    "what_cascades": "Wrong experiment → can't distinguish mechanisms → wrong patient stratification."
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "id": "chain11_step3",
+  "category": "ChainTask",
+  "question": "Acquired resistance to sotorasib has been observed clinically. Which resistance mechanism would you predict to be MOST difficult to overcome with next-generation KRAS G12C inhibitors?\nA) Secondary mutations in KRAS at Y96D that sterically block the S-IIP pocket\nB) Upregulation of SOS1, the KRAS guanine exchange factor, shifting the GTP/GDP equilibrium\nC) Activating mutations in downstream effectors (BRAF V600E, MEK1 mutations) that bypass KRAS entirely\nD) Acquisition of a second KRAS G12C allele (gene amplification)",
+  "ideal": "C",
+  "verification": "multiple_choice",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "structure_to_drug",
+    "chain_id": "chain11",
+    "topic": "KRAS G12C covalent inhibition by sotorasib",
+    "step": 3,
+    "step_role": "SAR prediction",
+    "depends_on": "chain11_step2",
+    "what_cascades": "Wrong resistance hierarchy → wrong clinical strategy.",
+    "correct_choice": "C",
+    "data_provenance": "- Clinical trial NCT04625647: Phase II, sotorasib in KRAS G12C NSCLC, status ACTIVE_NOT_RECRUITING (queried 2026-02-17)\n- Clinical trial NCT05398094: Phase II, AMG 510 in Stage III unresectable NSCLC KRAS G12C, RECRUITING (queried 2026-02-17)\n- Open Targets KRAS-NSCLC: score 0.8325; EGFR-NSCLC: score 0.8850 (queried 2026-02-17)"
+  }
+}

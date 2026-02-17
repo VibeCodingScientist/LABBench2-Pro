@@ -1,94 +1,649 @@
 [
   {
-    "chain_id": "paper_to_experiment",
+    "chain_id": "chain01",
+    "template": "paper_to_experiment",
+    "topic": "SHP2 allosteric activation in RASopathy signaling",
     "description": "Paper finding → data interpretation → statistical test → hypothesis generation",
     "steps": [
-      {"task_id": "chain01_step1", "input_type": "none"},
-      {"task_id": "chain01_step2", "input_type": "previous_response"},
-      {"task_id": "chain01_step3", "input_type": "previous_response"},
-      {"task_id": "chain01_step4", "input_type": "previous_response"}
-    ]
+      {
+        "task_id": "chain01_step1",
+        "input_type": "none"
+      },
+      {
+        "task_id": "chain01_step2",
+        "input_type": "previous_response"
+      },
+      {
+        "task_id": "chain01_step3",
+        "input_type": "previous_response"
+      },
+      {
+        "task_id": "chain01_step4",
+        "input_type": "previous_response"
+      }
+    ],
+    "data_provenance": "| Data Type | Identifier | Details | Query Date |\n|-----------|-----------|---------|------------|\n| PDB | [2SHP](https://www.rcsb.org/structure/2SHP) | SHP2 autoinhibited structure | 2026-02-17 |\n| Gene | PTPN11 | Encodes SHP2 protein tyrosine phosphatase | 2026-02-17 |\n| Clinical Trial | [NCT03114319](https://clinicaltrials.gov/ct2/show/NCT03114319) | SHP2 inhibitor clinical trial (referenced in Step 4) | 2026-02-17 |\n| Literature | LaRochelle et al. 2021 | *Nature*, SHP2 autoinhibition mechanism | 2026-02-17 |\n| Compound | SHP099 | Allosteric SHP2 inhibitor | 2026-02-17 |\n| Compound | TNO155 | Allosteric SHP2 inhibitor | 2026-02-17 |"
   },
   {
-    "chain_id": "structure_to_drug",
+    "chain_id": "chain02",
+    "template": "structure_to_drug",
+    "topic": "EGFR kinase domain inhibition and resistance",
     "description": "Protein structure → binding mechanism → SAR prediction → experimental validation",
     "steps": [
-      {"task_id": "chain02_step1", "input_type": "none"},
-      {"task_id": "chain02_step2", "input_type": "previous_response"},
-      {"task_id": "chain02_step3", "input_type": "previous_response"},
-      {"task_id": "chain02_step4", "input_type": "previous_response"}
-    ]
+      {
+        "task_id": "chain02_step1",
+        "input_type": "none"
+      },
+      {
+        "task_id": "chain02_step2",
+        "input_type": "previous_response"
+      },
+      {
+        "task_id": "chain02_step3",
+        "input_type": "previous_response"
+      },
+      {
+        "task_id": "chain02_step4",
+        "input_type": "previous_response"
+      }
+    ],
+    "data_provenance": "| Data Type | Identifier | Details | Query Date |\n|-----------|-----------|---------|------------|\n| PDB | [1M17](https://www.rcsb.org/structure/1M17) | EGFR kinase domain bound to erlotinib, active conformation | 2026-02-17 |\n| Open Targets | EGFR-NSCLC | Association score: 0.885 (referenced in Step 1) | 2026-02-17 |\n| Gene | EGFR | Gatekeeper residue T790, key residues Met793, Leu788, Thr854 | 2026-02-17 |\n| Compound | Erlotinib | First-generation EGFR TKI | 2026-02-17 |\n| Compound | Osimertinib | Third-generation EGFR TKI, covalent bond to Cys797 | 2026-02-17 |\n| Compound | BLU-945, BLU-701 | Fourth-generation reversible EGFR inhibitors (referenced) | 2026-02-17 |"
   },
   {
-    "chain_id": "stats_pipeline",
+    "chain_id": "chain03",
+    "template": "stats_pipeline",
+    "topic": "Differential expression in triple-negative breast cancer",
     "description": "Test selection → multiple testing correction → pathway interpretation",
     "steps": [
-      {"task_id": "chain03_step1", "input_type": "none"},
-      {"task_id": "chain03_step2", "input_type": "previous_response"},
-      {"task_id": "chain03_step3", "input_type": "previous_response"}
-    ]
+      {
+        "task_id": "chain03_step1",
+        "input_type": "none"
+      },
+      {
+        "task_id": "chain03_step2",
+        "input_type": "previous_response"
+      },
+      {
+        "task_id": "chain03_step3",
+        "input_type": "previous_response"
+      }
+    ],
+    "data_provenance": "| Data Type | Identifier | Details | Query Date |\n|-----------|-----------|---------|------------|\n| Disease | Triple-Negative Breast Cancer | RNA-seq, 15 tumors + 15 matched normals | 2026-02-17 |\n| ClinVar | BRCA2 | >18,000 pathogenic variants (referenced in Step 3) | 2026-02-17 |\n| GO Term | GO:0007049 | Cell cycle (P_adj = 2.1×10⁻²⁸) | 2026-02-17 |\n| GO Term | GO:0006281 | DNA repair (P_adj = 8.4×10⁻¹⁶) | 2026-02-17 |\n| GO Term | GO:0006955 | Immune response (P_adj = 1.7×10⁻¹⁴) | 2026-02-17 |\n| GO Term | GO:0030198 | Extracellular matrix organization | 2026-02-17 |\n| GO Term | GO:0042981 | Regulation of apoptosis | 2026-02-17 |\n| GO Term | GO:0006811 | Ion transport | 2026-02-17 |\n| Software | DESeq2, STAR, featureCounts, clusterProfiler | Analysis tools referenced | 2026-02-17 |"
   },
   {
-    "chain_id": "critical_appraisal",
+    "chain_id": "chain04",
+    "template": "critical_appraisal",
+    "topic": "IDH1 inhibitor efficacy in glioma",
     "description": "Evaluate weak evidence → integrate conflicting data → design definitive experiment",
     "steps": [
-      {"task_id": "chain04_step1", "input_type": "none"},
-      {"task_id": "chain04_step2", "input_type": "previous_response"},
-      {"task_id": "chain04_step3", "input_type": "previous_response"}
-    ]
+      {
+        "task_id": "chain04_step1",
+        "input_type": "none"
+      },
+      {
+        "task_id": "chain04_step2",
+        "input_type": "previous_response"
+      },
+      {
+        "task_id": "chain04_step3",
+        "input_type": "previous_response"
+      }
+    ],
+    "data_provenance": "| Data Type | Identifier | Details | Query Date |\n|-----------|-----------|---------|------------|\n| PDB | [3INM](https://www.rcsb.org/structure/3INM) | IDH1-R132H mutant active site, resolution 2.1 Å | 2026-02-17 |\n| Gene | IDH1 | R132H mutation, 2-hydroxyglutarate (2-HG) production | 2026-02-17 |\n| Cell Line | U87 | Glioma cell line (overexpressing IDH1-R132H) | 2026-02-17 |\n| Cell Line | BT142, TS603 | Patient-derived IDH1-mutant glioma lines | 2026-02-17 |\n| Compound | Ivosidenib (AG-120) | FDA-approved IDH1 inhibitor (comparator) | 2026-02-17 |"
   },
   {
-    "chain_id": "genetics_to_therapy",
+    "chain_id": "chain05",
+    "template": "genetics_to_therapy",
+    "topic": "PINK1 mutation in early-onset Parkinsonism",
     "description": "Genetic finding → structural analysis of mutation → therapeutic strategy",
     "steps": [
-      {"task_id": "chain05_step1", "input_type": "none"},
-      {"task_id": "chain05_step2", "input_type": "previous_response"},
-      {"task_id": "chain05_step3", "input_type": "previous_response"}
-    ]
+      {
+        "task_id": "chain05_step1",
+        "input_type": "none"
+      },
+      {
+        "task_id": "chain05_step2",
+        "input_type": "previous_response"
+      },
+      {
+        "task_id": "chain05_step3",
+        "input_type": "previous_response"
+      }
+    ],
+    "data_provenance": "| Data Type | Identifier | Details | Query Date |\n|-----------|-----------|---------|------------|\n| UniProt | [Q9BXM7](https://www.uniprot.org/uniprotkb/Q9BXM7) | PINK1, kinase domain 156–511, active site Asp362, ATP-binding 162–170/186 | 2026-02-17 |\n| ClinVar | PINK1 | 87 pathogenic variants, young adult-onset Parkinsonism | 2026-02-17 |\n| Open Targets | PINK1-Parkinsonism | Association score: 0.838 | 2026-02-17 |\n| Variant | c.926G>A (p.Gly309Asp) | Homozygous, in activation loop of kinase domain | 2026-02-17 |\n| Compound | Kinetin (KTP) | Neo-substrate enhancing residual PINK1 activity | 2026-02-17 |\n| Compound | MitoQ | Mitochondria-targeted antioxidant | 2026-02-17 |\n| Clinical Trial | [NCT03323749](https://clinicaltrials.gov/ct2/show/NCT03323749) | SS-31 (elamipretide) Phase III, mitochondrial myopathy | 2026-02-17 |"
   },
   {
-    "chain_id": "protocol_troubleshoot",
+    "chain_id": "chain06",
+    "template": "protocol_troubleshoot",
+    "topic": "Co-immunoprecipitation of KRAS-BRAF interaction",
     "description": "Diagnose protocol error → interpret corrected result → design quantitative follow-up",
     "steps": [
-      {"task_id": "chain06_step1", "input_type": "none"},
-      {"task_id": "chain06_step2", "input_type": "previous_response"},
-      {"task_id": "chain06_step3", "input_type": "previous_response"}
-    ]
+      {
+        "task_id": "chain06_step1",
+        "input_type": "none"
+      },
+      {
+        "task_id": "chain06_step2",
+        "input_type": "previous_response"
+      },
+      {
+        "task_id": "chain06_step3",
+        "input_type": "previous_response"
+      }
+    ],
+    "data_provenance": "| Data Type | Identifier | Details | Query Date |\n|-----------|-----------|---------|------------|\n| PDB | [1UWH](https://www.rcsb.org/structure/1UWH) | Wild-type BRAF structure | 2026-02-17 |\n| UniProt | [P01116](https://www.uniprot.org/uniprotkb/P01116) | KRAS, 189 aa, Switch I region residues 29–35, effector domain 29–40 | 2026-02-17 |\n| Gene | KRAS | Mutations: G12V, G12C, G12D, G13D, Q61H, S17N (dominant-negative) | 2026-02-17 |\n| Gene | BRAF | Predicted MW 84.4 kDa, phosphosites S446/S447/T599/S602 | 2026-02-17 |"
   },
   {
-    "chain_id": "paradox_resolution",
+    "chain_id": "chain07",
+    "template": "paradox_resolution",
+    "topic": "CRISPR KO of ZEB1 paradoxically increases migration",
     "description": "Explain paradoxical result → design discriminating experiment → synthesize conclusion",
     "steps": [
-      {"task_id": "chain07_step1", "input_type": "none"},
-      {"task_id": "chain07_step2", "input_type": "previous_response"},
-      {"task_id": "chain07_step3", "input_type": "previous_response"}
-    ]
+      {
+        "task_id": "chain07_step1",
+        "input_type": "none"
+      },
+      {
+        "task_id": "chain07_step2",
+        "input_type": "previous_response"
+      },
+      {
+        "task_id": "chain07_step3",
+        "input_type": "previous_response"
+      }
+    ],
+    "data_provenance": "| Data Type | Identifier | Details | Query Date |\n|-----------|-----------|---------|------------|\n| Gene | ZEB1 | EMT transcription factor, represses CDH1 (E-cadherin) | 2026-02-17 |\n| Gene | ZEB2 | Paralog of ZEB1, non-redundant target profiles | 2026-02-17 |\n| Cell Line | A549 | Lung adenocarcinoma, CRISPR ZEB1 knockout | 2026-02-17 |\n| Assay | Wound-healing | ZEB1-KO: 2.1× faster closure (p<0.001, n=6) | 2026-02-17 |\n| Assay | Matrigel Transwell | ZEB1-KO: 38% of WT invasion (p<0.01) | 2026-02-17 |"
   },
   {
-    "chain_id": "sequence_to_function",
+    "chain_id": "chain08",
+    "template": "sequence_to_function",
+    "topic": "Psychrophilic lactate dehydrogenase from a deep-sea organism",
     "description": "Identify protein from sequence → predict adaptation mechanism → design validation",
     "steps": [
-      {"task_id": "chain08_step1", "input_type": "none"},
-      {"task_id": "chain08_step2", "input_type": "previous_response"},
-      {"task_id": "chain08_step3", "input_type": "previous_response"}
-    ]
+      {
+        "task_id": "chain08_step1",
+        "input_type": "none"
+      },
+      {
+        "task_id": "chain08_step2",
+        "input_type": "previous_response"
+      },
+      {
+        "task_id": "chain08_step3",
+        "input_type": "previous_response"
+      }
+    ],
+    "data_provenance": "| Data Type | Identifier | Details | Query Date |\n|-----------|-----------|---------|------------|\n| Organism | *Shewanella benthica* | Deep-sea cold seep, 4°C, 500 atm, Mariana Trench | 2026-02-17 |\n| Protein Family | L-lactate dehydrogenase | EC 1.1.1.27, Rossmann fold, homotetramer ~35 kDa/subunit | 2026-02-17 |\n| Substitutions | P135G, I250V, A222S | Cold/pressure adaptation mutations vs. mesophilic *Lactobacillus* LDH | 2026-02-17 |\n| Catalytic Residues | His193, Arg169, Asp166 | Based on LDH family conservation (canonical numbering) | 2026-02-17 |"
   },
   {
-    "chain_id": "data_to_mechanism",
+    "chain_id": "chain09",
+    "template": "data_to_mechanism",
+    "topic": "Unexpected GAPDH cleavage during apoptosis confounds western blot quantification",
     "description": "Interpret ambiguous data → update with new evidence → correct prior analysis",
     "steps": [
-      {"task_id": "chain09_step1", "input_type": "none"},
-      {"task_id": "chain09_step2", "input_type": "previous_response"},
-      {"task_id": "chain09_step3", "input_type": "previous_response"}
+      {
+        "task_id": "chain09_step1",
+        "input_type": "none"
+      },
+      {
+        "task_id": "chain09_step2",
+        "input_type": "previous_response"
+      },
+      {
+        "task_id": "chain09_step3",
+        "input_type": "previous_response"
+      }
+    ],
+    "data_provenance": "| Data Type | Identifier | Details | Query Date |\n|-----------|-----------|---------|------------|\n| Protein | GAPDH | 36 kDa, caspase-3 substrate, cleavage at Asp238 | 2026-02-17 |\n| Antibody | Clone 6C5 | Monoclonal anti-GAPDH, N-terminal epitope | 2026-02-17 |\n| Cell Line | Jurkat | T-cell line, staurosporine 1 µM / 6h → 52% Annexin V+ | 2026-02-17 |\n| Compound | Staurosporine | Apoptosis inducer, caspase-3/7 activator | 2026-02-17 |\n| Compound | Z-VAD-FMK | Pan-caspase inhibitor (50 µM), abolishes GAPDH cleavage | 2026-02-17 |"
+  },
+  {
+    "chain_id": "chain10",
+    "template": "evidence_synthesis",
+    "topic": "Circulating tumor DNA (ctDNA) for early lung cancer detection",
+    "description": "Compare conflicting studies → meta-analytic reasoning → clinical recommendation",
+    "steps": [
+      {
+        "task_id": "chain10_step1",
+        "input_type": "none"
+      },
+      {
+        "task_id": "chain10_step2",
+        "input_type": "previous_response"
+      },
+      {
+        "task_id": "chain10_step3",
+        "input_type": "previous_response"
+      }
+    ],
+    "data_provenance": "| Data Type | Identifier | Details | Query Date |\n|-----------|-----------|---------|------------|\n| Biomarker | 10-gene ctDNA methylation panel | Bisulfite sequencing, cfDNA | 2026-02-17 |\n| Disease | NSCLC (Stage I) | Non-small cell lung cancer, early detection | 2026-02-17 |\n| Study A | Nature Medicine 2020 | Single-center, n=481, AUC=0.92 | 2026-02-17 |\n| Study B | Lancet Resp Med 2023 | Multi-center, n=3,300, AUC=0.68 | 2026-02-17 |\n| Study C | Prospective | n=540, 3 sites, AUC=0.79 | 2026-02-17 |\n| Study D | Retrospective | n=285, 1 site, AUC=0.88 | 2026-02-17 |\n| Study E | Prospective | n=1,950, 8 sites, AUC=0.71 | 2026-02-17 |\n| Comparator | LDCT (NLST/NELSON) | Sensitivity 85–95%, specificity 73–85%, mortality reduction 20–24% | 2026-02-17 |"
+  },
+  {
+    "chain_id": "chain11",
+    "template": "structure_to_drug",
+    "topic": "KRAS G12C covalent inhibition by sotorasib",
+    "description": "Protein structure → binding mechanism → SAR prediction → experimental validation",
+    "steps": [
+      {
+        "task_id": "chain11_step1",
+        "input_type": "none"
+      },
+      {
+        "task_id": "chain11_step2",
+        "input_type": "previous_response"
+      },
+      {
+        "task_id": "chain11_step3",
+        "input_type": "previous_response"
+      },
+      {
+        "task_id": "chain11_step4",
+        "input_type": "previous_response"
+      }
+    ],
+    "data_provenance": "- PDB 6OIM: Queried 2026-02-17, resolution 1.65 Å, released 2019-11-06, X-ray diffraction. Title: \"Crystal Structure of human KRAS G12C covalently bound to AMG 510\"\n- UniProt P01116 (KRAS): 189 aa, queried 2026-02-17\n- ChEMBL CHEMBL4535757 (sotorasib): IC50 = 68 nM (GTPase KRas, assay CHEMBL4357259); IC50 = 30 nM (KRAS, assay CHEMBL4701894); cellular IC50 = 5 nM (MIA PaCa-2, assay CHEMBL4357260)\n- Open Targets: KRAS-NSCLC association score = 0.8325 (queried 2026-02-17)\n\n### Step 2 — Explain binding mechanism\n**File:** `chain11_step2.json`\n- **Question:** Sotorasib achieves selectivity for KRAS G12C over wild-type KRAS and other G12 mutants (G12D, G12V). ChEMBL data shows sotorasib IC50 = 68 nM against KRAS G12C (CHEMBL4357259) but IC50 > 10,000 nM against wild-type KRAS (CHEMBL4735449) and KRAS G12D. Explain the molecular basis for this >150-fold selectivity window. Why can't sotorasib inhibit KRAS G12D even though both mutants activate the same RAS-MAPK pathway?\n- **Ideal answer:** Sotorasib's selectivity has three components: (1) **Covalent selectivity:** The drug requires Cys12 as a nucleophile for irreversible bond formation. G12D has aspartate, G12V has valine — neither can react with the Michael acceptor. This is absolute selectivity; no amount of dose escalation can overcome it. (2) **Conformational selectivity:** Sotorasib binds only the GDP-bound state. G12C has the highest intrinsic GTPase rate among oncogenic KRAS mutants (~50% of WT hydrolysis rate), meaning a significant fraction of cellular KRAS G12C cycles through the GDP state. G12D and G12V have much lower GTPase activity (<1% of WT), staying locked in the GTP state where the S-IIP is closed. (3) **Pocket complementarity:** Even if a non-covalent version of sotorasib were designed, the S-IIP shape is subtly different across mutants due to how residue 12 influences P-loop positioning. The WT glycine at position 12 doesn't create the same pocket geometry. These combined mechanisms make KRAS G12C uniquely druggable among RAS proteins.\n- **Verification:** llm-judge\n- **Cascade risk:** Wrong selectivity rationale → wrong SAR predictions for next-gen inhibitors.\n\n**Data Provenance:**\n- ChEMBL CHEMBL4535757: IC50 = 68 nM (KRAS G12C, CHEMBL4357259), IC50 > 10,000 nM (KRAS WT, CHEMBL4735449), IC50 > 10,000 nM (A549 KRAS G12S, CHEMBL4735451). Queried 2026-02-17.\n- ChEMBL EC50 data: NCI-H358 (KRAS G12C cell line) EC50 = 6.4 nM (CHEMBL5217982), 6.0 nM (CHEMBL5217992)\n\n### Step 3 — SAR prediction\n**File:** `chain11_step3.json`\n- **Question:** Acquired resistance to sotorasib has been observed clinically. Which resistance mechanism would you predict to be MOST difficult to overcome with next-generation KRAS G12C inhibitors?\nA) Secondary mutations in KRAS at Y96D that sterically block the S-IIP pocket\nB) Upregulation of SOS1, the KRAS guanine exchange factor, shifting the GTP/GDP equilibrium\nC) Activating mutations in downstream effectors (BRAF V600E, MEK1 mutations) that bypass KRAS entirely\nD) Acquisition of a second KRAS G12C allele (gene amplification)\n- **Ideal answer:** **C**. Bypass mutations in downstream effectors are the hardest to overcome because they render KRAS inhibition irrelevant — the pathway is activated independently of KRAS. (A) S-IIP pocket mutations can be addressed by redesigning the non-covalent portion of the inhibitor. (B) SOS1 upregulation shifts KRAS toward GTP-bound state (reducing drug access), but combination with SOS1 inhibitors (e.g., BI-3406) can restore sensitivity. (D) Gene amplification increases target levels but doesn't change the fundamental druggability. Bypass mutations require combination strategies targeting different pathway nodes simultaneously, which is a fundamentally harder pharmacology problem (drug-drug interactions, overlapping toxicity).\n- **Verification:** programmatic (multiple_choice: C)\n- **Cascade risk:** Wrong resistance hierarchy → wrong clinical strategy.\n\n**Data Provenance:**\n- Clinical trial NCT04625647: Phase II, sotorasib in KRAS G12C NSCLC, status ACTIVE_NOT_RECRUITING (queried 2026-02-17)\n- Clinical trial NCT05398094: Phase II, AMG 510 in Stage III unresectable NSCLC KRAS G12C, RECRUITING (queried 2026-02-17)\n- Open Targets KRAS-NSCLC: score 0.8325; EGFR-NSCLC: score 0.8850 (queried 2026-02-17)\n\n### Step 4 — Experimental validation plan\n**File:** `chain11_step4.json`\n- **Question:** Design a preclinical strategy to evaluate combination therapy of sotorasib + a SOS1 inhibitor to overcome resistance mechanism (B) from Step 3 (SOS1 upregulation shifting KRAS toward GTP-bound state). Specify cell models, assays, dosing strategy, and quantitative success criteria.\n- **Ideal answer:** (1) **Cell models:** NCI-H358 (KRAS G12C, NSCLC), MIA PaCa-2 (KRAS G12C, pancreatic). Generate sotorasib-resistant clones by dose escalation over 3-6 months. Characterize resistance: WES for secondary mutations, RNA-seq for bypass pathway activation, western blot for SOS1/pERK/pAKT levels. Select clones with confirmed SOS1 upregulation (>3-fold by western). (2) **Combination viability assay:** 8×8 dose matrix of sotorasib (0.3–1000 nM) × SOS1 inhibitor (0.1–3000 nM) in resistant and parental lines, 72h CellTiter-Glo. Calculate Bliss synergy scores. Success: Bliss excess >0.15 at clinically relevant concentrations. (3) **Target engagement:** In resistant cells treated with combination, measure: (a) RAS-GTP pulldown (RBD assay) — success: >70% reduction in RAS-GTP vs. sotorasib alone; (b) pERK/pAKT western — success: suppression to <20% of vehicle. (4) **In vivo:** Resistant NCI-H358 xenograft, 4 arms (n=10): vehicle, sotorasib 30 mg/kg QD, SOS1i 100 mg/kg BID, combination. 28-day study. Success: combination achieves >60% TGI when single agents show <20% TGI. Monitor body weight for tolerability.\n- **Verification:** llm-judge\n- **Cascade risk:** Terminal step.\n\n**Data Provenance:**\n- ChEMBL CHEMBL4535757 sotorasib: MIA PaCa-2 IC50 = 5 nM (CHEMBL4357260), NCI-H358 IC50 = 30 nM (CHEMBL4701895), NCI-H358 IC50 = 16 nM (CHEMBL4735450). Queried 2026-02-17."
+  },
+  {
+    "chain_id": "chain12",
+    "template": "paper_to_experiment",
+    "topic": "JAK2 V617F in myeloproliferative neoplasms",
+    "description": "Paper finding → data interpretation → statistical test → hypothesis generation",
+    "steps": [
+      {
+        "task_id": "chain12_step1",
+        "input_type": "none"
+      },
+      {
+        "task_id": "chain12_step2",
+        "input_type": "previous_response"
+      },
+      {
+        "task_id": "chain12_step3",
+        "input_type": "previous_response"
+      },
+      {
+        "task_id": "chain12_step4",
+        "input_type": "previous_response"
+      }
+    ],
+    "data_provenance": "- PDB 4IVA: Queried 2026-02-17, resolution 1.5 Å, released 2013-05-22, X-ray. Title: \"JAK2 kinase (JH1 domain) in complex with inhibitor\"\n- UniProt O60674 (JAK2): 1132 aa. Domains: FERM (37-380), atypical SH2 (401-482), Protein kinase 1/JH2 (545-809), Active site at 976. Queried 2026-02-17.\n- ClinVar JAK2: 200 pathogenic variants (queried 2026-02-17 15:55 UTC)\n- Open Targets JAK2-myelofibrosis: association score = 0.7417 (queried 2026-02-17)\n\n### Step 2 — Quantitative data interpretation\n**File:** `chain12_step2.json`\n- **Question:** Ruxolitinib is a JAK1/JAK2 inhibitor approved for myelofibrosis. ChEMBL data shows: ruxolitinib IC50 = 3 nM for JAK1 (CHEMBL1292865), 3 nM for JAK2 (CHEMBL1292866), 430 nM for JAK3 (CHEMBL1292867), and 19 nM for TYK2 (CHEMBL1292868). Calculate the selectivity ratios of JAK2 over JAK3 and TYK2. A patient with myelofibrosis responds to ruxolitinib initially (spleen reduction, symptom improvement) but develops anemia (hemoglobin drops from 10 to 7.5 g/dL). Based on the selectivity profile, explain this clinical observation.\n- **Ideal answer:** Selectivity ratios: JAK2/JAK3 = 430/3 = **143-fold**; JAK2/TYK2 = 19/3 = **6.3-fold**; JAK1/JAK2 = 3/3 = **1:1 (equipotent)**. The anemia is explained by ruxolitinib's **equal potency against JAK2 and JAK1**. Normal erythropoiesis depends on erythropoietin (EPO) signaling through JAK2 homodimers on erythroid progenitors. Ruxolitinib cannot selectively inhibit mutant JAK2 V617F vs. wild-type JAK2 — both are inhibited equally at therapeutic doses. This suppresses EPO-driven erythropoiesis, causing/worsening anemia. The spleen response occurs because the MPN clone is exquisitely dependent on JAK2-STAT signaling and is preferentially affected, but normal JAK2-dependent hematopoiesis is collateral damage. This is the fundamental limitation of pan-JAK2 inhibitors — they are pathway inhibitors, not mutation-selective. Dose reduction to manage anemia risks loss of disease control.\n- **Verification:** llm-judge\n- **Cascade risk:** Wrong selectivity interpretation → wrong prediction of clinical outcomes.\n\n**Data Provenance:**\n- ChEMBL CHEMBL1789941 (ruxolitinib): JAK1 IC50 = 3 nM (CHEMBL1292865), JAK2 IC50 = 3 nM (CHEMBL1292866), JAK3 IC50 = 430 nM (CHEMBL1292867), TYK2 IC50 = 19 nM (CHEMBL1292868), JAK1 IC50 = 3.3 nM (replicate, CHEMBL2155753). Max phase = 4 (approved). Queried 2026-02-17.\n- Open Targets JAK2-myelofibrosis: 0.7417; MPL-myelofibrosis: 0.7375; CALR-myelofibrosis: 0.5646 (queried 2026-02-17)\n\n### Step 3 — Statistical test selection\n**File:** `chain12_step3.json`\n- **Question:** You are analyzing a retrospective cohort of 85 myelofibrosis patients treated with ruxolitinib. You want to test whether baseline JAK2 V617F allele burden (measured by quantitative PCR, continuous variable from 0-100%) predicts spleen response at 24 weeks (≥35% reduction, binary yes/no). You also want to assess whether allele burden predicts time-to-response and whether initial allele burden trajectory (change in allele burden at weeks 4, 8, 12) provides additional predictive value beyond baseline. What statistical framework addresses all three questions?\n- **Ideal answer:** (1) **Baseline allele burden → binary spleen response:** Logistic regression with allele burden as continuous predictor. Report odds ratio per 10% increase in allele burden, with 95% CI. Check linearity assumption using restricted cubic splines — if non-linear, use spline logistic regression. (2) **Allele burden → time-to-response:** Cox proportional hazards model with allele burden as continuous covariate. Check PH assumption with Schoenfeld residuals. Report hazard ratio per 10% allele burden increase. Kaplan-Meier curves stratified by tertiles of allele burden for visualization. (3) **Trajectory analysis:** Joint longitudinal-survival model (JM package in R) that simultaneously models: (a) the longitudinal trajectory of allele burden (linear mixed-effects model with random intercept and slope), and (b) time-to-spleen response (Cox model). The joint model links the current value and/or slope of allele burden to the hazard of response, properly accounting for measurement error and informative dropout. This is superior to landmark analysis or time-varying Cox because it handles irregular measurement times and extrapolation. **Do not** use repeated t-tests comparing responders vs. non-responders at each timepoint — this ignores the time series structure and inflates type I error.\n- **Verification:** llm-judge\n- **Cascade risk:** Wrong model → biased estimates → wrong clinical thresholds.\n\n### Step 4 — Hypothesis generation\n**File:** `chain12_step4.json`\n- **Question:** Based on your analysis — JAK2 V617F drives MPN through constitutive JH1 activation via JH2 interface disruption, ruxolitinib inhibits WT and mutant JAK2 equally (causing anemia), and allele burden trajectory may predict response — propose 3 approaches to develop a mutation-selective JAK2 V617F inhibitor that spares wild-type JAK2 and thus preserves normal erythropoiesis.\n- **Ideal answer:** (1) **Target the JH2-JH1 interface directly:** Design compounds that stabilize the autoinhibitory JH2-JH1 interaction in the WT conformation. V617F disrupts this interface, so molecules that bind and stabilize the WT interface would preferentially inhibit cells lacking functional autoinhibition (i.e., V617F-expressing cells would still escape, requiring careful design). Alternatively, target the unique V617F-disrupted interface as a neo-pocket. (2) **Mutant-selective type II inhibitor:** Exploit the possibility that V617F alters the DFG motif equilibrium in JH1. If V617F shifts JH1 toward the DFG-out state more than WT (due to altered JH2 regulation), a type II inhibitor optimized for this specific DFG-out geometry could achieve selectivity. Analogous to how ponatinib selectively inhibits BCR-ABL T315I. Screen using differential scanning calorimetry (DSC) comparing compound binding to V617F vs. WT JH1-JH2 constructs. (3) **PROTAC degrader approach:** Design a PROTAC that binds JAK2 and recruits an E3 ligase (e.g., cereblon via thalidomide analog). If the PROTAC achieves preferential degradation of V617F JAK2 — exploiting different surface accessibility or stability of the mutant — it could selectively deplete the oncogenic protein. Even if binding affinity is similar, degradation kinetics may differ due to conformational differences affecting ubiquitination sites. This approach is being explored for several \"undruggable\" targets and would convert a pathway inhibitor into a mutation-specific one.\n- **Verification:** llm-judge\n- **Cascade risk:** Terminal step."
+  },
+  {
+    "chain_id": "chain13",
+    "template": "stats_pipeline",
+    "topic": "GWAS meta-analysis for type 2 diabetes risk loci",
+    "description": "Test selection → multiple testing correction → pathway interpretation",
+    "steps": [
+      {
+        "task_id": "chain13_step1",
+        "input_type": "none"
+      },
+      {
+        "task_id": "chain13_step2",
+        "input_type": "previous_response"
+      },
+      {
+        "task_id": "chain13_step3",
+        "input_type": "previous_response"
+      }
+    ],
+    "data_provenance": "- Open Targets T2D (EFO_0004220): top targets IFNAR2 (0.6094), IFNAR1 (0.6077), IMPDH1 (0.6057). Queried 2026-02-17.\n- ClinVar TP53 total variants: 3,912; pathogenic: 1,705 (queried 2026-02-17)\n\n### Step 2 — Multiple testing correction\n**File:** `chain13_step2.json`\n- **Question:** Your random-effects meta-analysis identifies 412 loci reaching genome-wide significance (p < 5×10⁻⁸). Of these, 380 replicate known T2D loci and 32 are novel. A reviewer asks: \"The genome-wide significance threshold of 5×10⁻⁸ was derived for European populations based on ~1 million independent common variants. With 8 million imputed variants across three ancestries, shouldn't you use a more stringent threshold?\" (a) Is the reviewer correct? (b) Calculate the appropriate Bonferroni threshold for 8 million tests. (c) How many of the 32 novel loci would survive this threshold if their p-values range from 1.2×10⁻⁸ to 4.8×10⁻⁸? (d) What is the better approach than adjusting the threshold?\n- **Ideal answer:** (a) **The reviewer raises a valid point but the conclusion is partially wrong.** The 5×10⁻⁸ threshold approximates a Bonferroni correction for ~1 million independent common variants in European LD structure (0.05/10⁶ ≈ 5×10⁻⁸). With imputed and multi-ancestry data, the number of effectively independent tests increases. However, the increase is not proportional to total variants because most of the 8 million variants are in LD with each other. (b) **Bonferroni for 8M tests:** 0.05 / 8×10⁶ = 6.25×10⁻⁹. This is ~8× more stringent than the standard threshold. (c) If the 32 novel loci have p-values from 1.2×10⁻⁸ to 4.8×10⁻⁸, **zero** survive a threshold of 6.25×10⁻⁹. But Bonferroni is overly conservative here because it ignores LD. (d) **Better approaches:** (i) Calculate the effective number of independent tests using eigenvalue decomposition of the LD matrix (simpleM or LDAK), which will yield ~2-3 million independent tests across ancestries, corresponding to a threshold of ~1.5-2.5×10⁻⁸. Some novel loci may survive this. (ii) Use a Bayesian framework (e.g., FINEMAP, SuSiE) that assigns posterior inclusion probabilities to each variant, avoiding arbitrary thresholds entirely. (iii) Require replication: the novel loci should be validated in an independent cohort — if 20+ of 32 replicate at p<0.05 (directionally consistent), this provides stronger evidence than any significance threshold.\n- **Verification:** llm-judge\n- **Cascade risk:** Wrong threshold → miss true signals or accept false positives.\n\n### Step 3 — Pathway interpretation\n**File:** `chain13_step3.json`\n- **Question:** MAGMA gene-set analysis on the 412 T2D loci identifies these enriched pathways:\n\n| Pathway | P_adj | # Genes | Enrichment |\n|---|---|---|---|\n| Insulin secretion regulation | 3.2×10⁻¹⁵ | 45 | 4.1× |\n| Pancreatic beta cell development | 7.8×10⁻¹¹ | 28 | 3.6× |\n| Type I interferon signaling | 1.4×10⁻⁷ | 19 | 2.8× |\n| Adipocyte differentiation | 5.6×10⁻⁶ | 22 | 2.3× |\n| Circadian rhythm regulation | 2.3×10⁻⁴ | 11 | 2.0× |\n| Mitochondrial electron transport | 0.012 | 8 | 1.5× |\n\nThe interferon signaling result is unexpected for T2D — your collaborator suggests it is an artifact. However, Open Targets independently identifies IFNAR2 and IFNAR1 as top T2D associations. Evaluate whether the interferon signal is real or artifact, and explain the potential biological connection.\n- **Ideal answer:** **The interferon signal is likely real, not an artifact.** Evidence: (1) **Independent convergence:** GWAS loci enriched for interferon genes AND Open Targets independently identifies IFNAR1/2 as top T2D associations from orthogonal data (genetic associations, expression, literature). This convergence from different methodologies strongly supports a genuine signal. (2) **Biological plausibility:** Type I interferons (IFNα/β) are increasingly recognized in T2D pathogenesis. IFN signaling in pancreatic beta cells induces ER stress and apoptosis, contributing to beta cell loss. In obesity, chronic low-grade inflammation involves IFN-stimulated gene expression in adipose tissue macrophages. Viral infections triggering IFN responses are linked to diabetes onset (enterovirus → type 1 diabetes; HCV → T2D). (3) **Statistical robustness:** p = 1.4×10⁻⁷ with 19 genes and 2.8× enrichment is highly significant and well above the marginal pathway results.\n\n**However, consider potential confounds:** The IFNAR1/IFNAR2 locus on chromosome 21q22 is in a region with complex LD and multiple genes. The T2D signal may reflect LD with nearby genes (e.g., IL10RB) rather than IFNAR itself. Fine-mapping with ancestry-specific LD (leveraging the African cohort's short LD blocks) is needed to distinguish causal genes.\n\n**Biological ranking:** (1) Insulin secretion + beta cell development = core T2D pathophysiology; (2) Interferon signaling + adipocyte differentiation = immune/metabolic crosstalk; (3) Circadian rhythm = plausible (sleep disruption → insulin resistance); (4) Mitochondrial transport = marginal (p=0.012, low enrichment).\n- **Verification:** llm-judge\n- **Cascade risk:** Terminal step."
+  },
+  {
+    "chain_id": "chain14",
+    "template": "critical_appraisal",
+    "topic": "Lecanemab efficacy in early Alzheimer's disease",
+    "description": "Evaluate weak evidence → integrate conflicting data → design definitive experiment",
+    "steps": [
+      {
+        "task_id": "chain14_step1",
+        "input_type": "none"
+      },
+      {
+        "task_id": "chain14_step2",
+        "input_type": "previous_response"
+      },
+      {
+        "task_id": "chain14_step3",
+        "input_type": "previous_response"
+      }
+    ],
+    "data_provenance": "- PDB 9CZI: Queried 2026-02-17, resolution 3.0 Å, released 2024-10-02, cryo-EM. Title: \"Paired helical tau filaments in dominantly inherited Alzheimer disease with cotton wool plaques\"\n- ClinVar APP: 131 pathogenic variants; PSEN1: 196 pathogenic variants (queried 2026-02-17 15:55 UTC)\n- Clinical trial NCT05999084: Lecanemab registry, RECRUITING (queried 2026-02-17)\n- Clinical trial NCT06602258: E2814 + lecanemab, Phase II, ACTIVE_NOT_RECRUITING (queried 2026-02-17)\n\n### Step 2 — Integrate contradictory evidence\n**File:** `chain14_step2.json`\n- **Question:** A subsequent real-world evidence study (n=3,200 patients across 45 US memory clinics, 12-month follow-up) reports: CDR-SB change in lecanemab-treated patients = +1.8 (vs. +1.66 for placebo in Clarity AD at 18 months). ARIA-E rate = 15.8% (vs. 12.6% in the trial). 22% of patients discontinued within 6 months (infusion burden, ARIA, or lack of perceived benefit). The study notes that real-world patients are older (mean 78 vs. 72 in Clarity AD), have more comorbidities, and 34% are on anticoagulants. How does this change your assessment?\n- **Ideal answer:** **This substantially weakens the real-world case for lecanemab:**\n\n1. **Worse outcomes than placebo arm of Clarity AD:** Real-world lecanemab patients declined +1.8 CDR-SB in 12 months, which extrapolates to ~2.7 at 18 months — *worse* than the Clarity AD placebo arm (+1.66 at 18 months). However, this comparison is confounded by the older, sicker real-world population who would be expected to decline faster regardless.\n\n2. **Higher ARIA rate (15.8% vs. 12.6%)** likely reflects older patients with more cerebrovascular disease and anticoagulant use. The 34% on anticoagulants is alarming given the 3 ARIA-related deaths in Clarity AD included anticoagulated patients.\n\n3. **High discontinuation (22% by 6 months)** reveals a practical effectiveness-efficacy gap. Intent-to-treat efficacy trials capture a best-case scenario; real-world adherence is worse.\n\n4. **Selection bias:** Real-world patients were not selected by biomarker-confirmed early AD — some may have mixed dementia, vascular contributions, or more advanced disease, all of which would dilute amyloid-specific effects.\n\n5. **Updated conclusion:** The Clarity AD trial result may be valid for its narrow population (biomarker-confirmed early AD, age ~72, no anticoagulants) but does not generalize well. The 0.45 CDR-SB benefit may not manifest in typical clinical patients. Treatment guidelines should emphasize strict patient selection criteria matching trial eligibility.\n- **Verification:** llm-judge\n- **Cascade risk:** Failure to account for efficacy-effectiveness gap → inappropriate treatment recommendations.\n\n### Step 3 — Design definitive experiment\n**File:** `chain14_step3.json`\n- **Question:** Based on your analysis — modest clinical benefit in selected patients, poor real-world generalization, amyloid reduction confirmed but functional impact unclear — design a trial that would definitively establish whether amyloid-clearing therapy provides clinically meaningful benefit. Specify: patient selection, endpoint, comparator, duration, and key design features.\n- **Ideal answer:**\n**Adaptive platform trial testing amyloid clearance + downstream combination:**\n\n**Population:** Biomarker-confirmed early AD (positive amyloid PET AND p-tau181/217 >2× ULN), age 60-80, MMSE 22-30, CDR-global 0.5-1.0. Exclude anticoagulant users and those with >4 microbleeds on baseline MRI.\n\n**Design:** 2×2 factorial, adaptive with interim futility analysis at 12 months:\n- Arm 1: Lecanemab + placebo tau (anti-amyloid alone)\n- Arm 2: Lecanemab + anti-tau antibody (e.g., E2814; combination)\n- Arm 3: Anti-tau antibody alone\n- Arm 4: Placebo + placebo\n\n**Primary endpoint:** Time to progression from MCI to dementia (CDR-global 0 to ≥1, or CDR-global 0.5 to ≥1.0 confirmed at 2 consecutive visits) — this is a **functional milestone** that patients and caregivers understand, not a continuous scale score.\n\n**Key secondary:** CDR-SB at 36 months, ADAS-Cog14, Amsterdam IADL, quality-adjusted life years (QALYs).\n\n**Duration:** 36 months (vs. 18 in Clarity AD). The widening treatment-placebo curves suggest longer observation is critical.\n\n**Sample size:** n=1,200 per arm (4,800 total), powered at 80% to detect a 25% relative reduction in dementia conversion (estimated ~40% conversion in placebo over 3 years → ~30% in treatment arm).\n\n**Design features:** (1) Stratify by ApoE4 status, baseline CDR, age. (2) Pre-registered digital biomarkers (smartphone cognitive tests, actigraphy) as exploratory endpoints. (3) Independent DSMB with stopping rules for ARIA-related SAEs. (4) Built-in health economic analysis: track all costs (drug, MRIs, hospitalizations) for cost-effectiveness.\n\n**Decision criterion:** If neither lecanemab alone nor combination delays dementia conversion at 36 months, the amyloid-clearance strategy should be deprioritized in favor of downstream targets.\n- **Verification:** llm-judge\n- **Cascade risk:** Terminal step."
+  },
+  {
+    "chain_id": "chain15",
+    "template": "genetics_to_therapy",
+    "topic": "CFTR F508del in cystic fibrosis",
+    "description": "Genetic finding → structural analysis of mutation → therapeutic strategy",
+    "steps": [
+      {
+        "task_id": "chain15_step1",
+        "input_type": "none"
+      },
+      {
+        "task_id": "chain15_step2",
+        "input_type": "previous_response"
+      },
+      {
+        "task_id": "chain15_step3",
+        "input_type": "previous_response"
+      }
+    ],
+    "data_provenance": "- PDB 5UAK: Queried 2026-02-17, resolution 3.87 Å, released 2017-01-18, cryo-EM. Title: \"Dephosphorylated, ATP-free human cystic fibrosis transmembrane conductance regulator (CFTR)\"\n- UniProt P13569 (CFTR): 1480 aa. Domains: ABC TMD1 (81-365), ABC transporter 1 (423-646), ABC TMD2 (859-1155). Queried 2026-02-17.\n- ClinVar CFTR: 2,152 pathogenic variants, 6,170 total variants (queried 2026-02-17 15:55 UTC)\n- ChEMBL CHEMBL2010601 (ivacaftor): max_phase = 4. Queried 2026-02-17.\n- Clinical trial NCT05668741: VX-522 in CF, Phase 1/2, RECRUITING (queried 2026-02-17)\n\n### Step 2 — Structural consequence of mutation\n**File:** `chain15_step2.json`\n- **Question:** The Trikafta triple combination restores ~50% of wild-type CFTR function in F508del/F508del patients. However, ~10% of CF patients carry mutations in both alleles that are not responsive to modulators (e.g., nonsense mutations like G542X creating premature stop codons, or splice mutations). For a patient compound heterozygous for F508del/G542X, Trikafta can only rescue the F508del allele. Given that normal CFTR chloride conductance requires proper channel assembly and ~50% of WT function is the threshold for avoiding significant lung disease, estimate whether rescuing one allele is sufficient and what additional strategies could help.\n- **Ideal answer:** **One-allele rescue with Trikafta provides partial but likely insufficient benefit:**\n\nQuantitative estimate: Each allele contributes ~50% of total CFTR mRNA. The G542X allele produces no functional protein (nonsense-mediated mRNA decay + truncated non-functional protein). The F508del allele with Trikafta: baseline ~2% trafficking × Trikafta rescue to ~50% of WT per-molecule function × some increase in surface trafficking (Trikafta raises to ~40-60% of WT surface levels). Net: ~25-30% of WT function from the rescued F508del allele alone.\n\n**Clinical prediction:** 25-30% of WT function is in the \"borderline\" zone. Patients with >50% function are asymptomatic; 25-50% may have mild disease. This patient would likely see improvement (reduced sweat chloride, improved FEV1) but not normalization.\n\n**Additional strategies for the G542X allele:**\n1. **Readthrough agents:** Ataluren (PTC124) promotes ribosomal readthrough of premature stop codons. Could partially restore full-length CFTR from the G542X allele. However, clinical trials showed limited efficacy (Phase III failed primary endpoint).\n2. **mRNA therapy:** Nebulized lipid nanoparticle-delivered CFTR mRNA to airway epithelium. Provides transient WT CFTR expression independent of genotype. Currently in Phase I/II trials (e.g., MRT5005).\n3. **Gene editing:** CRISPR-based correction of G542X in airway basal stem cells ex vivo, followed by re-engraftment. Technically feasible but delivery to sufficient airway surface remains unsolved.\n4. **NMD inhibition + Trikafta:** If G542X mRNA is stabilized by NMD inhibition, the truncated protein may still not function — but if any readthrough occurs, Trikafta could then help fold/gate the full-length protein produced.\n- **Verification:** llm-judge\n- **Cascade risk:** Wrong rescue estimate → wrong clinical expectation.\n\n### Step 3 — Therapeutic strategy\n**File:** `chain15_step3.json`\n- **Question:** Next-generation CFTR modulators aim to achieve >80% of WT function for F508del patients. The current Trikafta achieves ~50%. What specific molecular targets within the CFTR folding/trafficking pathway could a fourth drug component address to close this gap? Propose two distinct strategies with mechanisms and measurable endpoints.\n- **Ideal answer:**\n**Strategy 1 — Enhance ER proteostasis to reduce F508del degradation:**\nThe remaining F508del-CFTR that isn't rescued by Trikafta is being degraded by the CHIP/Hsp70-mediated ER quality control pathway. Inhibiting CHIP (STUB1) E3 ligase activity or modulating Hsp70/Hsp90 chaperone interactions could increase the fraction of F508del-CFTR that escapes ER retention. Specifically, small-molecule inhibitors of the Hsp70-CHIP interaction would block ubiquitination of partially misfolded CFTR without globally disrupting protein homeostasis. **Endpoint:** Measure F508del-CFTR surface expression by cell-surface biotinylation in primary human bronchial epithelial cells (HBE) from F508del homozygous patients. Success: Trikafta + CHIP inhibitor achieves >70% of WT surface CFTR (vs. ~50% with Trikafta alone). Monitor unfolded protein response (UPR) markers to ensure no proteotoxic stress.\n\n**Strategy 2 — Stabilize rescued F508del-CFTR at the plasma membrane:**\nEven CFTR that reaches the surface with Trikafta has reduced stability and is endocytosed and degraded faster than WT (half-life ~4h vs. ~16h for WT). A \"stabilizer\" that enhances CFTR-NHERF1 PDZ interaction (the C-terminal PDZ-binding motif DTRL anchors CFTR to the apical membrane via NHERF1/EBP50 scaffold) or inhibits endocytic retrieval could extend surface residence time. **Endpoint:** Measure CFTR surface half-life by pulse-chase surface biotinylation. Success: half-life increased from ~4h to >10h. Functional confirmation: Ussing chamber short-circuit current (Isc) in HBE monolayers showing sustained chloride secretion over 24h (currently declines as rescued CFTR is internalized).\n- **Verification:** llm-judge\n- **Cascade risk:** Terminal step."
+  },
+  {
+    "chain_id": "chain16",
+    "template": "protocol_troubleshoot",
+    "topic": "ChIP-seq for H3K27me3 in embryonic stem cells",
+    "description": "Diagnose protocol error → interpret corrected result → design quantitative follow-up",
+    "steps": [
+      {
+        "task_id": "chain16_step1",
+        "input_type": "none"
+      },
+      {
+        "task_id": "chain16_step2",
+        "input_type": "previous_response"
+      },
+      {
+        "task_id": "chain16_step3",
+        "input_type": "previous_response"
+      }
     ]
   },
   {
-    "chain_id": "evidence_synthesis",
+    "chain_id": "chain17",
+    "template": "paradox_resolution",
+    "topic": "PD-1 blockade accelerates tumor growth (hyperprogression)",
+    "description": "Explain paradoxical result → design discriminating experiment → synthesize conclusion",
+    "steps": [
+      {
+        "task_id": "chain17_step1",
+        "input_type": "none"
+      },
+      {
+        "task_id": "chain17_step2",
+        "input_type": "previous_response"
+      },
+      {
+        "task_id": "chain17_step3",
+        "input_type": "previous_response"
+      }
+    ],
+    "data_provenance": "- PDB 4ZQK: Queried 2026-02-17, resolution 2.45 Å, released 2015-11-04. Title: \"Structure of the complex of human programmed death-1 (PD-1) and its ligand PD-L1.\"\n- ClinVar TP53: 1,705 pathogenic, 3,912 total variants; PTEN: 1,922 pathogenic variants (queried 2026-02-17 15:55 UTC)\n- Open Targets: TP53-hepatocellular carcinoma score 0.8001; TP53-neoplasm score 0.9363 (queried 2026-02-17)\n\n### Step 2 — Design discriminating experiment\n**File:** `chain17_step2.json`\n- **Question:** Your top hypothesis is that PD-1 blockade activates Tregs more than effectors in HPD-prone tumors. Your secondary hypothesis is Fc-mediated effector T cell depletion. Design ONE experiment using patient samples (pre- and post-treatment biopsies) that distinguishes these two mechanisms. Specify: sample requirements, assays, controls, and the expected result pattern for each hypothesis.\n- **Ideal answer:**\n**Experiment: Multi-parameter flow cytometry + spatial transcriptomics on matched pre/post-treatment biopsies**\n\n**Samples:** Pre-treatment biopsy (baseline) and on-treatment biopsy (cycle 2, day 1, ~3 weeks post-first dose) from: (a) 15 HPD patients, (b) 15 responders, (c) 15 progressive disease (non-HPD). All receiving anti-PD-1 monotherapy.\n\n**Panel 1 — Flow cytometry (dissociated tumor):**\n- Treg panel: CD3/CD4/CD8/CD25/FoxP3/CTLA-4/Ki-67/PD-1\n- Effector panel: CD3/CD8/granzyme B/IFN-γ/PD-1/TIM-3/LAG-3/KLRG1\n- Absolute counts per gram of tumor (critical — ratios alone are insufficient)\n\n**Panel 2 — Spatial transcriptomics (10x Visium or MERFISH):**\n- Map spatial distribution of Tregs (FOXP3+), CD8+ effectors (CD8A/GZMB), and macrophages (CD68/CD163) relative to tumor nests\n\n**Expected if H1 (Treg activation) is correct:**\n- HPD post-treatment: ↑ absolute Treg count (>2-fold), ↑ Treg Ki-67+ (proliferating), ↑ Treg:CD8 ratio\n- Effector CD8+ count maintained or slightly increased but unchanged Ki-67/granzyme B (activated but suppressed)\n- Spatial: Tregs migrate INTO tumor nests post-treatment, surrounding CD8+ T cells\n- Responders: ↑ CD8+ count and Ki-67, Treg count stable or decreased\n\n**Expected if H2 (Fc-mediated CD8 depletion) is correct:**\n- HPD post-treatment: ↓ absolute CD8+ T cell count (>50% reduction), especially PD-1hi effectors\n- Treg count unchanged or proportionally increased (because CD8+ depleted, ratio changes)\n- Spatial: CD8+ T cells depleted from tumor margins where they interface with FcR+ macrophages\n- Key discriminator: **absolute CD8+ count.** H1 predicts stable/increased CD8; H2 predicts decreased CD8.\n\n**Critical control:** Include patients on anti-PD-1 with different Fc engineering (e.g., Fc-silent anti-PD-1 in clinical trials) — if HPD rate drops with Fc-silent antibodies, H2 is supported.\n- **Verification:** llm-judge\n- **Cascade risk:** Wrong experiment → can't distinguish mechanisms → wrong patient stratification.\n\n### Step 3 — Synthesize conclusion from results\n**File:** `chain17_step3.json`\n- **Question:** Results from your study:\n\n| Metric (fold-change, post/pre) | HPD (n=15) | Responders (n=15) | PD non-HPD (n=15) |\n|---|---|---|---|\n| Absolute CD8+ count | 1.4× (↑) | 2.8× (↑) | 1.1× (→) |\n| CD8+ Ki-67+ (% of CD8) | 8% → 22% | 8% → 45% | 8% → 12% |\n| Absolute Treg count | 3.2× (↑↑) | 0.8× (→) | 1.3× (↑) |\n| Treg Ki-67+ (% of Tregs) | 12% → 48% | 12% → 15% | 12% → 18% |\n| Treg:CD8 ratio | 0.3 → 0.7 | 0.3 → 0.1 | 0.3 → 0.35 |\n| Spatial: Tregs in tumor nests | Rare → abundant | Rare → rare | Rare → sparse |\n\nWhich hypothesis is supported? What is the clinical implication for patient selection?\n- **Ideal answer:** **H1 (Treg activation) is strongly supported; H2 (Fc-mediated CD8 depletion) is refuted.**\n\n**Evidence:**\n- CD8+ T cells are NOT depleted in HPD (1.4× increase, with modest Ki-67 activation at 22%), refuting H2's prediction of CD8 depletion.\n- Tregs are dramatically expanded in HPD (3.2× increase, Ki-67 from 12→48% = massive proliferation), with spatial invasion into tumor nests. This is precisely H1's prediction.\n- In responders, CD8+ cells expand 2.8× with robust activation (Ki-67 45%) while Tregs are stable — the effector:Treg balance shifts toward immunity.\n- The Treg:CD8 ratio is the key discriminator: HPD shifts from 0.3→0.7 (immunosuppressive); responders shift from 0.3→0.1 (immunocompetent).\n\n**Clinical implications:**\n1. **Pre-treatment Treg:CD8 ratio as a predictive biomarker:** Patients with high baseline Treg infiltration (>0.4 ratio) should be flagged as HPD risk. Consider combination with anti-CTLA-4 (which depletes Tregs via ADCC) before or concurrent with anti-PD-1.\n2. **Combination strategy for HPD-prone patients:** Anti-PD-1 + ipilimumab (anti-CTLA-4, which depletes FoxP3+ Tregs through Fc-mediated ADCC) to counter Treg expansion. Alternative: anti-PD-1 + anti-CCR8 (selectively depletes intratumoral Tregs without systemic immune toxicity).\n3. **Early monitoring:** Liquid biopsy or on-treatment biopsy at week 3 measuring Treg expansion could enable early detection and treatment switch before clinical HPD manifests.\n4. **Patient exclusion from anti-PD-1 monotherapy:** Tumors with >50% FoxP3+ cells among CD4+ TILs should not receive anti-PD-1 alone.\n- **Verification:** llm-judge\n- **Cascade risk:** Terminal step."
+  },
+  {
+    "chain_id": "chain18",
+    "template": "structure_to_drug",
+    "topic": "SARS-CoV-2 main protease inhibition by nirmatrelvir",
+    "description": "Protein structure → binding mechanism → SAR prediction → experimental validation",
+    "steps": [
+      {
+        "task_id": "chain18_step1",
+        "input_type": "none"
+      },
+      {
+        "task_id": "chain18_step2",
+        "input_type": "previous_response"
+      },
+      {
+        "task_id": "chain18_step3",
+        "input_type": "previous_response"
+      },
+      {
+        "task_id": "chain18_step4",
+        "input_type": "previous_response"
+      }
+    ],
+    "data_provenance": "- PDB 7SI9: Queried 2026-02-17, resolution 2.0 Å, released 2021-10-20, X-ray. Title: \"Room temperature X-ray structure of SARS-CoV-2 main protease (Mpro) in complex with PF-07321332\"\n- ChEMBL CHEMBL4802135 (nirmatrelvir): IC50 = 0.79 nM (Mpro, CHEMBL5112747); IC50 = 75 nM (CHEMBL5106611); IC50 = 31 nM (CHEMBL5142713). Queried 2026-02-17.\n\n### Step 2 — Explain binding mechanism\n**File:** `chain18_step2.json`\n- **Question:** Nirmatrelvir uses a nitrile warhead to form a reversible covalent bond with Cys145. Compare this to sotorasib's irreversible covalent bond with KRAS Cys12 (from Chain 11). Why was reversible covalent binding chosen for nirmatrelvir instead of irreversible? What are the pharmacological consequences of this design choice?\n- **Ideal answer:** **Reversible vs. irreversible covalent: different targets, different strategies:**\n\n**(1) Target biology dictates strategy:**\n- **KRAS G12C (sotorasib, irreversible):** KRAS is a human protein mutated in cancer. The Cys12 is unique to the mutant — irreversible binding provides maximum target engagement and selectivity (WT KRAS has Gly12, no cysteine). Irreversible binding is acceptable because: (a) only tumor cells express the target, (b) sustained target engagement is desired (KRAS is long-lived, t½ ~24h), (c) no off-target cysteine reactivity concern at therapeutic doses.\n- **Mpro (nirmatrelvir, reversible):** Mpro is a viral protease in an acute infection. Cysteine proteases with active-site cysteines are common in human biology (cathepsins, caspases, deubiquitinases). An irreversible warhead risks cross-reactivity with human cysteine proteases, causing toxicity. Reversible binding provides: (a) selectivity via binding kinetics — the nitrile forms a stable but dissociable thioimidate, so selectivity comes from prolonged residence time in the specific Mpro pocket rather than permanent modification, (b) safety margin — if the compound dissociates from an off-target, no permanent damage occurs.\n\n**(2) Pharmacological consequences:**\n- **Nirmatrelvir requires sustained plasma concentrations** above the IC50 because the drug-target complex is in dynamic equilibrium. This is why Paxlovid co-administers ritonavir (CYP3A4 inhibitor) to boost nirmatrelvir levels. Without boosting, nirmatrelvir's half-life (~5h) is insufficient for sustained target coverage.\n- **Sotorasib's pharmacology is dose-schedule flexible** — even if plasma levels drop, the drug remains bound to its target. Twice-daily dosing was later shown to be equally effective as once-daily, consistent with covalent pharmacology.\n\n**(3) Resistance implications:**\n- Reversible inhibitors face easier resistance development — mutations that reduce binding affinity directly reduce efficacy. For nirmatrelvir, mutations at E166V and L167F in Mpro have been reported to reduce binding.\n- Irreversible inhibitors require mutations that eliminate the covalent residue (Cys→Ser/Ala), which may compromise protein function if the cysteine is essential.\n- **Verification:** llm-judge\n- **Cascade risk:** Wrong understanding of covalent pharmacology → wrong design strategy.\n\n**Data Provenance:**\n- ChEMBL CHEMBL4535757 (sotorasib): IC50 = 68 nM KRAS G12C (CHEMBL4357259). ChEMBL CHEMBL4802135 (nirmatrelvir): IC50 = 0.79 nM Mpro (CHEMBL5112747). Queried 2026-02-17.\n- PDB 7SI9: resolution 2.0 Å, PDB 6OIM: resolution 1.65 Å. Both queried 2026-02-17.\n\n### Step 3 — SAR prediction\n**File:** `chain18_step3.json`\n- **Question:** Mpro resistance mutations are emerging. The E166V mutation in Mpro reduces nirmatrelvir IC50 from ~1 nM to ~50-100 nM but also reduces viral fitness (Mpro catalytic efficiency drops ~3-fold). Which of the following drug design strategies would BEST address nirmatrelvir resistance while maintaining pan-coronavirus potential?\nA) Increase the reactivity of the nitrile warhead to form a more stable covalent bond\nB) Design a non-covalent inhibitor with extended interactions into the S3/S4 pockets that are distal from position 166\nC) Develop a PROTAC that recruits a human E3 ligase to degrade Mpro — since Mpro is a viral protein, any ubiquitination would be productive\nD) Switch to an allosteric inhibitor targeting the Mpro dimer interface\n- **Ideal answer:** **B**. Non-covalent inhibitors with extended S3/S4 pocket interactions overcome E166V by: (1) distributing binding energy across multiple subsites so that a single mutation at position 166 causes only a modest affinity loss, and (2) the S3/S4 pockets are more conserved across coronaviruses (they contact the peptide backbone, not sidechain-specific residues), maintaining pan-coronavirus potential. (A) is wrong — increasing warhead reactivity would increase off-target cysteine labeling (toxicity) without specifically addressing the E166V mutation, which affects the S1 pocket shape rather than Cys145 reactivity. (C) is creative but impractical — PROTACs require cell-penetrating molecules with drug-like properties; current PROTACs are large (MW >800) and poorly bioavailable orally. Mpro is also produced continuously during viral replication, so degradation must outpace synthesis. (D) is theoretically interesting but the dimer interface is flat and large (~1,600 Å²), making it a challenging drug target with no validated precedent for viral proteases.\n- **Verification:** programmatic (multiple_choice: B)\n- **Cascade risk:** Wrong SAR reasoning → wrong development strategy.\n\n### Step 4 — Experimental validation plan\n**File:** `chain18_step4.json`\n- **Question:** Design a preclinical evaluation plan for a next-generation Mpro inhibitor (Compound Y, non-covalent, extended S3/S4 binding) against both wild-type and E166V Mpro. Include resistance profiling, antiviral efficacy, and a key pharmacological challenge specific to oral antivirals.\n- **Ideal answer:** (1) **Biochemical potency against mutant panel:** FRET-based Mpro enzymatic assay against WT, E166V, L167F, E166V/L167F double mutant, and SARS-CoV-1 Mpro (pan-CoV assessment). Success: Ki <10 nM for WT, <50 nM for single mutants, <200 nM for double. Cross-reactivity with human cathepsin L, caspase-3, and SARS-CoV-2 PLpro <1 µM (selectivity window >100×). (2) **Cellular antiviral assay:** CPE assay in Vero E6-TMPRSS2 cells with WT SARS-CoV-2 and reverse-genetics E166V mutant virus. EC50 measurement with CC50 for selectivity index (SI). Success: EC50 <100 nM, SI >100. (3) **Resistance profiling:** Serial passage of SARS-CoV-2 in VeroE6 cells with escalating Compound Y concentrations (starting at 0.5× EC50, doubling every 3 passages, 20 passages total). WGS of resistant viruses at passages 10, 15, 20. Compare mutation spectrum to nirmatrelvir-selected resistance. Success: >15 passages to achieve >10× EC50 shift (vs. ~8 passages for nirmatrelvir). (4) **PK challenge — oral bioavailability without boosting:** Nirmatrelvir requires ritonavir boosting (CYP3A4 inhibition) which causes extensive drug-drug interactions. Compound Y must achieve oral bioavailability >30% without a booster. Rat PK study: IV (1 mg/kg) and PO (10 mg/kg), measure Cmax, AUC, t½, F. Design Compound Y to avoid CYP3A4 as primary clearance route (assess metabolic soft spots by liver microsome stability across species). Success: F >30%, t½ >4h, allowing BID or TID dosing without ritonavir.\n- **Verification:** llm-judge\n- **Cascade risk:** Terminal step.\n\n**Data Provenance:**\n- ChEMBL CHEMBL4802135 (nirmatrelvir): multiple IC50 values (0.79-145 nM range across assays). Queried 2026-02-17.\n- PDB 7SI9: Mpro + nirmatrelvir, 2.0 Å. PDB 8DCZ: Mpro M165Y mutant + nirmatrelvir, 2.38 Å. Queried 2026-02-17."
+  },
+  {
+    "chain_id": "chain19",
+    "template": "data_to_mechanism",
+    "topic": "Imatinib resistance in CML: BCR-ABL T315I gatekeeper mutation",
+    "description": "Interpret ambiguous data → update with new evidence → correct prior analysis",
+    "steps": [
+      {
+        "task_id": "chain19_step1",
+        "input_type": "none"
+      },
+      {
+        "task_id": "chain19_step2",
+        "input_type": "previous_response"
+      },
+      {
+        "task_id": "chain19_step3",
+        "input_type": "previous_response"
+      }
+    ],
+    "data_provenance": "- PDB 1IEP: Queried 2026-02-17, resolution 2.1 Å, released 2001-04-18. Title: \"Crystal structure of the c-Abl kinase domain in complex with STI-571.\"\n- PDB 2HYY: resolution 2.4 Å, released 2007-01-16. Title: \"Human Abl kinase domain in complex with imatinib.\"\n- ChEMBL CHEMBL941 (imatinib): IC50 = 40 nM ABL1 (CHEMBL846551), 240 nM PDGFRβ (CHEMBL763440), 260 nM KIT (CHEMBL766073), max_phase = 4. Queried 2026-02-17.\n- ClinVar ABL1: 94 pathogenic variants (queried 2026-02-17)\n- UniProt P00533 (EGFR): kinase domain 712-979. For comparison with ABL gatekeeper mechanism.\n\n### Step 2 — Update with new evidence\n**File:** `chain19_step2.json`\n- **Question:** ABL1 kinase domain sequencing reveals the **T315I** mutation at 45% variant allele frequency. You switch the patient to dasatinib (100 mg QD, a second-generation TKI). After 6 months on dasatinib: BCR-ABL = 12% IS (worse than at switch). Dasatinib trough is adequate. The ponatinib IC50 against ABL1 T315I is 8.6 nM (ChEMBL CHEMBL1176860), while ponatinib IC50 against WT ABL1 is 40 nM (CHEMBL1176861). (a) Why did dasatinib fail? (b) What is the recommended next therapy? (c) Calculate the ponatinib selectivity for T315I vs. WT ABL1 and explain why this ratio is unusual.\n- **Ideal answer:**\n**(a) Dasatinib failure:** T315I confers resistance to dasatinib because, like imatinib, dasatinib forms a hydrogen bond with T315 (via the hydroxyl group). The isoleucine substitution eliminates this interaction and creates steric clash. This is why T315I is called the \"gatekeeper\" mutation — it guards the entrance to the hydrophobic back pocket used by type I (dasatinib, bosutinib) and type II (imatinib, nilotinib) inhibitors.\n\n**(b) Recommended therapy:** **Ponatinib** (Iclusig) — a third-generation TKI specifically designed to accommodate the T315I isoleucine through a rigid ethynyl linker that positions the inhibitor to avoid steric clash with isoleucine. Alternatively, **asciminib** (ABL001), a first-in-class STAMP (Specifically Targeting the ABL Myristoyl Pocket) inhibitor that binds the allosteric myristoyl pocket rather than the ATP site — completely bypassing the ATP-site gatekeeper mutation. For the patient's situation (T315I with rising BCR-ABL on dasatinib), guidelines recommend ponatinib 45 mg QD with dose reduction after response, or asciminib 200 mg BID.\n\n**(c) Ponatinib selectivity:** IC50(WT)/IC50(T315I) = 40/8.6 = **4.6-fold more potent against T315I than WT.** This is unusual because most kinase inhibitors lose potency against gatekeeper mutations (5-100× IC50 increase). Ponatinib is actually *more potent* against the mutant. Explanation: Ponatinib was computationally designed to exploit the T315I mutation — the isoleucine creates a deeper hydrophobic pocket that the ethynyl group fills more optimally than the smaller threonine hydroxyl. However, this selectivity means ponatinib at WT-ABL-effective doses also potently inhibits other kinases (FGFR, VEGFR, PDGFRα), contributing to its vascular toxicity (arterial occlusive events).\n- **Verification:** llm-judge\n- **Cascade risk:** Wrong TKI selection → progressive disease → blast crisis.\n\n**Data Provenance:**\n- ChEMBL CHEMBL1171837 (ponatinib): IC50 = 8.6 nM ABL1 (CHEMBL1176860), 40 nM ABL1 (CHEMBL1176861), max_phase = 4. BaF3 BCR-ABL IC50 = 1.2 nM (CHEMBL1176862), BaF3 BCR-ABL T315I IC50 = 8.8 nM (CHEMBL1176863). Queried 2026-02-17.\n- Clinical trial NCT04626024: TKI cessation for CML, Phase II, RECRUITING (queried 2026-02-17)\n\n### Step 3 — Correct prior analysis\n**File:** `chain19_step3.json`\n- **Question:** The patient achieves complete molecular response on ponatinib after 12 months (BCR-ABL <0.01% IS). However, they develop hypertension (BP 165/95) and elevated troponin-I (0.08 ng/mL, upper normal 0.04). Ponatinib carries a FDA black box warning for arterial occlusive events (AOEs), occurring in ~25% of patients at 45 mg. (a) What is the mechanism of ponatinib cardiovascular toxicity? (b) Should you stop ponatinib? (c) Propose an evidence-based management strategy that balances CML control with cardiovascular risk.\n- **Ideal answer:**\n**(a) Mechanism:** Ponatinib inhibits VEGFR2 (IC50 ~1.5 nM) and FGFR1 (IC50 ~2 nM) — both are essential for vascular endothelial survival and nitric oxide production. VEGFR2 inhibition reduces NO synthesis → endothelial dysfunction → vasoconstriction → hypertension. FGFR inhibition impairs endothelial repair after microinjury. Combined with PDGFRα/β inhibition (impaired pericyte function), this creates a prothrombotic endothelium. The elevated troponin suggests early myocardial injury, possibly from coronary microvascular dysfunction or demand ischemia secondary to hypertension.\n\n**(b) Do NOT stop ponatinib abruptly** — the patient has a dangerous T315I mutation that was resistant to two prior TKIs. Stopping risks rapid molecular relapse → hematologic relapse → potential blast crisis within months. This is a classic risk-risk decision, not a risk-benefit one.\n\n**(c) Management strategy:**\n1. **Dose reduce ponatinib** from 45 mg to 15 mg QD. The OPTIC trial demonstrated that once BCR-ABL ≤1% IS is achieved, dose reduction to 15 mg maintains molecular response in >90% of patients while reducing AOE risk from ~25% to ~5%.\n2. **Aggressive cardiovascular risk management:** Start amlodipine 10 mg + lisinopril 20 mg for BP target <130/80. Aspirin 81 mg daily (if platelets adequate). Statin for endothelial protection regardless of LDL.\n3. **Serial monitoring:** Troponin-I monthly × 3 then quarterly. If troponin continues to rise on 15 mg, consider switch to asciminib (allosteric, does not inhibit VEGFR/FGFR — no cardiovascular signal in trials). Asciminib 200 mg BID for T315I.\n4. **Echocardiography** at baseline and every 6 months.\n5. **Maintain BCR-ABL monitoring** monthly — if molecular response is lost on 15 mg, the decision is harder (escalate ponatinib with cardiology co-management vs. switch to asciminib).\n- **Verification:** llm-judge\n- **Cascade risk:** Terminal step — tests integration of pharmacology, clinical medicine, and risk management."
+  },
+  {
+    "chain_id": "chain20",
+    "template": "evidence_synthesis",
+    "topic": "FLT3 inhibitors in AML: gilteritinib vs. midostaurin",
     "description": "Compare conflicting studies → meta-analytic reasoning → clinical recommendation",
     "steps": [
-      {"task_id": "chain10_step1", "input_type": "none"},
-      {"task_id": "chain10_step2", "input_type": "previous_response"},
-      {"task_id": "chain10_step3", "input_type": "previous_response"}
+      {
+        "task_id": "chain20_step1",
+        "input_type": "none"
+      },
+      {
+        "task_id": "chain20_step2",
+        "input_type": "previous_response"
+      },
+      {
+        "task_id": "chain20_step3",
+        "input_type": "previous_response"
+      }
+    ],
+    "data_provenance": "- PDB 6JQR: Queried 2026-02-17, resolution 2.2 Å, released 2019-11-20. Title: \"Crystal structure of FLT3 in complex with gilteritinib\"\n- ChEMBL CHEMBL3301622 (gilteritinib): FLT3 IC50 = 0.41 nM (CHEMBL3706339), AXL IC50 = 1.0 nM (CHEMBL3811320), ALK IC50 = 1.5 nM (CHEMBL3706338), max_phase = 4. Queried 2026-02-17.\n- UniProt P36888 (FLT3): 993 aa. Domains: Ig-like C2-type (253-343), Protein kinase (610-943), Active site at 811. Queried 2026-02-17.\n- ClinVar FLT3: 50 pathogenic variants (queried 2026-02-17)\n- Open Targets AML: CEBPA 0.8444, DNMT3A 0.8296, FLT3 0.8219 (queried 2026-02-17)\n\n### Step 2 — Meta-analytic reasoning\n**File:** `chain20_step2.json`\n- **Question:** Additional data is now available on FLT3 inhibitors in AML:\n\n| Trial | Drug | Setting | N | Median OS (drug) | Median OS (control) | HR |\n|---|---|---|---|---|---|---|\n| RATIFY | Midostaurin + chemo | Front-line | 717 | 74.7 mo | 25.6 mo | 0.78 |\n| ADMIRAL | Gilteritinib mono | R/R | 371 | 9.3 mo | 5.6 mo | 0.64 |\n| QuANTUM-First | Quizartinib + chemo | Front-line | 539 | 31.9 mo | 15.1 mo | 0.78 |\n| LACEWING | Gilteritinib + azacitidine | Unfit elderly | 123 | 9.82 mo | 8.87 mo | 0.916 |\n\n(a) What pattern emerges across these four trials? (b) Why did the LACEWING trial fail while RATIFY and QuANTUM-First succeeded? (c) How would you formally assess whether FLT3 inhibitor efficacy depends on the backbone chemotherapy intensity?\n- **Ideal answer:**\n**(a) Pattern:** FLT3 inhibitors provide clear benefit when **combined with intensive chemotherapy** (HR 0.78 in both RATIFY and QuANTUM-First), moderate benefit as **monotherapy vs. salvage chemo** (HR 0.64 in ADMIRAL), but **minimal benefit with low-intensity backbone** (HR 0.916 in LACEWING). This suggests FLT3 inhibitors amplify the effect of cytotoxic chemotherapy rather than being sufficient as single pathway-targeted agents.\n\n**(b) LACEWING failure:** Several factors: (1) The elderly unfit population has AML with different biology — more adverse cytogenetics, more secondary AML, more co-mutations (DNMT3A, TET2, ASXL1) that drive chemoresistance independent of FLT3. (2) Azacitidine is a low-intensity agent that induces differentiation/apoptosis through epigenetic mechanisms — it may not synergize with FLT3 inhibition the same way cytotoxic 7+3 does. (3) FLT3 mutation is a proliferative driver; cytotoxic chemotherapy attacks the proliferating population and FLT3 inhibitors prevent regrowth — this synergy requires the chemotherapy to generate a significant cell kill, which azacitidine doesn't achieve. (4) Small sample size (n=123) limited power to detect modest benefits.\n\n**(c) Formal analysis approach:**\n- **Meta-regression:** Random-effects meta-analysis with log(HR) as the outcome and **backbone intensity** (intensive chemo, low-intensity, monotherapy) as a categorical moderator variable. Test whether the moderator explains heterogeneity in treatment effect.\n- If only 4 studies are available, this is underpowered for formal meta-regression (k<10 rule). Instead: (1) present a forest plot stratified by backbone intensity with subgroup interaction test, (2) use individual patient data (IPD) meta-analysis if available — model OS with treatment × backbone interaction term in a Cox model.\n- The hypothesis predicts: intensive chemo backbone → HR ~0.75-0.80; low-intensity backbone → HR ~0.90-1.0; monotherapy → intermediate (HR ~0.65 but in a population with much shorter survival).\n- **Verification:** llm-judge\n- **Cascade risk:** Wrong pattern identification → wrong treatment algorithm for elderly patients.\n\n### Step 3 — Clinical recommendation\n**File:** `chain20_step3.json`\n- **Question:** Based on your synthesis — FLT3 inhibitors work best with intensive chemotherapy, modestly as monotherapy in R/R, and poorly with low-intensity backbones — a tumor board asks: A 72-year-old patient with newly diagnosed FLT3-ITD+ AML (allelic ratio 0.8, NPM1 co-mutation, no adverse cytogenetics) with ECOG PS 1, creatinine 1.4, ejection fraction 50%. Is this patient fit for intensive chemotherapy + FLT3 inhibitor, or should they receive a low-intensity regimen? What FLT3 inhibitor would you recommend and why?\n- **Ideal answer:**\n**Assessment: This patient is in the \"gray zone\" — potentially fit for intensive therapy with careful evaluation.**\n\n**Favorable factors:** ECOG 1, NPM1 co-mutation (favorable prognosis), no adverse cytogenetics. NPM1+/FLT3-ITD+ with allelic ratio <0.5 is favorable risk; allelic ratio 0.8 shifts to intermediate risk (ELN 2022). Age 72 alone does not preclude intensive therapy.\n\n**Concerning factors:** Age 72 increases treatment-related mortality (TRM) with 7+3 (~10-15% vs. ~5% in younger patients). Creatinine 1.4 suggests mild renal impairment (estimate GFR). EF 50% is borderline for anthracycline use (daunorubicin in 7+3).\n\n**Recommendation:**\n1. **Geriatric assessment** (gait speed, ADLs, Charlson comorbidity index) should guide fitness determination, not age alone.\n2. **If deemed fit:** 7+3 + **midostaurin** (RATIFY-based, FDA-approved front-line) or 7+3 + **quizartinib** (QuANTUM-First, recently approved, more FLT3-selective). Between these: **quizartinib** is preferred because (a) it has higher FLT3 selectivity, (b) it demonstrated improvement in both FLT3-ITD and high allelic ratio subgroups, (c) the survival benefit was clear even in older patients (60-75 subgroup analysis).\n3. **Consider dose-reduced 7+3** (\"5+2\") to mitigate anthracycline cardiac risk given EF 50%.\n4. **If deemed unfit by geriatric assessment:** Venetoclax + azacitidine (standard of care for unfit AML) + consider adding gilteritinib — although LACEWING was negative, venetoclax-based combinations have different synergy biology than azacitidine alone, and ongoing trials are exploring this.\n5. **Plan for maintenance FLT3 inhibitor** after remission — RATIFY showed most benefit was in the maintenance phase.\n6. **Molecular monitoring:** PCR-based FLT3-ITD and NPM1 MRD at cycles 2, 4, and post-consolidation. If MRD-negative for NPM1, excellent prognosis. If MRD-positive, consider allogeneic transplant if fit.\n\n**Do NOT give:** Gilteritinib monotherapy front-line — LACEWING's failure applies even more strongly to monotherapy; reserve gilteritinib for R/R setting where ADMIRAL demonstrated benefit.\n- **Verification:** llm-judge\n- **Cascade risk:** Terminal step.\n\n**Data Provenance:**\n- PDB 6JQR: FLT3 + gilteritinib, 2.2 Å, 2019. Queried 2026-02-17.\n- ChEMBL CHEMBL3301622 (gilteritinib): FLT3 IC50 = 0.41 nM (CHEMBL3706339). ChEMBL CHEMBL941 (imatinib for comparison): ABL1 IC50 = 40 nM. Queried 2026-02-17.\n- ChEMBL CHEMBL1171837 (ponatinib): ABL1 IC50 = 8.6 nM (CHEMBL1176860). Queried 2026-02-17.\n- ClinVar FLT3: 50 pathogenic; DNMT3A: 352 pathogenic; NPM1: 29 pathogenic (queried 2026-02-17)\n- Open Targets AML: FLT3 0.8219, DNMT3A 0.8296, CEBPA 0.8444 (queried 2026-02-17)\n- Clinical trial NCT05193448: Gilteritinib real-world, COMPLETED. NCT03839771: Enasidenib/Ivosidenib + chemo, Phase III, ACTIVE_NOT_RECRUITING (queried 2026-02-17)"
+  },
+  {
+    "chain_id": "chain21",
+    "template": "genetics_to_therapy",
+    "topic": "SCN1A loss-of-function in Dravet syndrome",
+    "description": "Genetic finding → structural analysis of mutation → therapeutic strategy",
+    "steps": [
+      {
+        "task_id": "chain21_step1",
+        "input_type": "none"
+      },
+      {
+        "task_id": "chain21_step2",
+        "input_type": "previous_response"
+      },
+      {
+        "task_id": "chain21_step3",
+        "input_type": "previous_response"
+      }
+    ],
+    "data_provenance": "- PDB 7DTD: Queried 2026-02-17, resolution 3.3 Å, released 2021-04-07, cryo-EM. Title: \"Voltage-gated sodium channel Nav1.1 and beta4\"\n- UniProt P35498 (SCN1A): 2,009 aa, IQ domain (1915-1944). Queried 2026-02-17.\n- ClinVar SCN1A: 2,858 pathogenic variants, 5,158 total (queried 2026-02-17 15:55 UTC)\n- Clinical trial NCT06598449: Fenfluramine in children with Dravet, Phase IV, RECRUITING (queried 2026-02-17)\n\n### Step 2 — Structural consequence of mutation\n**File:** `chain21_step2.json`\n- **Question:** A Dravet patient has the de novo missense mutation SCN1A R1648H (in the S4 voltage-sensing segment of domain IV). S4 segments contain positively charged arginine/lysine residues at every third position that act as voltage sensors — they move outward in response to depolarization, initiating channel opening (activation). Predict the biophysical consequence of R1648H on channel gating, explain how this leads to loss of function in the context of fast-spiking interneurons, and propose how to experimentally validate this using patch-clamp electrophysiology.\n- **Ideal answer:**\n**Predicted biophysical consequence:** R1648H neutralizes a positive charge in the DIV S4 voltage sensor (arginine → histidine, which is mostly uncharged at physiological pH). This will: (1) **Shift the voltage-dependence of inactivation** — DIV S4 movement is specifically coupled to fast inactivation (not activation). Neutralizing a charge reduces the voltage sensitivity of DIV S4, causing: (a) accelerated entry into inactivation (faster inactivation kinetics), and (b) hyperpolarized shift in the voltage-dependence of steady-state inactivation (V½ inactivation shifts negative by ~10-15 mV). (2) **Slowed recovery from inactivation** — the channel stays inactivated longer between action potentials.\n\n**Impact on fast-spiking interneurons:** PV+ interneurons fire at 200+ Hz, with ~3-5 ms between action potentials. At each spike, Nav1.1 channels must: activate → inactivate → recover from inactivation → be available for the next spike. If recovery from inactivation is slowed (due to R1648H), channels accumulate in the inactivated state during high-frequency firing. After 10-20 spikes, insufficient channels are available → depolarization block → interneuron falls silent. Pyramidal neurons firing at <50 Hz are minimally affected because they have much longer inter-spike intervals for recovery.\n\n**Experimental validation:**\n1. **Heterologous expression:** Transfect HEK293T with WT or R1648H Nav1.1 (+ β1 subunit). Whole-cell voltage-clamp at 22°C.\n2. **Steady-state inactivation:** Step to conditioning potentials (-120 to -20 mV, 500 ms) then test pulse to 0 mV. Fit Boltzmann. **Predict:** WT V½ ≈ -65 mV; R1648H V½ ≈ -78 mV (negative shift).\n3. **Recovery from inactivation:** Two-pulse protocol: 500 ms at 0 mV (inactivate) → variable recovery interval at -80 mV (1-100 ms) → test pulse. **Predict:** WT τ_recovery ≈ 5 ms; R1648H ≈ 12 ms.\n4. **High-frequency train:** Inject a train of 200 brief current pulses at 200 Hz in current-clamp (or in iPSC-derived interneurons expressing R1648H). **Predict:** WT maintains firing throughout; R1648H shows progressive amplitude reduction and depolarization block after ~15 spikes.\n- **Verification:** llm-judge\n- **Cascade risk:** Wrong biophysical prediction → wrong therapeutic rationale.\n\n### Step 3 — Therapeutic strategy\n**File:** `chain21_step3.json`\n- **Question:** Given that Dravet syndrome involves interneuron-specific Nav1.1 loss-of-function, propose two therapeutic strategies: one currently approved and one in development. For each, explain the mechanism, key evidence, and a limitation.\n- **Ideal answer:**\n**Strategy 1 — Approved: Fenfluramine (Fintepla)**\n**Mechanism:** Fenfluramine acts through two complementary mechanisms: (1) It releases serotonin (5-HT) from presynaptic vesicles and inhibits reuptake, increasing 5-HT levels. 5-HT activates 5-HT2C receptors on GABAergic interneurons, enhancing their excitability — partially compensating for the Nav1.1 deficit by depolarizing interneurons through a non-sodium-channel mechanism. (2) It also has direct positive modulation of sigma-1 receptors, which may have independent anti-seizure effects.\n**Evidence:** Phase III trial (NCT03936777) showed 62% median seizure frequency reduction vs. 1% placebo. FDA-approved 2020 for Dravet (age ≥2 years). Some patients achieve >75% seizure reduction.\n**Limitation:** (1) Historical association with cardiac valvulopathy (at higher doses for obesity treatment) requires echocardiographic monitoring every 6 months, adding burden and cost. (2) Does not address the underlying Nav1.1 deficiency — it's a compensatory mechanism that may lose efficacy if interneurons degenerate over time. (3) ~30% of patients are non-responders.\n\n**Strategy 2 — In development: SCN1A antisense oligonucleotide (TANGO approach)**\n**Mechanism:** Targeted Augmentation of Nuclear Gene Output (TANGO). SCN1A has a naturally occurring non-productive splice variant (NMD-inducing poison exon). An antisense oligonucleotide (ASO) blocks inclusion of this poison exon, increasing productive SCN1A mRNA and Nav1.1 protein from the wild-type allele. This directly addresses haploinsufficiency by upregulating the functional allele from ~50% to potentially ~75-100% of normal.\n**Evidence:** Preclinical data in Scn1a+/- mice shows increased Nav1.1 protein and reduced seizure susceptibility. STK-001 (Stoke Therapeutics) is in Phase I/II clinical trials. This approach is mutation-agnostic — works for any heterozygous loss-of-function SCN1A mutation (>80% of Dravet patients).\n**Limitation:** (1) Requires intrathecal injection (IT) every few months — invasive, especially for young children. (2) Distribution of ASOs throughout the CNS is uneven — brainstem and spinal cord are well-penetrated, but cortical delivery may be insufficient. (3) Risk of increasing Nav1.1 in excitatory neurons (where it's normally low) could theoretically have paradoxical effects, though preclinical data suggests this is not a major issue. (4) Long-term safety of chronic IT ASO administration in children is unknown.\n- **Verification:** llm-judge\n- **Cascade risk:** Terminal step.\n\n**Data Provenance:**\n- Clinical trial NCT06598449: Fenfluramine Phase IV, RECRUITING (queried 2026-02-17)\n- Clinical trial NCT03936777: Fenfluramine Phase III in Dravet, COMPLETED (queried 2026-02-17)\n- Clinical trial NCT03467113: ZX008 (fenfluramine) Phase I, COMPLETED (queried 2026-02-17)\n- ClinVar SCN1A: 2,858 pathogenic / 5,158 total (queried 2026-02-17)\n- PDB 7DTD: Nav1.1+β4, 3.3 Å, cryo-EM, 2021 (queried 2026-02-17)"
+  },
+  {
+    "chain_id": "chain22",
+    "template": "protocol_troubleshoot",
+    "topic": "CRISPR base editing efficiency in primary T cells",
+    "description": "Diagnose protocol error → interpret corrected result → design quantitative follow-up",
+    "steps": [
+      {
+        "task_id": "chain22_step1",
+        "input_type": "none"
+      },
+      {
+        "task_id": "chain22_step2",
+        "input_type": "previous_response"
+      },
+      {
+        "task_id": "chain22_step3",
+        "input_type": "previous_response"
+      }
+    ]
+  },
+  {
+    "chain_id": "chain23",
+    "template": "sequence_to_function",
+    "topic": "Novel AmpC β-lactamase from carbapenem-resistant Enterobacteriaceae",
+    "description": "Identify protein from sequence → predict adaptation mechanism → design validation",
+    "steps": [
+      {
+        "task_id": "chain23_step1",
+        "input_type": "none"
+      },
+      {
+        "task_id": "chain23_step2",
+        "input_type": "previous_response"
+      },
+      {
+        "task_id": "chain23_step3",
+        "input_type": "previous_response"
+      }
+    ]
+  },
+  {
+    "chain_id": "chain24",
+    "template": "paper_to_experiment",
+    "topic": "PCSK9 and LDL receptor regulation in cardiovascular disease",
+    "description": "Paper finding → data interpretation → statistical test → hypothesis generation",
+    "steps": [
+      {
+        "task_id": "chain24_step1",
+        "input_type": "none"
+      },
+      {
+        "task_id": "chain24_step2",
+        "input_type": "previous_response"
+      },
+      {
+        "task_id": "chain24_step3",
+        "input_type": "previous_response"
+      },
+      {
+        "task_id": "chain24_step4",
+        "input_type": "previous_response"
+      }
+    ],
+    "data_provenance": "- PDB 2P4E: Queried 2026-02-17, resolution 1.98 Å, released 2007-04-10. Title: \"Crystal Structure of PCSK9\"\n- PDB 3BPS: Queried 2026-02-17, resolution 2.41 Å, released 2008-02-12. Title: \"PCSK9:EGF-A complex\"\n- UniProt Q8NBP7 (PCSK9): 692 aa. Domains: Inhibitor I9 (77-149), Peptidase S8 (155-461). Active site: charge relay at 186, 226. Queried 2026-02-17.\n- ClinVar PCSK9: 1,322 pathogenic variants (queried 2026-02-17)\n- Open Targets: PCSK9-total cholesterol (EFO_0004574) 0.7534, APOB 0.7389, LDLR 0.7306 (queried 2026-02-17, verified 2026-02-17 16:45)\n\n### Step 2 — Quantitative data interpretation\n**File:** `chain24_step2.json`\n- **Question:** The FOURIER trial (evolocumab, n=27,564) showed: LDL-C reduction from 92 mg/dL to 30 mg/dL (59% reduction). Primary endpoint (cardiovascular death, MI, stroke, hospitalization for angina, coronary revascularization): HR=0.85, p<0.001. But cardiovascular DEATH alone: HR=1.05, p=0.51 (non-significant, numerically slightly higher). A critic argues this means evolocumab \"reduces events but doesn't save lives.\" Evaluate this claim quantitatively. Consider: (a) Was the trial powered to detect a mortality difference? (b) What is the expected mortality reduction for a 59% LDL-C lowering based on the statin literature (CTT meta-analysis shows 10% CV mortality reduction per 1 mmol/L LDL-C reduction)?\n- **Ideal answer:**\n**(a) Power analysis for mortality endpoint:**\nFOURIER had 1,616 primary endpoint events but only 251 CV deaths over 2.2 years median follow-up. With 251 events, the trial had ~25% power to detect a 15% mortality reduction (the plausible range). To detect a 15% CV mortality reduction with 80% power, you'd need ~1,200 CV deaths, requiring either 5× more patients or 5× longer follow-up. **The trial was massively underpowered for the mortality endpoint.** The HR of 1.05 (p=0.51) is entirely consistent with either no effect OR a 15% benefit — the confidence interval likely spans ~0.80 to 1.35.\n\n**(b) Expected benefit from CTT calibration:**\nLDL-C reduced by 62 mg/dL = 1.6 mmol/L. CTT meta-analysis (statins) shows ~10% CV mortality reduction per 1 mmol/L over 5 years. Expected: ~16% CV mortality reduction for 1.6 mmol/L reduction, BUT this assumes 5 years of treatment. FOURIER had only 2.2 years median follow-up. Extrapolating: at 2.2 years, the expected mortality reduction is ~7-10%, corresponding to ~18-25 fewer CV deaths out of 251 — well within the noise of the study.\n\n**(c) Conclusion:** The critic's argument is statistically naive. The non-significant mortality result does NOT mean \"no mortality benefit\" — it means the trial was too short and too small to detect the expected mortality benefit. The primary endpoint result (HR=0.85) is consistent with CTT-predicted benefit. Long-term open-label extension data (FOURIER-OLE, 7+ years) will be needed to confirm mortality benefit. This is a classic example of interpreting \"absence of evidence\" as \"evidence of absence\" — a fundamental statistical error.\n- **Verification:** llm-judge\n- **Cascade risk:** Wrong statistical reasoning → reject effective therapy.\n\n### Step 3 — Statistical test selection\n**File:** `chain24_step3.json`\n- **Question:** You are designing a new PCSK9 inhibitor trial specifically powered for cardiovascular mortality. Using FOURIER data: CV death rate ~1.8%/year (placebo equivalent), expected HR ~0.85 with PCSK9 inhibition (based on CTT calibration for the LDL-C reduction achieved), 1:1 randomization. Calculate the required sample size and study duration to achieve 80% power at two-sided α=0.05.\n- **Ideal answer:** Using the log-rank test power formula for a survival endpoint:\n\n**Parameters:**\n- CV death rate (control): λ₀ = 0.018/year\n- Expected HR: 0.85 (i.e., treatment rate λ₁ = 0.018 × 0.85 = 0.0153/year)\n- Need total events (d) for 80% power:\n\nd = 4 × (Z₀.₀₂₅ + Z₀.₂₀)² / (ln(HR))²\nd = 4 × (1.96 + 0.842)² / (ln(0.85))²\nd = 4 × (2.802)² / (-0.1625)²\nd = 4 × 7.851 / 0.0264\nd = 31.4 / 0.0264\nd ≈ **1,189 CV death events needed**\n\n**Sample size and duration trade-offs:**\n- Option A: n = 30,000 (similar to FOURIER), follow-up 5 years. Expected events: ~30,000 × 0.0167 (average rate) × 5 ≈ 2,505 events → well-powered (even over-powered for HR 0.85). \n- Option B: n = 50,000, follow-up 3 years. Expected: ~50,000 × 0.0167 × 3 ≈ 2,505 events.\n- Option C: n = 20,000, follow-up 5 years. Expected: ~1,670 events → adequate but less margin.\n\n**Recommended design:** n = 25,000-30,000, follow-up minimum 4-5 years. This provides robust power for CV mortality while being practically feasible with injectable PCSK9 inhibitors.\n\n**Key caveat:** The control group rate (1.8%/year) assumes background statin therapy. If the trial is conducted in the era of highly effective LDL-lowering (most patients already on high-intensity statins), the residual CV death rate may be lower, requiring even more events. An adaptive design with pre-specified event-driven analysis (trigger at 1,200 CV deaths regardless of calendar time) is preferred.\n- **Verification:** llm-judge\n- **Cascade risk:** Terminal step.\n\n### Step 4 — Hypothesis generation\n**File:** `chain24_step4.json`\n- **Question:** A new modality — inclisiran, a siRNA targeting PCSK9 mRNA in hepatocytes — achieves ~50% LDL-C reduction with only twice-yearly subcutaneous injections (vs. biweekly for evolocumab). Propose 3 testable hypotheses about whether inclisiran's mechanism (reducing PCSK9 synthesis vs. antibody-mediated extracellular sequestration) might produce different efficacy or safety outcomes compared to monoclonal antibodies.\n- **Ideal answer:**\n**(1) Hypothesis: Inclisiran may have enhanced efficacy through intracellular PCSK9 depletion.** PCSK9 acts both extracellularly (binding surface LDLR) and intracellularly (directing newly synthesized LDLR to lysosomes during secretory pathway transit). Monoclonal antibodies only block extracellular PCSK9. Inclisiran, by preventing PCSK9 synthesis entirely, also blocks the intracellular degradation pathway. **Testable:** Measure LDLR surface density and total cellular LDLR protein in primary human hepatocytes treated with: (a) evolocumab (extracellular only), (b) PCSK9 siRNA (both pathways), (c) combination. If intracellular pathway contributes, siRNA should produce more LDLR per cell than antibody despite similar LDL-C reduction (because intracellular LDLR pool is preserved).\n\n**(2) Hypothesis: Inclisiran's sustained PD effect may cause \"rebound\" LDL-C elevation if PCSK9 pathway adapts.** Chronic PCSK9 depletion upregulates PCSK9 gene transcription via SREBP-2 (the same pathway that upregulates LDLR when cholesterol drops). With antibodies, elevated PCSK9 is simply sequestered. With siRNA, the mRNA is degraded, but SREBP-2-driven transcription may eventually overwhelm siRNA-mediated knockdown — especially as siRNA potency wanes before the next dose (day 120-180). **Testable:** Measure plasma PCSK9 levels and LDL-C at monthly intervals between doses. Predict: LDL-C nadir at 1-2 months, gradual rise months 4-6 as siRNA wanes, with possible overshoot above baseline if PCSK9 transcription is strongly upregulated.\n\n**(3) Hypothesis: Inclisiran's hepatocyte-specific mechanism may reduce neurocognitive safety signals.** Evolocumab's EBBINGHAUS sub-study showed no cognitive effects, but concerns persist about very low LDL-C and CNS cholesterol. PCSK9 is expressed in the CNS (cortical neurons). Antibodies don't cross the BBB, so brain PCSK9 is unaffected. Inclisiran, a GalNAc-conjugated siRNA, is hepatocyte-specific (ASGPR-mediated uptake) and does NOT reach the brain. Both modalities should spare CNS PCSK9. **Testable:** This is actually a null hypothesis — both should have identical CNS safety. But if PCSK9 antibodies have any CNS effects (through rare BBB disruption or transport), inclisiran would not. Compare neurocognitive endpoints between large evolocumab and inclisiran trials using standardized instruments (CogState, CANTAB).\n- **Verification:** llm-judge\n- **Cascade risk:** Terminal step."
+  },
+  {
+    "chain_id": "chain25",
+    "template": "paradox_resolution",
+    "topic": "Exercise-induced immunosuppression in marathon runners",
+    "description": "Explain paradoxical result → design discriminating experiment → synthesize conclusion",
+    "steps": [
+      {
+        "task_id": "chain25_step1",
+        "input_type": "none"
+      },
+      {
+        "task_id": "chain25_step2",
+        "input_type": "previous_response"
+      },
+      {
+        "task_id": "chain25_step3",
+        "input_type": "previous_response"
+      }
+    ]
+  },
+  {
+    "chain_id": "chain26",
+    "template": "data_to_mechanism",
+    "topic": "Unexpected synergy between venetoclax and azacitidine in AML",
+    "description": "Interpret ambiguous data → update with new evidence → correct prior analysis",
+    "steps": [
+      {
+        "task_id": "chain26_step1",
+        "input_type": "none"
+      },
+      {
+        "task_id": "chain26_step2",
+        "input_type": "previous_response"
+      },
+      {
+        "task_id": "chain26_step3",
+        "input_type": "previous_response"
+      }
+    ],
+    "data_provenance": "- Open Targets AML (EFO_0000222): CEBPA 0.8444, DNMT3A 0.8296, FLT3 0.8219 (queried 2026-02-17)\n- ClinVar DNMT3A: 352 pathogenic variants (queried 2026-02-17)\n- PDB 2QRV: DNMT3A-DNMT3L complex, 2.89 Å, released 2007-12-04 (queried 2026-02-17)\n- Clinical trial NCT03839771: Ivosidenib/enasidenib + induction, Phase III, ACTIVE_NOT_RECRUITING (queried 2026-02-17)\n\n### Step 2 — Update with new evidence\n**File:** `chain26_step2.json`\n- **Question:** BH3 profiling (mitochondrial priming assay) is performed on AML blasts from 30 patients before treatment:\n- High BCL-2 dependence (primed by ABT-199 peptide): 18 patients → 78% CR with ven+aza\n- Low BCL-2 dependence: 12 patients → 42% CR with ven+aza\n- Pre-treatment MCL-1 protein (western blot, normalized): High MCL-1 group had 55% CR vs. 75% CR in low MCL-1 group\n- RNA-seq: Azacitidine treatment (day 8 biopsy, pre-venetoclax) showed MCL-1 mRNA reduced by 40% and NOXA mRNA increased by 3.2-fold in 22/30 patients\n\nWhich hypothesis from Step 1 is best supported? Can you now predict which patients will respond?\n- **Ideal answer:** **All three hypotheses are partially supported, but Hypothesis 1 (MCL-1 reduction) and Hypothesis 2 (BH3 gene reactivation) are dominant:**\n\n**Evidence for H1:** MCL-1 protein levels inversely correlate with response (75% CR in low MCL-1 vs. 55% in high MCL-1). Azacitidine reduces MCL-1 mRNA by 40%, priming cells for venetoclax.\n\n**Evidence for H2:** NOXA (a BH3-only protein that specifically neutralizes MCL-1) is upregulated 3.2-fold by azacitidine. This is complementary to H1 — azacitidine both reduces MCL-1 directly AND increases its antagonist NOXA. This double mechanism explains the synergy: cells that resist MCL-1 reduction may still respond to NOXA upregulation.\n\n**Predictive biomarker framework:**\n1. **Best predictor:** BH3 profiling — 78% CR in BCL-2-dependent blasts vs. 42% in non-dependent. This directly measures the functional requirement for BCL-2, integrating all upstream variables.\n2. **Supplementary:** Pre-treatment MCL-1 protein level (high MCL-1 = partial resistance, may need MCL-1 inhibitor addition).\n3. **On-treatment:** Day 8 biopsy showing MCL-1 reduction >30% and NOXA induction >2-fold predicts response. Patients NOT showing this on-treatment change may benefit from early addition of an MCL-1 inhibitor.\n\n**Combined predictor:** BCL-2 dependent AND low MCL-1 → ~85% CR (identify the best responders). BCL-2 independent AND high MCL-1 → ~30% CR (candidates for alternative regimen).\n- **Verification:** llm-judge\n- **Cascade risk:** Wrong biomarker → wrong patient selection.\n\n### Step 3 — Correct prior analysis\n**File:** `chain26_step3.json`\n- **Question:** A retrospective analysis of VIALE-A trial data stratified by IDH1/IDH2 mutation status (mutations present in ~15% of AML patients, detectable by ClinVar variants: IDH1 35 pathogenic, IDH2 80 pathogenic) reveals: IDH-mutant AML responds exceptionally well to ven+aza (CR rate 75% vs. 65% for IDH-WT). However, when these patients relapse, they lose the IDH mutation (IDH reversion to wild-type) in 40% of cases. This is unusual — most cancers acquire new mutations at relapse, not lose drivers. (a) Explain why IDH-mutant AML is particularly sensitive to venetoclax. (b) Why would relapsed disease LOSE the IDH mutation? (c) What does this mean for salvage therapy?\n- **Ideal answer:**\n**(a) IDH mutation → venetoclax sensitivity:** IDH1/2 mutations produce 2-hydroxyglutarate (2-HG), an oncometabolite that inhibits the α-ketoglutarate-dependent enzyme cytochrome c oxidase (Complex IV of the ETC). This forces AML cells to rely more heavily on BCL-2 to maintain mitochondrial membrane integrity and prevent apoptosis. BCL-2 dependence is therefore metabolically enforced in IDH-mutant AML. Additionally, 2-HG inhibits TET2 (a DNA demethylase), creating a hypermethylation phenotype that silences pro-apoptotic genes — azacitidine directly reverses this. The combination is mechanistically tailored: azacitidine reverses 2-HG-mediated methylation, restoring apoptotic priming, while venetoclax blocks the compensatory BCL-2 dependence.\n\n**(b) IDH mutation loss at relapse:** The IDH mutation was a **dependency** for the original clone's survival strategy (BCL-2 dependence + differentiation block). Under venetoclax+azacitidine selective pressure, the IDH-mutant clone is preferentially killed. Relapse arises from a **pre-existing IDH-WT subclone** that was a minor population at diagnosis. This IDH-WT subclone survives because it's NOT BCL-2-dependent (uses MCL-1 or BFL-1 instead) and is NOT affected by 2-HG-driven metabolic rewiring. The \"loss\" of IDH mutation is clonal selection, not reversion.\n\n**(c) Implications for salvage therapy:**\n1. **Do NOT add an IDH inhibitor** (ivosidenib/enasidenib) at relapse if the IDH mutation is lost — there's no target.\n2. **The relapsed disease has fundamentally different biology:** It's BCL-2-independent (explaining venetoclax resistance) and may be MCL-1-dependent. Salvage options: (a) MCL-1 inhibitor combinations, (b) conventional intensive chemotherapy if patient is fit, (c) targeted therapy based on whatever driver mutations the relapsed clone carries (re-sequence to identify new targets).\n3. **Clinical implication:** Monitor IDH mutation status AND subclonal architecture at diagnosis using deep NGS (>1% VAF sensitivity). If IDH-WT subclones are detectable at >5% VAF at diagnosis, consider preemptive strategies to address both populations.\n- **Verification:** llm-judge\n- **Cascade risk:** Terminal step.\n\n**Data Provenance:**\n- ClinVar IDH1: 35 pathogenic; IDH2: 80 pathogenic (queried 2026-02-17)\n- PDB 4JA8: IDH2 R140Q + AGI-6780 inhibitor, 1.55 Å, released 2013-04-10, X-ray (queried 2026-02-17)\n- Open Targets AML: DNMT3A 0.8296, FLT3 0.8219 (queried 2026-02-17)\n- ClinVar DNMT3A: 352 pathogenic; NPM1: 29 pathogenic (queried 2026-02-17)"
+  },
+  {
+    "chain_id": "chain27",
+    "template": "evidence_synthesis",
+    "topic": "BRAF V600E inhibition in melanoma: lessons from vemurafenib resistance",
+    "description": "Compare conflicting studies → meta-analytic reasoning → clinical recommendation",
+    "steps": [
+      {
+        "task_id": "chain27_step1",
+        "input_type": "none"
+      },
+      {
+        "task_id": "chain27_step2",
+        "input_type": "previous_response"
+      },
+      {
+        "task_id": "chain27_step3",
+        "input_type": "previous_response"
+      }
+    ],
+    "data_provenance": "- PDB 3OG7: Queried 2026-02-17, resolution 2.45 Å, released 2010-09-22. Title: \"B-Raf Kinase V600E oncogenic mutant in complex with PLX4032\"\n- UniProt P15056 (BRAF): 766 aa. Domains: RBD (155-227), Protein kinase (457-717). Active site: proton acceptor at 576. Queried 2026-02-17.\n- ClinVar BRAF: 352 pathogenic variants (queried 2026-02-17)\n- ChEMBL CHEMBL1229517 (vemurafenib): IC50 = 31 nM (BRAF, CHEMBL1948324), 61 nM (CHEMBL1948325), 190 nM (CHEMBL1948326). Max phase = 4. Queried 2026-02-17.\n- Open Targets melanoma (EFO_0000389): CDKN2A 0.8458, MITF 0.7498, PTEN 0.7137 (queried 2026-02-17)\n\n### Step 2 — Meta-analytic reasoning\n**File:** `chain27_step2.json`\n- **Question:** Subsequent trials tested combination approaches in BRAF V600E melanoma:\n\n| Trial | Treatment | N | Median PFS | Median OS | HR (OS) |\n|---|---|---|---|---|---|\n| BRIM-3 | Vemurafenib mono | 675 | 5.3 mo | 13.6 mo | ref |\n| coBRIM | Vemurafenib + cobimetinib | 495 | 12.3 mo | 22.5 mo | 0.70 |\n| COMBI-d | Dabrafenib + trametinib | 423 | 11.0 mo | 25.1 mo | 0.71 |\n| KEYNOTE-022 | Dabrafenib + trametinib + pembrolizumab | 120 | 16.9 mo | 32.7 mo | ~0.56 |\n\n(a) What is the pattern in PFS and OS across generations of therapy? (b) Is there diminishing returns with each additional agent? (c) How would you estimate the relative contribution of each drug component?\n- **Ideal answer:**\n**(a) Progressive improvement with each generation:**\n- Monotherapy: PFS 5.3 mo, OS 13.6 mo\n- BRAF+MEK: PFS 11-12 mo, OS 22-25 mo (PFS ~2.2×, OS ~1.7×)\n- BRAF+MEK+PD-1: PFS 16.9 mo, OS 32.7 mo (PFS ~1.4× over doublet, OS ~1.4×)\n\n**(b) Diminishing marginal returns:** Each additional agent provides less absolute PFS gain:\n- Adding MEK to BRAF: +6.3 months PFS (massive improvement)\n- Adding PD-1 to BRAF+MEK: +5.3 months PFS (substantial but smaller)\nThe OS gains are more proportional because immunotherapy provides long-term survival \"tails\" (patients who become long-term survivors, visible only in OS data). The PFS benefit may understate the immunotherapy contribution because some patients develop durable immune responses that aren't captured by RECIST-based PFS.\n\n**(c) Relative contribution estimation:**\nThis requires caution because trials have different populations and timeframes. However, using a framework:\n- BRAF inhibitor alone: blocks primary driver → dramatic initial response but short duration\n- Adding MEK inhibitor: blocks the most common resistance escape (MAPK reactivation) → doubles PFS\n- Adding anti-PD-1: adds an entirely orthogonal mechanism (immune-mediated tumor killing) that can produce durable responses independent of targeted therapy resistance\n\nA formal approach: Construct a network meta-analysis (NMA) using the BRAF-mono arm as common comparator. Estimate indirect comparison of doublet vs. triplet adjusting for cross-trial differences. The \"components analysis\" approach (factorial trials like KEYNOTE-022 which randomized to doublet±pembrolizumab) directly estimates the pembrolizumab contribution: OS HR for adding pembrolizumab ≈ 0.56/0.71 ≈ 0.79 (roughly 21% further mortality reduction from immunotherapy addition).\n\n**Key insight:** Targeted therapy and immunotherapy address DIFFERENT failure modes. Targeted therapy extends the time before resistant clones dominate. Immunotherapy provides a separate mechanism that can eliminate resistant clones if the immune system recognizes them. The optimal strategy likely involves all three simultaneously, not sequentially.\n- **Verification:** llm-judge\n- **Cascade risk:** Wrong component attribution → wrong trial design.\n\n### Step 3 — Clinical recommendation\n**File:** `chain27_step3.json`\n- **Question:** A 55-year-old patient presents with BRAF V600E metastatic melanoma, ECOG PS 0, no brain metastases, LDH normal. Treatment options include: (a) BRAF+MEK (dabrafenib+trametinib), (b) anti-PD-1 monotherapy (pembrolizumab or nivolumab), (c) anti-PD-1 + anti-CTLA-4 (nivolumab+ipilimumab), (d) BRAF+MEK+anti-PD-1 triplet. Based on your evidence synthesis, which would you recommend first-line and why? Address both rapid response need and long-term survival.\n- **Ideal answer:**\n**Recommended: (c) Nivolumab + ipilimumab (nivo+ipi) as preferred first-line, with BRAF+MEK as rescue.**\n\n**Rationale:**\n1. **Immunotherapy first, targeted therapy at progression.** The DREAMseq trial (ECOG-ACRIN EA6134) directly tested sequencing: anti-PD-1+anti-CTLA-4 first → BRAF+MEK at progression vs. BRAF+MEK first → immunotherapy at progression. 2-year OS was **72% for immunotherapy-first vs. 52% for targeted-therapy-first.** This is the most important data point: sequence matters, and immunotherapy first is superior.\n\n2. **Why nivo+ipi over pembrolizumab alone:** In BRAF V600E melanoma, nivo+ipi achieves higher response rates (~60% vs. ~42%) and more durable responses than anti-PD-1 alone. The 5-year OS for nivo+ipi is ~50-60% across CheckMate trials.\n\n3. **Why NOT the BRAF+MEK+anti-PD-1 triplet:** While the triplet has the best PFS/OS numbers, it comes with significantly higher toxicity (grade 3-4 AEs ~73% for KEYNOTE-022 triplet vs. ~55% for nivo+ipi vs. ~30% for dabrafenib+trametinib). In a PS 0 patient with normal LDH (good prognosis features), maximum front-line intensity may not be needed, and toxicity from the triplet may compromise the patient's ability to receive subsequent lines.\n\n4. **When to use BRAF+MEK first instead:**\n   - Symptomatic, high-volume disease requiring rapid response (BRAF+MEK response rate >60% with rapid onset within 2 weeks, vs. immunotherapy which may take 2-3 months)\n   - Brain metastases (BRAF+MEK has better CNS penetration)\n   - High LDH (poor prognosis, may not survive long enough for immunotherapy to work)\n\n5. **For this specific patient** (PS 0, no brain mets, normal LDH = favorable prognosis): nivo+ipi first-line, accepting the ~55% grade 3-4 toxicity rate (mostly manageable immune-related AEs). If progression after immunotherapy, switch to dabrafenib+trametinib. This sequence maximizes long-term survival probability.\n- **Verification:** llm-judge\n- **Cascade risk:** Terminal step."
+  },
+  {
+    "chain_id": "chain28",
+    "template": "sequence_to_function",
+    "topic": "Identifying a novel CRISPR-Cas effector from metagenomic data",
+    "description": "Identify protein from sequence → predict adaptation mechanism → design validation",
+    "steps": [
+      {
+        "task_id": "chain28_step1",
+        "input_type": "none"
+      },
+      {
+        "task_id": "chain28_step2",
+        "input_type": "previous_response"
+      },
+      {
+        "task_id": "chain28_step3",
+        "input_type": "previous_response"
+      }
+    ]
+  },
+  {
+    "chain_id": "chain29",
+    "template": "stats_pipeline",
+    "topic": "Single-cell RNA-seq analysis of tumor-infiltrating lymphocytes in melanoma",
+    "description": "Test selection → multiple testing correction → pathway interpretation",
+    "steps": [
+      {
+        "task_id": "chain29_step1",
+        "input_type": "none"
+      },
+      {
+        "task_id": "chain29_step2",
+        "input_type": "previous_response"
+      },
+      {
+        "task_id": "chain29_step3",
+        "input_type": "previous_response"
+      }
+    ]
+  },
+  {
+    "chain_id": "chain30",
+    "template": "critical_appraisal",
+    "topic": "Microbiome manipulation for immunotherapy response in melanoma",
+    "description": "Evaluate weak evidence → integrate conflicting data → design definitive experiment",
+    "steps": [
+      {
+        "task_id": "chain30_step1",
+        "input_type": "none"
+      },
+      {
+        "task_id": "chain30_step2",
+        "input_type": "previous_response"
+      },
+      {
+        "task_id": "chain30_step3",
+        "input_type": "previous_response"
+      }
     ]
   }
 ]

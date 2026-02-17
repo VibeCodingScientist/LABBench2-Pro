@@ -1,0 +1,17 @@
+{
+  "id": "chain23_step3",
+  "category": "ChainTask",
+  "question": "Design an experiment to confirm that the three mutations (G183D, N289S, T314A) are responsible for the carbapenem-hydrolytic activity and determine which mutations are necessary vs. sufficient. Include: cloning strategy, enzyme kinetics, and clinical correlate.",
+  "ideal": "**Cloning and expression:**\nClone the novel AmpC gene and CMY-2 (reference) into pET28a with C-terminal His₆ tag. Generate all 7 combinatorial mutants on the CMY-2 backbone:\n- CMY-2 WT\n- CMY-2 + G183D\n- CMY-2 + N289S\n- CMY-2 + T314A\n- CMY-2 + G183D/N289S\n- CMY-2 + G183D/T314A\n- CMY-2 + N289S/T314A\n- CMY-2 + G183D/N289S/T314A (= novel enzyme)\n\nExpress in *E. coli* BL21(DE3), purify by Ni-NTA + SEC.\n\n**Enzyme kinetics:**\nMeasure Km and kcat for each variant against a substrate panel:\n- Nitrocefin (chromogenic, general β-lactamase substrate)\n- Ceftazidime (3rd-gen cephalosporin)\n- Meropenem (carbapenem)\n- Imipenem (carbapenem)\n\nUse UV spectrophotometry (Δε at 297 nm for nitrocefin; Δε at 300 nm for meropenem). Calculate catalytic efficiency (kcat/Km) for each enzyme-substrate combination.\n\n**Predictions:**\n- CMY-2 WT: kcat/Km for meropenem ≈ 10⁻³ µM⁻¹s⁻¹ (negligible carbapenemase)\n- G183D single: kcat/Km for meropenem ≈ 10⁻² µM⁻¹s⁻¹ (modest increase)\n- G183D/N289S double: kcat/Km for meropenem ≈ 10⁻¹ µM⁻¹s⁻¹ (clinically relevant)\n- Triple mutant: highest carbapenemase activity\n\n**Clinical correlate:**\nTransform each variant into *K. pneumoniae* ATCC13883 (susceptible, with intact porins) and the same strain with OmpK36 deletion (porin-deficient). Measure meropenem MICs. **Key prediction:** Carbapenem resistance (MIC ≥4) requires both the enzyme mutations AND porin loss — neither alone is sufficient. This is the typical clinical scenario for AmpC-mediated carbapenem resistance.\n\n**Analysis:** Two-way ANOVA: enzyme variant × porin status → MIC. Report which mutations are necessary (no single mutation achieves clinical resistance alone), which are sufficient in combination, and the epistatic interactions.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "sequence_to_function",
+    "chain_id": "chain23",
+    "topic": "Novel AmpC β-lactamase from carbapenem-resistant Enterobacteriaceae",
+    "step": 3,
+    "step_role": "Design validation experiment",
+    "depends_on": "chain23_step2",
+    "what_cascades": "Terminal step."
+  }
+}

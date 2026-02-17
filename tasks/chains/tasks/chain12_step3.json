@@ -1,0 +1,17 @@
+{
+  "id": "chain12_step3",
+  "category": "ChainTask",
+  "question": "You are analyzing a retrospective cohort of 85 myelofibrosis patients treated with ruxolitinib. You want to test whether baseline JAK2 V617F allele burden (measured by quantitative PCR, continuous variable from 0-100%) predicts spleen response at 24 weeks (≥35% reduction, binary yes/no). You also want to assess whether allele burden predicts time-to-response and whether initial allele burden trajectory (change in allele burden at weeks 4, 8, 12) provides additional predictive value beyond baseline. What statistical framework addresses all three questions?",
+  "ideal": "(1) **Baseline allele burden → binary spleen response:** Logistic regression with allele burden as continuous predictor. Report odds ratio per 10% increase in allele burden, with 95% CI. Check linearity assumption using restricted cubic splines — if non-linear, use spline logistic regression. (2) **Allele burden → time-to-response:** Cox proportional hazards model with allele burden as continuous covariate. Check PH assumption with Schoenfeld residuals. Report hazard ratio per 10% allele burden increase. Kaplan-Meier curves stratified by tertiles of allele burden for visualization. (3) **Trajectory analysis:** Joint longitudinal-survival model (JM package in R) that simultaneously models: (a) the longitudinal trajectory of allele burden (linear mixed-effects model with random intercept and slope), and (b) time-to-spleen response (Cox model). The joint model links the current value and/or slope of allele burden to the hazard of response, properly accounting for measurement error and informative dropout. This is superior to landmark analysis or time-varying Cox because it handles irregular measurement times and extrapolation. **Do not** use repeated t-tests comparing responders vs. non-responders at each timepoint — this ignores the time series structure and inflates type I error.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "paper_to_experiment",
+    "chain_id": "chain12",
+    "topic": "JAK2 V617F in myeloproliferative neoplasms",
+    "step": 3,
+    "step_role": "Statistical test selection",
+    "depends_on": "chain12_step2",
+    "what_cascades": "Wrong model → biased estimates → wrong clinical thresholds."
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "id": "chain13_step2",
+  "category": "ChainTask",
+  "question": "Your random-effects meta-analysis identifies 412 loci reaching genome-wide significance (p < 5×10⁻⁸). Of these, 380 replicate known T2D loci and 32 are novel. A reviewer asks: \"The genome-wide significance threshold of 5×10⁻⁸ was derived for European populations based on ~1 million independent common variants. With 8 million imputed variants across three ancestries, shouldn't you use a more stringent threshold?\" (a) Is the reviewer correct? (b) Calculate the appropriate Bonferroni threshold for 8 million tests. (c) How many of the 32 novel loci would survive this threshold if their p-values range from 1.2×10⁻⁸ to 4.8×10⁻⁸? (d) What is the better approach than adjusting the threshold?",
+  "ideal": "(a) **The reviewer raises a valid point but the conclusion is partially wrong.** The 5×10⁻⁸ threshold approximates a Bonferroni correction for ~1 million independent common variants in European LD structure (0.05/10⁶ ≈ 5×10⁻⁸). With imputed and multi-ancestry data, the number of effectively independent tests increases. However, the increase is not proportional to total variants because most of the 8 million variants are in LD with each other. (b) **Bonferroni for 8M tests:** 0.05 / 8×10⁶ = 6.25×10⁻⁹. This is ~8× more stringent than the standard threshold. (c) If the 32 novel loci have p-values from 1.2×10⁻⁸ to 4.8×10⁻⁸, **zero** survive a threshold of 6.25×10⁻⁹. But Bonferroni is overly conservative here because it ignores LD. (d) **Better approaches:** (i) Calculate the effective number of independent tests using eigenvalue decomposition of the LD matrix (simpleM or LDAK), which will yield ~2-3 million independent tests across ancestries, corresponding to a threshold of ~1.5-2.5×10⁻⁸. Some novel loci may survive this. (ii) Use a Bayesian framework (e.g., FINEMAP, SuSiE) that assigns posterior inclusion probabilities to each variant, avoiding arbitrary thresholds entirely. (iii) Require replication: the novel loci should be validated in an independent cohort — if 20+ of 32 replicate at p<0.05 (directionally consistent), this provides stronger evidence than any significance threshold.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "stats_pipeline",
+    "chain_id": "chain13",
+    "topic": "GWAS meta-analysis for type 2 diabetes risk loci",
+    "step": 2,
+    "step_role": "Multiple testing correction",
+    "depends_on": "chain13_step1",
+    "what_cascades": "Wrong threshold → miss true signals or accept false positives."
+  }
+}

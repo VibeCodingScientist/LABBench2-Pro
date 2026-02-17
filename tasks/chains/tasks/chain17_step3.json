@@ -1,0 +1,17 @@
+{
+  "id": "chain17_step3",
+  "category": "ChainTask",
+  "question": "Results from your study:\n\n| Metric (fold-change, post/pre) | HPD (n=15) | Responders (n=15) | PD non-HPD (n=15) |\n|---|---|---|---|\n| Absolute CD8+ count | 1.4× (↑) | 2.8× (↑) | 1.1× (→) |\n| CD8+ Ki-67+ (% of CD8) | 8% → 22% | 8% → 45% | 8% → 12% |\n| Absolute Treg count | 3.2× (↑↑) | 0.8× (→) | 1.3× (↑) |\n| Treg Ki-67+ (% of Tregs) | 12% → 48% | 12% → 15% | 12% → 18% |\n| Treg:CD8 ratio | 0.3 → 0.7 | 0.3 → 0.1 | 0.3 → 0.35 |\n| Spatial: Tregs in tumor nests | Rare → abundant | Rare → rare | Rare → sparse |\n\nWhich hypothesis is supported? What is the clinical implication for patient selection?",
+  "ideal": "**H1 (Treg activation) is strongly supported; H2 (Fc-mediated CD8 depletion) is refuted.**\n\n**Evidence:**\n- CD8+ T cells are NOT depleted in HPD (1.4× increase, with modest Ki-67 activation at 22%), refuting H2's prediction of CD8 depletion.\n- Tregs are dramatically expanded in HPD (3.2× increase, Ki-67 from 12→48% = massive proliferation), with spatial invasion into tumor nests. This is precisely H1's prediction.\n- In responders, CD8+ cells expand 2.8× with robust activation (Ki-67 45%) while Tregs are stable — the effector:Treg balance shifts toward immunity.\n- The Treg:CD8 ratio is the key discriminator: HPD shifts from 0.3→0.7 (immunosuppressive); responders shift from 0.3→0.1 (immunocompetent).\n\n**Clinical implications:**\n1. **Pre-treatment Treg:CD8 ratio as a predictive biomarker:** Patients with high baseline Treg infiltration (>0.4 ratio) should be flagged as HPD risk. Consider combination with anti-CTLA-4 (which depletes Tregs via ADCC) before or concurrent with anti-PD-1.\n2. **Combination strategy for HPD-prone patients:** Anti-PD-1 + ipilimumab (anti-CTLA-4, which depletes FoxP3+ Tregs through Fc-mediated ADCC) to counter Treg expansion. Alternative: anti-PD-1 + anti-CCR8 (selectively depletes intratumoral Tregs without systemic immune toxicity).\n3. **Early monitoring:** Liquid biopsy or on-treatment biopsy at week 3 measuring Treg expansion could enable early detection and treatment switch before clinical HPD manifests.\n4. **Patient exclusion from anti-PD-1 monotherapy:** Tumors with >50% FoxP3+ cells among CD4+ TILs should not receive anti-PD-1 alone.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "paradox_resolution",
+    "chain_id": "chain17",
+    "topic": "PD-1 blockade accelerates tumor growth (hyperprogression)",
+    "step": 3,
+    "step_role": "Synthesize conclusion from results",
+    "depends_on": "chain17_step2",
+    "what_cascades": "Terminal step."
+  }
+}

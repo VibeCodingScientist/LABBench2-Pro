@@ -1,15 +1,17 @@
 {
   "id": "chain09_step2",
   "category": "ChainTask",
-  "question": "[FILL: Present additional data that supports one interpretation.\nExample: 'Follow-up experiments show: 1) Annexin V staining: 45% of treated cells are apoptotic vs 3% control. 2) Caspase-3 activity assay: 8-fold increase in treated cells. 3) Pre-treatment with Z-VAD-FMK (pan-caspase inhibitor) eliminates the 25 kDa band. Does this resolve which of your hypotheses was correct? What does this mean for using GAPDH as a loading control in this experiment?']",
-  "ideal": "[FILL: Updated conclusion + practical implication.\nExample: 'This confirms caspase-3-mediated GAPDH cleavage during treatment-induced apoptosis. The Z-VAD-FMK rescue is definitive — blocking caspases eliminates the cleavage product. Critical practical implication: GAPDH is NOT a valid loading control for this experiment because the treatment itself degrades GAPDH. The apparent loading differences between lanes may be artifacts. Should switch to a caspase-resistant loading control (total protein stain like Ponceau S, or a membrane protein like Na/K-ATPase).']",
+  "question": "You performed the Z-VAD-FMK experiment and two additional controls:\n- Staurosporine alone: 25 kDa band present (as before)\n- Z-VAD-FMK + staurosporine: 25 kDa band **completely absent**\n- Annexin V/PI flow cytometry of staurosporine-treated cells: 52% Annexin V+ (early + late apoptotic)\n- Caspase-3/7 activity (Caspase-Glo): 12-fold increase over vehicle\n\nThese results confirm caspase-mediated GAPDH cleavage. Now: (a) What does this mean for using GAPDH as a loading control in this experiment? (b) What alternative loading controls would be valid? (c) For the 48% of cells that are NOT apoptotic (Annexin V−), is the GAPDH in those cells intact?",
+  "ideal": "**(a) GAPDH is INVALID as a loading control here.** The 25 kDa cleavage product means that total intact GAPDH is reduced in the staurosporine lane — densitometry of the 37 kDa band underestimates total protein, and summing 37+25 kDa bands is unreliable (transfer efficiency may differ for different-sized fragments). Any protein normalized to GAPDH will appear artificially *increased* in the staurosporine lane because the denominator is artifactually low.\n\n**(b) Valid alternatives:**\n1. **Total protein staining (Ponceau S or Stain-Free):** Measures all proteins in each lane, independent of any single protein's behavior. Best option for apoptosis experiments.\n2. **Na⁺/K⁺-ATPase (ATP1A1):** Membrane protein, not a caspase substrate, MW ~113 kDa.\n3. **Total histone H3:** Nuclear protein, not cleaved by caspase-3 (though histone H2B can be). ~15 kDa.\n4. **Vinculin (~124 kDa):** Large cytoskeletal protein, not reported as caspase substrate.\n**Avoid:** β-actin (caspase-3 substrate), β-tubulin (caspase-6 substrate), lamin A/C (caspase-6 substrate). These are all cleaved during apoptosis and share the same confound.\n\n**(c)** In the viable 48%, GAPDH is likely intact — caspase-3 is only activated in apoptotic cells. However, western blots from whole lysates represent the mixed population. The 37 kDa band is a mixture of GAPDH from viable and apoptotic cells; the 25 kDa band comes only from apoptotic cells. You cannot deconvolve these at the western blot level — you would need to **sort Annexin V− cells** before lysis to analyze only the viable population.",
   "verification": "llm-judge",
   "source": "pro-chain",
   "meta": {
     "chain": "data_to_mechanism",
+    "chain_id": "chain09",
+    "topic": "Unexpected GAPDH cleavage during apoptosis confounds western blot quantification",
     "step": 2,
-    "step_role": "Update interpretation with new evidence, identify practical consequences",
-    "depends_on": "Must evaluate new data against hypotheses from step 1",
-    "what_cascades": "Wrong loading control decision → all quantification is wrong"
+    "step_role": "Update with new evidence",
+    "depends_on": "chain09_step1",
+    "what_cascades": "Wrong loading control → all quantification invalid."
   }
 }

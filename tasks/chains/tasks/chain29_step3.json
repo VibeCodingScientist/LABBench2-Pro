@@ -1,0 +1,17 @@
+{
+  "id": "chain29_step3",
+  "category": "ChainTask",
+  "question": "GSEA (pre-ranked by DESeq2 log2FC × -log10(p)) on the progenitor-exhausted CD8+ cluster reveals:\n\n| Pathway | NES | FDR | Leading edge genes |\n|---|---|---|---|\n| Wnt/β-catenin signaling | +2.8 | <0.001 | TCF7, LEF1, MYC, CTNNB1 |\n| Oxidative phosphorylation | +2.2 | 0.003 | NDUFA, SDHA, COX5B, ATP5F1 |\n| Glycolysis | -1.9 | 0.015 | HK2, LDHA, PKM, SLC2A1 |\n| T cell exhaustion signature | -2.5 | <0.001 | PDCD1, LAG3, ENTPD1, HAVCR2 |\n| IFN-γ response | +1.6 | 0.045 | STAT1, IRF1, GBP1, IDO1 |\n\nPositive NES = enriched in responders. Interpret this profile biologically. What does it tell us about the functional state of CD8+ T cells that predict immunotherapy response?",
+  "ideal": "**This is a remarkably coherent biological picture of the \"stem-like\" CD8+ T cell state that predicts immunotherapy response:**\n\n**1. Wnt/β-catenin signaling (NES +2.8, responders):** TCF7 (encoding TCF-1, the master transcription factor of progenitor-exhausted T cells) heads the leading edge. TCF-1+ PD-1+ CD8+ T cells represent the \"stem-like\" reservoir that self-renews AND differentiates into effector cells upon PD-1 blockade. This is arguably THE key finding — responders have more Wnt-active, self-renewing T cell progenitors that can mount a sustained anti-tumor response when unleashed by anti-PD-1.\n\n**2. OXPHOS up + Glycolysis down (responders):** Progenitor-exhausted T cells rely on mitochondrial OXPHOS for energy (like memory T cells), whereas terminally exhausted T cells shift to glycolysis (like effector T cells in metabolic crisis). The metabolic profile of responder T cells is **metabolically fit** — they have functional mitochondria supporting long-term survival and self-renewal.\n\n**3. Exhaustion signature DOWN (responders):** Lower expression of exhaustion markers (PD-1, LAG-3, CD39/ENTPD1, TIM-3) in responders' progenitor-exhausted cells. This seems paradoxical — these cells are defined by being PD-1+ — but the DEGREE of exhaustion marker expression matters. Responders' progenitor cells express moderate PD-1 (enough to define them) but haven't progressed to the terminal exhaustion state with multi-marker co-expression (PD-1+++/LAG-3+/TIM-3+/CD39+).\n\n**4. IFN-γ response (modestly enriched in responders):** Indicates these cells are capable of responding to inflammatory signals — they're not anergic. However, the modest enrichment (NES 1.6, FDR 0.045) suggests this is a readiness state, not active IFN-γ production.\n\n**Integrated model:** Responders harbor a larger reservoir of metabolically fit, Wnt-active, self-renewing CD8+ T cell progenitors that haven't terminally differentiated. Anti-PD-1 therapy specifically expands this population — without sufficient progenitors, there's nothing to expand, explaining non-response.\n\n**Clinical translation:** TCF7+ CD8+ T cell frequency in pre-treatment biopsies could serve as a predictive biomarker for anti-PD-1 response. Several retrospective studies support this (Sade-Feldman et al., Cell 2018). Prospective validation needed.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "stats_pipeline",
+    "chain_id": "chain29",
+    "topic": "Single-cell RNA-seq analysis of tumor-infiltrating lymphocytes in melanoma",
+    "step": 3,
+    "step_role": "Pathway interpretation",
+    "depends_on": "chain29_step2",
+    "what_cascades": "Terminal step."
+  }
+}

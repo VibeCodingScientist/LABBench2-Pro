@@ -1,0 +1,17 @@
+{
+  "id": "chain13_step3",
+  "category": "ChainTask",
+  "question": "MAGMA gene-set analysis on the 412 T2D loci identifies these enriched pathways:\n\n| Pathway | P_adj | # Genes | Enrichment |\n|---|---|---|---|\n| Insulin secretion regulation | 3.2×10⁻¹⁵ | 45 | 4.1× |\n| Pancreatic beta cell development | 7.8×10⁻¹¹ | 28 | 3.6× |\n| Type I interferon signaling | 1.4×10⁻⁷ | 19 | 2.8× |\n| Adipocyte differentiation | 5.6×10⁻⁶ | 22 | 2.3× |\n| Circadian rhythm regulation | 2.3×10⁻⁴ | 11 | 2.0× |\n| Mitochondrial electron transport | 0.012 | 8 | 1.5× |\n\nThe interferon signaling result is unexpected for T2D — your collaborator suggests it is an artifact. However, Open Targets independently identifies IFNAR2 and IFNAR1 as top T2D associations. Evaluate whether the interferon signal is real or artifact, and explain the potential biological connection.",
+  "ideal": "**The interferon signal is likely real, not an artifact.** Evidence: (1) **Independent convergence:** GWAS loci enriched for interferon genes AND Open Targets independently identifies IFNAR1/2 as top T2D associations from orthogonal data (genetic associations, expression, literature). This convergence from different methodologies strongly supports a genuine signal. (2) **Biological plausibility:** Type I interferons (IFNα/β) are increasingly recognized in T2D pathogenesis. IFN signaling in pancreatic beta cells induces ER stress and apoptosis, contributing to beta cell loss. In obesity, chronic low-grade inflammation involves IFN-stimulated gene expression in adipose tissue macrophages. Viral infections triggering IFN responses are linked to diabetes onset (enterovirus → type 1 diabetes; HCV → T2D). (3) **Statistical robustness:** p = 1.4×10⁻⁷ with 19 genes and 2.8× enrichment is highly significant and well above the marginal pathway results.\n\n**However, consider potential confounds:** The IFNAR1/IFNAR2 locus on chromosome 21q22 is in a region with complex LD and multiple genes. The T2D signal may reflect LD with nearby genes (e.g., IL10RB) rather than IFNAR itself. Fine-mapping with ancestry-specific LD (leveraging the African cohort's short LD blocks) is needed to distinguish causal genes.\n\n**Biological ranking:** (1) Insulin secretion + beta cell development = core T2D pathophysiology; (2) Interferon signaling + adipocyte differentiation = immune/metabolic crosstalk; (3) Circadian rhythm = plausible (sleep disruption → insulin resistance); (4) Mitochondrial transport = marginal (p=0.012, low enrichment).",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "stats_pipeline",
+    "chain_id": "chain13",
+    "topic": "GWAS meta-analysis for type 2 diabetes risk loci",
+    "step": 3,
+    "step_role": "Pathway interpretation",
+    "depends_on": "chain13_step2",
+    "what_cascades": "Terminal step."
+  }
+}

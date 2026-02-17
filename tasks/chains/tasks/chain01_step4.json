@@ -1,15 +1,18 @@
 {
   "id": "chain01_step4",
   "category": "ChainTask",
-  "question": "[FILL: Ask the model to synthesize everything into testable hypotheses.\nExample: 'Based on your analysis — zinc mediates X-Y binding at physiological concentrations, half-max ~3 µM, testable via t-test with WT vs mutant — propose 3 testable hypotheses for how zinc dysregulation in Wilson disease might disrupt the X-Y signaling pathway.']",
-  "ideal": "[FILL: 3 specific, falsifiable hypotheses.\nExample: '1) Copper accumulation in Wilson disease displaces zinc from the His142/Cys205 coordination site, reducing X-Y binding affinity by >10-fold. 2) Hepatic zinc depletion secondary to copper overload drops local zinc below the 3 µM half-max threshold, effectively abolishing X-Y signaling. 3) The H142 residue undergoes copper-mediated oxidation in Wilson disease, permanently disrupting the zinc-binding site even after copper chelation therapy.']",
+  "question": "Based on your analysis — SHP2 autoinhibition is released by bisphosphorylated peptides with EC50 ~0.7 µM, activation is graded in the cellular concentration range, and E76K destabilizes the closed conformation — propose 3 testable hypotheses for why allosteric SHP2 inhibitors (e.g., SHP099, TNO155) show clinical efficacy in RAS-driven cancers but not in cancers with SHP2 E76K mutations (as observed in clinical trials NCT03114319).",
+  "ideal": "1) **Allosteric inhibitors stabilize the closed conformation** that E76K already disrupts — the drug binding site (the interface between N-SH2 and PTP domains) is partially pre-opened in E76K, reducing inhibitor affinity by >10-fold. Testable: measure SHP099 Kd for WT vs. E76K by ITC or SPR. 2) **E76K bypasses the activation step that allosteric inhibitors block** — SHP099 prevents the conformational opening triggered by phosphopeptide binding, but E76K is constitutively open. Even complete allosteric inhibition cannot restore the autoinhibited state. Testable: measure SHP099 IC50 in phosphatase assay with E76K ± activating peptide; if peptide-independent, drug should fail regardless. 3) **Catalytic site inhibitors should retain efficacy against E76K** because the PTP active site is structurally intact. Testable: compare IC50 of allosteric (SHP099) vs. active-site inhibitor (e.g., IIB-08) against WT and E76K; predict active-site inhibitors show <3-fold shift while allosteric inhibitors show >10-fold.",
   "verification": "llm-judge",
   "source": "pro-chain",
   "meta": {
     "chain": "paper_to_experiment",
+    "chain_id": "chain01",
+    "topic": "SHP2 allosteric activation in RASopathy signaling",
     "step": 4,
-    "step_role": "Hypothesis generation synthesizing all prior steps",
-    "depends_on": "Must integrate mechanism (step 1), quantitative threshold (step 2), and experimental approach (step 3)",
-    "what_cascades": "Terminal step — quality depends on everything above"
+    "step_role": "Hypothesis generation",
+    "depends_on": "chain01_step3",
+    "what_cascades": "Terminal step — quality depends on correct understanding of mechanism, quantitative data, and statistical framework.",
+    "data_provenance": "| Data Type | Identifier | Details | Query Date |\n|-----------|-----------|---------|------------|\n| PDB | [2SHP](https://www.rcsb.org/structure/2SHP) | SHP2 autoinhibited structure | 2026-02-17 |\n| Gene | PTPN11 | Encodes SHP2 protein tyrosine phosphatase | 2026-02-17 |\n| Clinical Trial | [NCT03114319](https://clinicaltrials.gov/ct2/show/NCT03114319) | SHP2 inhibitor clinical trial (referenced in Step 4) | 2026-02-17 |\n| Literature | LaRochelle et al. 2021 | *Nature*, SHP2 autoinhibition mechanism | 2026-02-17 |\n| Compound | SHP099 | Allosteric SHP2 inhibitor | 2026-02-17 |\n| Compound | TNO155 | Allosteric SHP2 inhibitor | 2026-02-17 |"
   }
 }

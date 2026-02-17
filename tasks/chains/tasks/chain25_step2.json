@@ -1,0 +1,17 @@
+{
+  "id": "chain25_step2",
+  "category": "ChainTask",
+  "question": "Your top two hypotheses are: (H1) Exercise-induced airway epithelial damage causing sterile inflammation, and (H2) Stress hormone-mediated immune cell redistribution to mucosal sites. Design ONE study that distinguishes these mechanisms in marathon runners.",
+  "ideal": "**Study: Pre/post-marathon nasal lavage + blood sampling with epithelial damage markers**\n\n**Participants:** 60 marathon runners (finishers of a single event), 20 sedentary matched controls.\n\n**Sampling timepoints:** Pre-race (morning of race), 1h post-race, 6h, 24h, 72h, 7 days.\n\n**Sample 1 — Nasal lavage (10 mL sterile saline per nostril):**\n- Cell differential (cytospin: neutrophils, eosinophils, lymphocytes, epithelial cells)\n- Cytokines: IL-6, IL-8, IL-33, TSLP (epithelial damage markers), IFN-γ, TNF-α\n- **Epithelial integrity marker: Club cell protein-16 (CC16)** — a small protein normally sequestered in airway epithelium. When epithelium is damaged, CC16 leaks into the airway lumen and blood. Serum CC16 is the gold standard biomarker for airway epithelial permeability.\n- **Calprotectin (S100A8/A9):** Neutrophil-derived marker of active inflammation.\n\n**Sample 2 — Blood:**\n- Serum CC16 (epithelial damage → CC16 crosses into blood)\n- Cortisol, epinephrine, norepinephrine\n- Complete blood count with differential (lymphocyte count for lymphopenia)\n- Flow cytometry: CD3/CD4/CD8/CD16/CD56 for lymphocyte subsets\n- Tissue-homing markers: α4β7 (gut-homing), CCR5/CXCR3 (inflammation-homing) on T cells\n\n**Symptom diary:** Daily symptom score (Jackson cold score) for 14 days.\n\n**Expected if H1 (epithelial damage):**\n- Serum CC16: Dramatically elevated at 1h (>5× baseline), slowly normalizing over 72h\n- Nasal IL-33/TSLP: Elevated at 1-6h (epithelial alarmins)\n- Nasal neutrophils: Elevated at 6-24h (sterile inflammation)\n- Cortisol: Elevated but does NOT correlate with CC16 or symptom severity (damage is mechanical, not hormonal)\n- Symptoms correlate with CC16 levels, not cortisol levels\n\n**Expected if H2 (immune redistribution):**\n- Serum CC16: Normal or minimally elevated (no epithelial damage)\n- Blood lymphocytes: Drop at 1h (lymphopenia), rebound by 24h\n- Nasal lavage lymphocytes: Increase at 6-24h (redistribution to mucosa)\n- CCR5/CXCR3+ T cells: Depleted from blood, appearing in nasal lavage\n- Cortisol levels correlate with symptom severity and lymphocyte redistribution kinetics\n- Symptoms correlate with cortisol AUC, not CC16\n\n**Key discriminator: Serum CC16.** If elevated → epithelial damage (H1). If normal → redistribution (H2).",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "paradox_resolution",
+    "chain_id": "chain25",
+    "topic": "Exercise-induced immunosuppression in marathon runners",
+    "step": 2,
+    "step_role": "Design discriminating experiment",
+    "depends_on": "chain25_step1",
+    "what_cascades": "Wrong mechanism → wrong advice to athletes."
+  }
+}

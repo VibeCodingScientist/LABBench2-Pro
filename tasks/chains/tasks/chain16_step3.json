@@ -1,0 +1,17 @@
+{
+  "id": "chain16_step3",
+  "category": "ChainTask",
+  "question": "You successfully repeat the ChIP-seq with CUT&Tag (100K mESCs, anti-H3K27me3) and obtain high-quality data: 30M unique reads, FRiP=0.35, 22,000 broad peaks. You want to compare H3K27me3 domains between: (a) naive mESCs (2i+LIF), (b) primed mESCs (activin+FGF), and (c) mESCs with EZH2 catalytic-dead mutation (SET domain Y641F — this is the PRC2 methyltransferase). Describe the analysis pipeline and the expected differences with biological rationale.",
+  "ideal": "**Analysis pipeline:**\n1. **Alignment:** Bowtie2 to mm10, remove duplicates (Picard), filter MAPQ≥30\n2. **Peak calling:** MACS2 broad mode (`--broad --broad-cutoff 0.1`) for each sample. Also use SICER2 (designed for broad histone marks) for comparison.\n3. **Differential analysis:** DiffBind or MAnorm2 for quantitative comparison of H3K27me3 signal across conditions. Use spike-in normalization (add *Drosophila* chromatin + anti-H2Av antibody to each CUT&Tag) to control for global changes in H3K27me3 levels.\n4. **Visualization:** deepTools computeMatrix → plotHeatmap at TSSs, showing H3K27me3 signal ±10 kb around all gene promoters, sorted by signal intensity.\n5. **Gene set overlap:** Intersect differential H3K27me3 domains with gene annotations to identify genes gaining/losing Polycomb repression.\n\n**Expected differences:**\n- **Naive → Primed:** Gain of H3K27me3 at developmental gene promoters (e.g., Hox clusters, lineage-specific TFs) as cells become more restricted. Loss of H3K27me3 at pluripotency-associated bivalent promoters that resolve to active state. Overall H3K27me3 domain count should increase by ~20-30%.\n- **EZH2-Y641F catalytic-dead:** Near-complete loss of H3K27me3 genome-wide (EZH2 is the sole H3K27me3 methyltransferase in PRC2). Expect >90% reduction in peak count and signal intensity. This is the negative control confirming antibody specificity and CUT&Tag performance. Residual signal may come from: (a) EZH1 compensation (the paralog has weak H3K27 methyltransferase activity), (b) antibody background.\n- **Critical control:** The EZH2 mutant validates the entire experiment — if substantial H3K27me3 signal remains, either the mutation is leaky, EZH1 compensates, or the antibody has off-target binding.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "protocol_troubleshoot",
+    "chain_id": "chain16",
+    "topic": "ChIP-seq for H3K27me3 in embryonic stem cells",
+    "step": 3,
+    "step_role": "Quantitative follow-up",
+    "depends_on": "chain16_step2",
+    "what_cascades": "Terminal step."
+  }
+}

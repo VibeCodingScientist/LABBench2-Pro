@@ -1,0 +1,17 @@
+{
+  "id": "chain26_step2",
+  "category": "ChainTask",
+  "question": "BH3 profiling (mitochondrial priming assay) is performed on AML blasts from 30 patients before treatment:\n- High BCL-2 dependence (primed by ABT-199 peptide): 18 patients → 78% CR with ven+aza\n- Low BCL-2 dependence: 12 patients → 42% CR with ven+aza\n- Pre-treatment MCL-1 protein (western blot, normalized): High MCL-1 group had 55% CR vs. 75% CR in low MCL-1 group\n- RNA-seq: Azacitidine treatment (day 8 biopsy, pre-venetoclax) showed MCL-1 mRNA reduced by 40% and NOXA mRNA increased by 3.2-fold in 22/30 patients\n\nWhich hypothesis from Step 1 is best supported? Can you now predict which patients will respond?",
+  "ideal": "**All three hypotheses are partially supported, but Hypothesis 1 (MCL-1 reduction) and Hypothesis 2 (BH3 gene reactivation) are dominant:**\n\n**Evidence for H1:** MCL-1 protein levels inversely correlate with response (75% CR in low MCL-1 vs. 55% in high MCL-1). Azacitidine reduces MCL-1 mRNA by 40%, priming cells for venetoclax.\n\n**Evidence for H2:** NOXA (a BH3-only protein that specifically neutralizes MCL-1) is upregulated 3.2-fold by azacitidine. This is complementary to H1 — azacitidine both reduces MCL-1 directly AND increases its antagonist NOXA. This double mechanism explains the synergy: cells that resist MCL-1 reduction may still respond to NOXA upregulation.\n\n**Predictive biomarker framework:**\n1. **Best predictor:** BH3 profiling — 78% CR in BCL-2-dependent blasts vs. 42% in non-dependent. This directly measures the functional requirement for BCL-2, integrating all upstream variables.\n2. **Supplementary:** Pre-treatment MCL-1 protein level (high MCL-1 = partial resistance, may need MCL-1 inhibitor addition).\n3. **On-treatment:** Day 8 biopsy showing MCL-1 reduction >30% and NOXA induction >2-fold predicts response. Patients NOT showing this on-treatment change may benefit from early addition of an MCL-1 inhibitor.\n\n**Combined predictor:** BCL-2 dependent AND low MCL-1 → ~85% CR (identify the best responders). BCL-2 independent AND high MCL-1 → ~30% CR (candidates for alternative regimen).",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "data_to_mechanism",
+    "chain_id": "chain26",
+    "topic": "Unexpected synergy between venetoclax and azacitidine in AML",
+    "step": 2,
+    "step_role": "Update with new evidence",
+    "depends_on": "chain26_step1",
+    "what_cascades": "Wrong biomarker → wrong patient selection."
+  }
+}

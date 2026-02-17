@@ -1,0 +1,18 @@
+{
+  "id": "chain11_step2",
+  "category": "ChainTask",
+  "question": "Sotorasib achieves selectivity for KRAS G12C over wild-type KRAS and other G12 mutants (G12D, G12V). ChEMBL data shows sotorasib IC50 = 68 nM against KRAS G12C (CHEMBL4357259) but IC50 > 10,000 nM against wild-type KRAS (CHEMBL4735449) and KRAS G12D. Explain the molecular basis for this >150-fold selectivity window. Why can't sotorasib inhibit KRAS G12D even though both mutants activate the same RAS-MAPK pathway?",
+  "ideal": "Sotorasib's selectivity has three components: (1) **Covalent selectivity:** The drug requires Cys12 as a nucleophile for irreversible bond formation. G12D has aspartate, G12V has valine — neither can react with the Michael acceptor. This is absolute selectivity; no amount of dose escalation can overcome it. (2) **Conformational selectivity:** Sotorasib binds only the GDP-bound state. G12C has the highest intrinsic GTPase rate among oncogenic KRAS mutants (~50% of WT hydrolysis rate), meaning a significant fraction of cellular KRAS G12C cycles through the GDP state. G12D and G12V have much lower GTPase activity (<1% of WT), staying locked in the GTP state where the S-IIP is closed. (3) **Pocket complementarity:** Even if a non-covalent version of sotorasib were designed, the S-IIP shape is subtly different across mutants due to how residue 12 influences P-loop positioning. The WT glycine at position 12 doesn't create the same pocket geometry. These combined mechanisms make KRAS G12C uniquely druggable among RAS proteins.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "structure_to_drug",
+    "chain_id": "chain11",
+    "topic": "KRAS G12C covalent inhibition by sotorasib",
+    "step": 2,
+    "step_role": "Explain binding mechanism",
+    "depends_on": "chain11_step1",
+    "what_cascades": "Wrong selectivity rationale → wrong SAR predictions for next-gen inhibitors.",
+    "data_provenance": "- ChEMBL CHEMBL4535757: IC50 = 68 nM (KRAS G12C, CHEMBL4357259), IC50 > 10,000 nM (KRAS WT, CHEMBL4735449), IC50 > 10,000 nM (A549 KRAS G12S, CHEMBL4735451). Queried 2026-02-17.\n- ChEMBL EC50 data: NCI-H358 (KRAS G12C cell line) EC50 = 6.4 nM (CHEMBL5217982), 6.0 nM (CHEMBL5217992)"
+  }
+}

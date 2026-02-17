@@ -1,0 +1,18 @@
+{
+  "id": "chain26_step3",
+  "category": "ChainTask",
+  "question": "A retrospective analysis of VIALE-A trial data stratified by IDH1/IDH2 mutation status (mutations present in ~15% of AML patients, detectable by ClinVar variants: IDH1 35 pathogenic, IDH2 80 pathogenic) reveals: IDH-mutant AML responds exceptionally well to ven+aza (CR rate 75% vs. 65% for IDH-WT). However, when these patients relapse, they lose the IDH mutation (IDH reversion to wild-type) in 40% of cases. This is unusual — most cancers acquire new mutations at relapse, not lose drivers. (a) Explain why IDH-mutant AML is particularly sensitive to venetoclax. (b) Why would relapsed disease LOSE the IDH mutation? (c) What does this mean for salvage therapy?",
+  "ideal": "**(a) IDH mutation → venetoclax sensitivity:** IDH1/2 mutations produce 2-hydroxyglutarate (2-HG), an oncometabolite that inhibits the α-ketoglutarate-dependent enzyme cytochrome c oxidase (Complex IV of the ETC). This forces AML cells to rely more heavily on BCL-2 to maintain mitochondrial membrane integrity and prevent apoptosis. BCL-2 dependence is therefore metabolically enforced in IDH-mutant AML. Additionally, 2-HG inhibits TET2 (a DNA demethylase), creating a hypermethylation phenotype that silences pro-apoptotic genes — azacitidine directly reverses this. The combination is mechanistically tailored: azacitidine reverses 2-HG-mediated methylation, restoring apoptotic priming, while venetoclax blocks the compensatory BCL-2 dependence.\n\n**(b) IDH mutation loss at relapse:** The IDH mutation was a **dependency** for the original clone's survival strategy (BCL-2 dependence + differentiation block). Under venetoclax+azacitidine selective pressure, the IDH-mutant clone is preferentially killed. Relapse arises from a **pre-existing IDH-WT subclone** that was a minor population at diagnosis. This IDH-WT subclone survives because it's NOT BCL-2-dependent (uses MCL-1 or BFL-1 instead) and is NOT affected by 2-HG-driven metabolic rewiring. The \"loss\" of IDH mutation is clonal selection, not reversion.\n\n**(c) Implications for salvage therapy:**\n1. **Do NOT add an IDH inhibitor** (ivosidenib/enasidenib) at relapse if the IDH mutation is lost — there's no target.\n2. **The relapsed disease has fundamentally different biology:** It's BCL-2-independent (explaining venetoclax resistance) and may be MCL-1-dependent. Salvage options: (a) MCL-1 inhibitor combinations, (b) conventional intensive chemotherapy if patient is fit, (c) targeted therapy based on whatever driver mutations the relapsed clone carries (re-sequence to identify new targets).\n3. **Clinical implication:** Monitor IDH mutation status AND subclonal architecture at diagnosis using deep NGS (>1% VAF sensitivity). If IDH-WT subclones are detectable at >5% VAF at diagnosis, consider preemptive strategies to address both populations.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "data_to_mechanism",
+    "chain_id": "chain26",
+    "topic": "Unexpected synergy between venetoclax and azacitidine in AML",
+    "step": 3,
+    "step_role": "Correct prior analysis",
+    "depends_on": "chain26_step2",
+    "what_cascades": "Terminal step.",
+    "data_provenance": "- ClinVar IDH1: 35 pathogenic; IDH2: 80 pathogenic (queried 2026-02-17)\n- PDB 4JA8: IDH2 R140Q + AGI-6780 inhibitor, 1.55 Å, released 2013-04-10, X-ray (queried 2026-02-17)\n- Open Targets AML: DNMT3A 0.8296, FLT3 0.8219 (queried 2026-02-17)\n- ClinVar DNMT3A: 352 pathogenic; NPM1: 29 pathogenic (queried 2026-02-17)"
+  }
+}

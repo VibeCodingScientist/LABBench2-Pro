@@ -1,15 +1,17 @@
 {
   "id": "chain03_step1",
   "category": "ChainTask",
-  "question": "[FILL: Present gene expression data and ask for appropriate test.\nExample: 'You have RNA-seq data from 12 tumor samples and 12 matched normal tissues. For each of 20,000 genes, you have normalized read counts. What statistical test should you use to identify differentially expressed genes, and why?']",
-  "ideal": "[FILL: Correct test choice.\nExample: 'DESeq2 or edgeR using a negative binomial generalized linear model, as RNA-seq count data is overdispersed relative to Poisson. A paired/matched design should be used since samples are matched tumor-normal pairs. A simple t-test would be inappropriate because count data violates normality assumptions.']",
+  "question": "You have RNA-seq data from 15 triple-negative breast cancer (TNBC) tumors and 15 matched adjacent normal tissues (same patient). Library prep: polyA-selected, 150bp PE, ~40M reads/sample. After alignment (STAR) and quantification (featureCounts), you have a raw count matrix of 22,487 genes × 30 samples. What statistical method should you use for differential expression analysis? Justify your choice, considering: (a) the data distribution, (b) the paired design, (c) potential confounders, and (d) why simpler approaches fail.",
+  "ideal": "Use **DESeq2** (or equivalently edgeR) with a **negative binomial generalized linear model** including patient as a blocking factor. Justification: (a) RNA-seq counts follow an overdispersed Poisson → negative binomial distribution; variance is not proportional to mean, ruling out Poisson models. (b) The paired design (tumor vs. normal from same patient) must be modeled: `design = ~ patient + condition` — this controls for inter-individual variation and increases power. (c) Include batch if samples were sequenced in multiple runs; can model with surrogate variable analysis (svaseq) if hidden confounders suspected. (d) **t-tests fail** because they assume normality on continuous data and cannot handle count-specific mean-variance relationships. Log-transforming and running t-tests loses information at low counts and violates variance stabilization assumptions. Limma-voom is acceptable as an alternative (applies precision weights to log-CPM), especially with >15 samples where the normal approximation holds.",
   "verification": "llm-judge",
   "source": "pro-chain",
   "meta": {
     "chain": "stats_pipeline",
+    "chain_id": "chain03",
+    "topic": "Differential expression in triple-negative breast cancer",
     "step": 1,
-    "step_role": "Choose appropriate statistical framework",
-    "depends_on": "nothing",
-    "what_cascades": "Wrong test → wrong p-values → wrong gene list → wrong pathway analysis"
+    "step_role": "Choose statistical framework",
+    "depends_on": "nothing — this is the seed question",
+    "what_cascades": "Wrong method → wrong DE gene list → wrong pathway enrichment → wrong biological conclusion."
   }
 }

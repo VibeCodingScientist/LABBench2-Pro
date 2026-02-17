@@ -1,0 +1,18 @@
+{
+  "id": "chain18_step3",
+  "category": "ChainTask",
+  "question": "Mpro resistance mutations are emerging. The E166V mutation in Mpro reduces nirmatrelvir IC50 from ~1 nM to ~50-100 nM but also reduces viral fitness (Mpro catalytic efficiency drops ~3-fold). Which of the following drug design strategies would BEST address nirmatrelvir resistance while maintaining pan-coronavirus potential?\nA) Increase the reactivity of the nitrile warhead to form a more stable covalent bond\nB) Design a non-covalent inhibitor with extended interactions into the S3/S4 pockets that are distal from position 166\nC) Develop a PROTAC that recruits a human E3 ligase to degrade Mpro — since Mpro is a viral protein, any ubiquitination would be productive\nD) Switch to an allosteric inhibitor targeting the Mpro dimer interface",
+  "ideal": "B",
+  "verification": "multiple_choice",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "structure_to_drug",
+    "chain_id": "chain18",
+    "topic": "SARS-CoV-2 main protease inhibition by nirmatrelvir",
+    "step": 3,
+    "step_role": "SAR prediction",
+    "depends_on": "chain18_step2",
+    "what_cascades": "Wrong SAR reasoning → wrong development strategy.",
+    "correct_choice": "B"
+  }
+}

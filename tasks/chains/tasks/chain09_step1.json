@@ -1,15 +1,17 @@
 {
   "id": "chain09_step1",
   "category": "ChainTask",
-  "question": "[FILL: Present a gel/blot image description with ambiguity and ask for interpretation.\nExample: 'A Western blot for GAPDH (loading control, expected 37 kDa) shows: Lane 1 (WT): strong band at 37 kDa. Lane 2 (Treated): strong band at 37 kDa PLUS an unexpected band at ~25 kDa. Lane 3 (KO): very faint band at 37 kDa, no 25 kDa band. What could the 25 kDa band in Lane 2 represent?']",
-  "ideal": "[FILL: Diagnostic reasoning.\nExample: 'The 25 kDa band is likely a GAPDH degradation product caused by the treatment. Possibilities: 1) Caspase-mediated cleavage — GAPDH is a known caspase-3 substrate, cleaved during apoptosis. If the treatment induces apoptosis, this is expected. 2) Non-specific antibody cross-reactivity (less likely since it only appears in treated lane). 3) The treatment activates a protease that cleaves GAPDH. The faint 37 kDa band in KO lane suggests lower protein loading or reduced GAPDH expression, not relevant to the 25 kDa mystery.']",
+  "question": "You are studying the effect of staurosporine (1 µM, 6h) on AKT phosphorylation in Jurkat T-cells. Your western blot for the loading control GAPDH (expected MW: 36 kDa) shows:\n- Lane 1 (DMSO vehicle): Single strong band at ~37 kDa\n- Lane 2 (Staurosporine 1 µM): Strong band at ~37 kDa + unexpected additional band at ~25 kDa (~30% intensity of full-length)\n- Lane 3 (Media-only control): Single strong band at ~37 kDa\n\nThe anti-GAPDH antibody is monoclonal (clone 6C5, epitope in N-terminal domain). List at least 3 possible explanations for the 25 kDa band in lane 2, ranked by likelihood. What single additional experiment would most efficiently distinguish between them?",
+  "ideal": "**Ranked explanations:**\n\n1. **(Most likely) Caspase-mediated GAPDH cleavage.** Staurosporine is a potent inducer of apoptosis in Jurkat cells (activates caspase-3/7 within 2-4h). GAPDH is a known caspase-3 substrate, cleaved at **Asp238**, producing an N-terminal fragment of ~25 kDa and a C-terminal fragment of ~11 kDa. Since the antibody (clone 6C5) recognizes the N-terminal domain, it detects both full-length (37 kDa) and the N-terminal cleavage fragment (25 kDa). The ~30% cleavage is consistent with partial apoptosis at 6h.\n\n2. **(Possible) Non-specific cross-reactivity.** The 25 kDa band could be a staurosporine-induced protein that cross-reacts with the antibody. However, monoclonal clone 6C5 is highly specific and widely validated, making this unlikely. Also, the band would need to be staurosporine-inducible, which is a coincidence.\n\n3. **(Less likely) Alternative translation/splicing.** An alternative GAPDH transcript could produce a smaller isoform. However, this would be present in all lanes, not only staurosporine-treated.\n\n4. **(Unlikely) Degradation artifact.** Sample degradation during lysis. However, all lanes were processed identically and only lane 2 shows the extra band.\n\n**Distinguishing experiment:** Add **Z-VAD-FMK** (pan-caspase inhibitor, 50 µM, 1h pre-treatment) before staurosporine. If the 25 kDa band is caspase-mediated cleavage, Z-VAD-FMK will abolish it. If it's non-specific or an isoform, Z-VAD-FMK will have no effect. This single experiment distinguishes hypothesis 1 from all others.",
   "verification": "llm-judge",
   "source": "pro-chain",
   "meta": {
     "chain": "data_to_mechanism",
+    "chain_id": "chain09",
+    "topic": "Unexpected GAPDH cleavage during apoptosis confounds western blot quantification",
     "step": 1,
-    "step_role": "Interpret ambiguous experimental data",
-    "depends_on": "nothing",
-    "what_cascades": "Wrong interpretation of the band → wrong mechanistic model"
+    "step_role": "Interpret ambiguous data",
+    "depends_on": "nothing — this is the seed question",
+    "what_cascades": "Wrong interpretation → wrong mechanistic model → wrong quantification correction."
   }
 }

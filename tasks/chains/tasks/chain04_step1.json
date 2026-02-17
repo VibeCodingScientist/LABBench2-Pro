@@ -1,15 +1,17 @@
 {
   "id": "chain04_step1",
   "category": "ChainTask",
-  "question": "[FILL: Present a claim with incomplete evidence and ask if it's supported.\nExample: 'A preprint claims that drug X reduces tumor growth by 40% in mice (n=5 per group, p=0.048). The study used a single tumor cell line (4T1) implanted subcutaneously. Is this sufficient evidence to conclude drug X is an effective anti-cancer agent?']",
-  "ideal": "[FILL: Critical evaluation.\nExample: 'No. Major limitations: 1) Marginal significance (p=0.048) with n=5 is fragile — a single outlier could flip the result. 2) Single cell line in one tumor type — no evidence of generalizability. 3) Subcutaneous xenograft may not reflect orthotopic tumor biology. 4) No dose-response relationship shown. This is preliminary evidence warranting further investigation, not a conclusion.']",
+  "question": "A preprint on *bioRxiv* reports that a novel IDH1 R132H inhibitor (\"compound X\") reduces 2-hydroxyglutarate (2-HG) levels by 85% and shrinks tumors by 50% in a glioma mouse model. The study used: n=6 per group (vehicle vs. compound X), single cell line (U87 overexpressing IDH1-R132H), subcutaneous xenograft model, single dose level (50 mg/kg BID), 14-day study, p=0.03 for tumor volume. The crystal structure of IDH1-R132H is known (PDB: 3INM — resolution 2.1 Å, shows the mutant active site with NADPH and α-ketoglutarate). Is this sufficient evidence to conclude compound X is a promising IDH1 inhibitor for clinical development?",
+  "ideal": "**No — this is preliminary evidence with multiple limitations:**\n1. **Marginal statistics:** p=0.03 with n=6 provides ~55% power for the stated effect size; the study was likely underpowered and the effect may be inflated.\n2. **Single cell line, artificial model:** U87 cells overexpressing IDH1-R132H is an engineered system, not a naturally IDH1-mutant line. The endogenous mutation (heterozygous, with wild-type allele) behaves differently than an overexpression construct. Use patient-derived IDH1-mutant glioma lines (e.g., BT142, TS603).\n3. **Subcutaneous ≠ orthotopic:** Gliomas grow in the brain behind the BBB. Subcutaneous models don't test brain penetration, which is critical for glioma drugs.\n4. **Single dose, no PK:** No dose-response, no pharmacokinetic data showing brain exposure, no correlation between 2-HG reduction and tumor response.\n5. **No comparison to existing inhibitors:** Ivosidenib (AG-120) is FDA-approved for IDH1-mutant cholangiocarcinoma. How does compound X compare?\n6. **Preprint, not peer-reviewed.**",
   "verification": "llm-judge",
   "source": "pro-chain",
   "meta": {
     "chain": "critical_appraisal",
+    "chain_id": "chain04",
+    "topic": "IDH1 inhibitor efficacy in glioma",
     "step": 1,
-    "step_role": "Evaluate strength of evidence for a claim",
-    "depends_on": "nothing",
-    "what_cascades": "If model accepts weak evidence, it will draw wrong conclusions in later steps"
+    "step_role": "Evaluate strength of evidence",
+    "depends_on": "nothing — this is the seed question",
+    "what_cascades": "Accepting weak evidence → wrong assessment when conflicting data arrives."
   }
 }

@@ -1,0 +1,17 @@
+{
+  "id": "chain16_step2",
+  "category": "ChainTask",
+  "question": "After switching to MNase digestion (producing mono- to tri-nucleosomal fragments, 150-500 bp) and milder washes (150 mM NaCl), your new ChIP-seq data shows: FRiP = 0.22, MACS2 (broad mode) calls 18,500 broad peaks. However, quality metrics reveal: (a) PCR duplicate rate = 38% (expected: <20%), (b) library complexity (estimated by Picard) is only 0.4 (expected: >0.8), (c) after deduplication, effective read depth drops from 40M to 25M. What happened, and is the data still usable?",
+  "ideal": "The **high duplicate rate (38%) and low library complexity (0.4)** indicate that you had **insufficient ChIP DNA for library preparation**, resulting in over-amplification during PCR. In ChIP-seq, the IP yield can be very low (1-10 ng); if <1 ng of DNA enters library prep, excessive PCR cycles (>15) are needed, creating many duplicate molecules from limited template.\n\n**Is the data usable?** Partially. After deduplication, 25M unique reads with FRiP=0.22 gives ~5.5M reads in peaks. For broad marks like H3K27me3, ENCODE recommends >20M unique reads (ideally 40-60M for broad peaks). At 25M unique, you can: (a) identify most major H3K27me3 domains, (b) perform differential analysis between conditions with reduced power, (c) **not** reliably detect subtle domain boundary shifts or quantitative changes.\n\n**Remediation:** (1) Re-sequence the same library to increase total reads (won't help — same duplicates will be sequenced again). (2) **Prepare a new library** from a new ChIP experiment, starting with more cells (>10M instead of typical 1M for histone ChIP) to increase IP yield. (3) Use a library prep kit designed for low-input (e.g., NEBNext Ultra II, ThruPLEX) that requires fewer PCR cycles. (4) Add a UMI (unique molecular identifier) adapter during library prep to distinguish true duplicates from PCR duplicates. (5) For future experiments, consider CUT&Tag, which requires only 100K cells and generates lower background.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "protocol_troubleshoot",
+    "chain_id": "chain16",
+    "topic": "ChIP-seq for H3K27me3 in embryonic stem cells",
+    "step": 2,
+    "step_role": "Interpret corrected result",
+    "depends_on": "chain16_step1",
+    "what_cascades": "Wrong QC interpretation → publish artifacts as biology."
+  }
+}

@@ -40,22 +40,24 @@ Programmatically generated tasks with deterministic or rubric-graded ground trut
 | Uncertainty Calibration | 100 | LLM-judge | LABBench2 questions with critical info stripped |
 | Hypothesis Generation | 100 | LLM-judge (rubric) | Real PubMed abstracts (NCBI Entrez) |
 
-### Tier 3: Compositional Chains
+### Tier 3: Compositional Chains (30 chains, 96 steps)
 
-Multi-step research workflows where each step depends on the previous answer. If the model gets step 1 wrong, it cascades:
+Multi-step research workflows where each step depends on the previous answer. If the model gets step 1 wrong, it cascades. **30 hand-authored chains** across 10 template types, with 3 variants each covering different biomedical domains:
 
-| Chain | Workflow | Steps |
-|---|---|---|
-| Paper to Experiment | Paper finding → data interpretation → stats test → hypothesis | 4 |
-| Structure to Drug | Protein structure → binding mechanism → SAR prediction → validation | 4 |
-| Stats Pipeline | Test selection → multiple testing correction → pathway interpretation | 3 |
-| Critical Appraisal | Evaluate weak evidence → integrate conflicting data → design definitive experiment | 3 |
-| Genetics to Therapy | Genetic finding → structural impact → therapeutic strategy | 3 |
-| Protocol Troubleshoot | Diagnose error → interpret fix → quantitative follow-up | 3 |
-| Paradox Resolution | Explain paradox → discriminating experiment → synthesize conclusion | 3 |
-| Sequence to Function | Identify protein → predict adaptations → design validation | 3 |
-| Data to Mechanism | Interpret ambiguous data → update with evidence → correct prior analysis | 3 |
-| Evidence Synthesis | Compare conflicting studies → meta-analysis → clinical recommendation | 3 |
+| Template | Workflow | Steps | Example Topics |
+|---|---|---|---|
+| Paper to Experiment | Paper finding → data interpretation → stats test → hypothesis | 4 | SHP2, JAK2 V617F, PCSK9 |
+| Structure to Drug | Protein structure → binding mechanism → SAR prediction → validation | 4 | EGFR, KRAS G12C, SARS-CoV-2 Mpro |
+| Stats Pipeline | Test selection → multiple testing correction → pathway interpretation | 3 | TNBC RNA-seq, T2D GWAS, scRNA-seq TILs |
+| Critical Appraisal | Evaluate weak evidence → integrate conflicting data → design definitive experiment | 3 | IDH1 glioma, Lecanemab, Microbiome |
+| Genetics to Therapy | Genetic finding → structural impact → therapeutic strategy | 3 | PINK1 Parkinson's, CFTR CF, SCN1A Dravet |
+| Protocol Troubleshoot | Diagnose error → interpret fix → quantitative follow-up | 3 | KRAS-BRAF co-IP, ChIP-seq, CRISPR base editing |
+| Paradox Resolution | Explain paradox → discriminating experiment → synthesize conclusion | 3 | ZEB1 EMT, PD-1 hyperprogression, Exercise immunosuppression |
+| Sequence to Function | Identify protein → predict adaptations → design validation | 3 | Psychrophilic LDH, AmpC β-lactamase, Novel Cas effector |
+| Data to Mechanism | Interpret ambiguous data → update with evidence → correct prior analysis | 3 | GAPDH confound, Imatinib resistance, Venetoclax synergy |
+| Evidence Synthesis | Compare conflicting studies → meta-analysis → clinical recommendation | 3 | ctDNA lung cancer, FLT3 AML, BRAF melanoma |
+
+All chains use real data verified against 6 databases: PDB, UniProt, ChEMBL, ClinVar, ClinicalTrials.gov, and Open Targets. See [`tasks/chains/LABBench2Pro_AllExamples.md`](tasks/chains/LABBench2Pro_AllExamples.md) for the complete chain content and [`tasks/chains/VERIFICATION_REPORT.md`](tasks/chains/VERIFICATION_REPORT.md) for the data verification audit (95/95 data points verified correct).
 
 Plus: **feedback simulation** (does telling the model it was wrong improve the next step?) and **cost-accuracy Pareto frontier** analysis.
 
@@ -91,7 +93,11 @@ labbench2-pro/
 │       ├── gen_chains.py      # Auto-generate chains (scaffolding)
 │       └── cost_tracker.py    # Pareto frontier + cost analysis
 │
-├── tasks/chains/              # Hand-authored chain definitions
+├── tasks/chains/              # 30 chains (96 steps), verified data
+│   ├── tasks/                 # Individual step JSON files
+│   ├── chain_definitions.json # Chain wiring (step order, dependencies)
+│   ├── LABBench2Pro_AllExamples.md  # Full chain content (readable)
+│   └── VERIFICATION_REPORT.md # Data verification audit
 ├── db/schema.sql              # PostgreSQL schema (5 tables)
 ├── docker-compose.yml         # Postgres 16 + Redis 7
 └── run_all.sh                 # Single-command pipeline
@@ -164,7 +170,7 @@ python -m src.tier2.gen_stats_tasks --output-dir tasks/stats_reasoning --count 2
 python -m src.tier2.gen_structure --output-dir tasks/structures --pdb-count 50 --gel-count 60
 
 # Run a specific chain
-python -m src.tier3.run_chains --model claude-opus-4.6 --chain paper_to_experiment
+python -m src.tier3.run_chains --model claude-opus-4.6 --chain chain01
 
 # Cost summary
 python -m src.tier3.cost_tracker
@@ -205,7 +211,10 @@ Currently supported (Anthropic fully implemented, others stubbed pending API key
 
 ## Contributing
 
-The compositional chains need domain expertise. See [`tasks/chains/ALL_TEMPLATES.md`](tasks/chains/ALL_TEMPLATES.md) for the 10 chain templates with `[FILL:]` markers. The infrastructure is built — what's needed is real biology content.
+All 30 compositional chains are authored and verified. Contributions welcome for:
+- Additional chain variants (new biomedical topics using the 10 existing templates)
+- New chain templates (novel multi-step reasoning patterns)
+- Running the benchmark against additional models (OpenAI, Google — provider stubs are implemented)
 
 ## License
 

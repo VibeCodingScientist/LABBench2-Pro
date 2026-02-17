@@ -1,0 +1,17 @@
+{
+  "id": "chain28_step1",
+  "category": "ChainTask",
+  "question": "Metagenomic sequencing of a hot spring microbial community (78°C, pH 3.2, Yellowstone National Park) reveals a CRISPR array flanked by a novel open reading frame. The predicted protein is 1,243 amino acids. HHpred analysis shows weak homology (probability 85%) to TnpB (a nuclease associated with IS200/IS605 transposable elements) and structural similarity to the RuvC-like domain of Cas12a. But the protein is ~300 aa larger than Cas12a and contains an additional N-terminal domain with no detectable homology. What protein family does this likely represent, and what is its predicted function?",
+  "ideal": "This protein is likely a **novel type V CRISPR-Cas effector** in the Cas12 superfamily, potentially representing a new Cas12 subtype or an ancestor of known Cas12 effectors. The evidence:\n\n1. **TnpB homology is diagnostic:** TnpB is the evolutionary ancestor of type V Cas effectors (including Cas12a/b/c/d/e). The homology to TnpB's RuvC domain indicates this protein uses the same RuvC-fold catalytic mechanism for DNA cleavage. RuvC-domain nucleases use a single active site with D-E-D metal coordination motif for sequential nicking of both DNA strands.\n\n2. **Size analysis:** At 1,243 aa, this is significantly larger than Cas12a (~1,300 aa — actually similar!) but much larger than TnpB (~400 aa). The additional ~300 aa N-terminal domain beyond Cas12a size could be: (a) a target recognition domain (PAM-interacting domain equivalent), (b) a second nuclease domain (making this potentially dual-nuclease like Cas9's RuvC+HNH), (c) a HEPN domain for RNA cleavage (like Cas13 effectors), or (d) a DNA-binding domain for enhanced target specificity.\n\n3. **Environmental context matters:** The extremophilic source (78°C, pH 3.2) means this protein is thermostable and acid-tolerant. If it functions as a programmable nuclease, it would be active at temperatures where mesophilic Cas9/Cas12a denature — potentially useful for **high-temperature diagnostic assays** (e.g., combining with PCR without separate enzyme addition) or **industrial biotechnology** (editing thermophilic organisms for biofuel production).\n\n4. **CRISPR array association** confirms it's a bona fide Cas effector (not just a mobile genetic element nuclease), and it likely uses the adjacent CRISPR spacers as guide sequences.\n\n**Predicted function:** RNA-guided DNA endonuclease, processing its own crRNA from the CRISPR array, and cleaving double-stranded DNA targets complementary to the spacer sequence, with a preference for a specific PAM sequence adjacent to the target.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "sequence_to_function",
+    "chain_id": "chain28",
+    "topic": "Identifying a novel CRISPR-Cas effector from metagenomic data",
+    "step": 1,
+    "step_role": "Identify protein from sequence",
+    "depends_on": "nothing — this is the seed question",
+    "what_cascades": "Wrong family assignment → wrong biochemical predictions → wrong characterization experiments."
+  }
+}

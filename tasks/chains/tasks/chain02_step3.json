@@ -1,16 +1,18 @@
 {
   "id": "chain02_step3",
   "category": "ChainTask",
-  "question": "[FILL: Ask the model to predict SAR (structure-activity relationships) based on the binding model.\nExample: 'Based on the sulfonamide binding mode (zinc coordination + Thr199 H-bonds + hydrophobic pocket), predict which modification would MOST improve binding affinity: A) Adding a fluorine to the aromatic ring, B) Replacing the sulfonamide with a carboxylate, C) Extending the aromatic ring into the hydrophobic pocket with a phenyl group, D) Adding a polar hydroxyl group to the ring']",
-  "ideal": "[FILL: The correct answer with reasoning.\nExample: 'C) Extending into the hydrophobic pocket. The zinc coordination (sulfonamide) and H-bonding (Thr199) are already optimized. The hydrophobic pocket offers the most room for additional favorable contacts. B would lose the critical N-Zn bond. A would add minimal contacts. D would be unfavorable in the hydrophobic environment.']",
-  "verification": "programmatic",
-  "verification_fn": "multiple_choice",
+  "question": "Given that osimertinib's efficacy depends on covalent bonding to Cys797 and C797S resistance eliminates this, a fourth-generation EGFR inhibitor must work without covalent Cys797 binding. Which design strategy would MOST likely yield a potent inhibitor of EGFR harboring L858R/T790M/C797S triple-mutant?\nA) Increase the reactivity of the acrylamide warhead to form a covalent bond with nearby Lys745 instead\nB) Design a reversible inhibitor with high shape complementarity to the mutant binding pocket, exploiting the unique conformation created by the triple mutation\nC) Add a PEG linker to extend the molecule into the allosteric pocket behind the αC-helix\nD) Replace the pyrimidine scaffold with a large macrocyclic peptide that binds outside the ATP pocket",
+  "ideal": "B",
+  "verification": "multiple_choice",
   "source": "pro-chain",
   "meta": {
     "chain": "structure_to_drug",
+    "chain_id": "chain02",
+    "topic": "EGFR kinase domain inhibition and resistance",
     "step": 3,
-    "step_role": "Predict SAR from binding model",
-    "depends_on": "Must use binding mode from step 2 to reason about modifications",
-    "what_cascades": "Wrong SAR → wrong lead optimization strategy"
+    "step_role": "SAR prediction",
+    "depends_on": "chain02_step2",
+    "what_cascades": "Wrong SAR reasoning → wrong validation design.",
+    "correct_choice": "B"
   }
 }

@@ -1,0 +1,17 @@
+{
+  "id": "chain19_step3",
+  "category": "ChainTask",
+  "question": "The patient achieves complete molecular response on ponatinib after 12 months (BCR-ABL <0.01% IS). However, they develop hypertension (BP 165/95) and elevated troponin-I (0.08 ng/mL, upper normal 0.04). Ponatinib carries a FDA black box warning for arterial occlusive events (AOEs), occurring in ~25% of patients at 45 mg. (a) What is the mechanism of ponatinib cardiovascular toxicity? (b) Should you stop ponatinib? (c) Propose an evidence-based management strategy that balances CML control with cardiovascular risk.",
+  "ideal": "**(a) Mechanism:** Ponatinib inhibits VEGFR2 (IC50 ~1.5 nM) and FGFR1 (IC50 ~2 nM) — both are essential for vascular endothelial survival and nitric oxide production. VEGFR2 inhibition reduces NO synthesis → endothelial dysfunction → vasoconstriction → hypertension. FGFR inhibition impairs endothelial repair after microinjury. Combined with PDGFRα/β inhibition (impaired pericyte function), this creates a prothrombotic endothelium. The elevated troponin suggests early myocardial injury, possibly from coronary microvascular dysfunction or demand ischemia secondary to hypertension.\n\n**(b) Do NOT stop ponatinib abruptly** — the patient has a dangerous T315I mutation that was resistant to two prior TKIs. Stopping risks rapid molecular relapse → hematologic relapse → potential blast crisis within months. This is a classic risk-risk decision, not a risk-benefit one.\n\n**(c) Management strategy:**\n1. **Dose reduce ponatinib** from 45 mg to 15 mg QD. The OPTIC trial demonstrated that once BCR-ABL ≤1% IS is achieved, dose reduction to 15 mg maintains molecular response in >90% of patients while reducing AOE risk from ~25% to ~5%.\n2. **Aggressive cardiovascular risk management:** Start amlodipine 10 mg + lisinopril 20 mg for BP target <130/80. Aspirin 81 mg daily (if platelets adequate). Statin for endothelial protection regardless of LDL.\n3. **Serial monitoring:** Troponin-I monthly × 3 then quarterly. If troponin continues to rise on 15 mg, consider switch to asciminib (allosteric, does not inhibit VEGFR/FGFR — no cardiovascular signal in trials). Asciminib 200 mg BID for T315I.\n4. **Echocardiography** at baseline and every 6 months.\n5. **Maintain BCR-ABL monitoring** monthly — if molecular response is lost on 15 mg, the decision is harder (escalate ponatinib with cardiology co-management vs. switch to asciminib).",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "data_to_mechanism",
+    "chain_id": "chain19",
+    "topic": "Imatinib resistance in CML: BCR-ABL T315I gatekeeper mutation",
+    "step": 3,
+    "step_role": "Correct prior analysis",
+    "depends_on": "chain19_step2",
+    "what_cascades": "Terminal step — tests integration of pharmacology, clinical medicine, and risk management."
+  }
+}

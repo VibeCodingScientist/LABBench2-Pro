@@ -1,0 +1,18 @@
+{
+  "id": "chain19_step2",
+  "category": "ChainTask",
+  "question": "ABL1 kinase domain sequencing reveals the **T315I** mutation at 45% variant allele frequency. You switch the patient to dasatinib (100 mg QD, a second-generation TKI). After 6 months on dasatinib: BCR-ABL = 12% IS (worse than at switch). Dasatinib trough is adequate. The ponatinib IC50 against ABL1 T315I is 8.6 nM (ChEMBL CHEMBL1176860), while ponatinib IC50 against WT ABL1 is 40 nM (CHEMBL1176861). (a) Why did dasatinib fail? (b) What is the recommended next therapy? (c) Calculate the ponatinib selectivity for T315I vs. WT ABL1 and explain why this ratio is unusual.",
+  "ideal": "**(a) Dasatinib failure:** T315I confers resistance to dasatinib because, like imatinib, dasatinib forms a hydrogen bond with T315 (via the hydroxyl group). The isoleucine substitution eliminates this interaction and creates steric clash. This is why T315I is called the \"gatekeeper\" mutation — it guards the entrance to the hydrophobic back pocket used by type I (dasatinib, bosutinib) and type II (imatinib, nilotinib) inhibitors.\n\n**(b) Recommended therapy:** **Ponatinib** (Iclusig) — a third-generation TKI specifically designed to accommodate the T315I isoleucine through a rigid ethynyl linker that positions the inhibitor to avoid steric clash with isoleucine. Alternatively, **asciminib** (ABL001), a first-in-class STAMP (Specifically Targeting the ABL Myristoyl Pocket) inhibitor that binds the allosteric myristoyl pocket rather than the ATP site — completely bypassing the ATP-site gatekeeper mutation. For the patient's situation (T315I with rising BCR-ABL on dasatinib), guidelines recommend ponatinib 45 mg QD with dose reduction after response, or asciminib 200 mg BID.\n\n**(c) Ponatinib selectivity:** IC50(WT)/IC50(T315I) = 40/8.6 = **4.6-fold more potent against T315I than WT.** This is unusual because most kinase inhibitors lose potency against gatekeeper mutations (5-100× IC50 increase). Ponatinib is actually *more potent* against the mutant. Explanation: Ponatinib was computationally designed to exploit the T315I mutation — the isoleucine creates a deeper hydrophobic pocket that the ethynyl group fills more optimally than the smaller threonine hydroxyl. However, this selectivity means ponatinib at WT-ABL-effective doses also potently inhibits other kinases (FGFR, VEGFR, PDGFRα), contributing to its vascular toxicity (arterial occlusive events).",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "data_to_mechanism",
+    "chain_id": "chain19",
+    "topic": "Imatinib resistance in CML: BCR-ABL T315I gatekeeper mutation",
+    "step": 2,
+    "step_role": "Update with new evidence",
+    "depends_on": "chain19_step1",
+    "what_cascades": "Wrong TKI selection → progressive disease → blast crisis.",
+    "data_provenance": "- ChEMBL CHEMBL1171837 (ponatinib): IC50 = 8.6 nM ABL1 (CHEMBL1176860), 40 nM ABL1 (CHEMBL1176861), max_phase = 4. BaF3 BCR-ABL IC50 = 1.2 nM (CHEMBL1176862), BaF3 BCR-ABL T315I IC50 = 8.8 nM (CHEMBL1176863). Queried 2026-02-17.\n- Clinical trial NCT04626024: TKI cessation for CML, Phase II, RECRUITING (queried 2026-02-17)"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "id": "chain26_step1",
+  "category": "ChainTask",
+  "question": "Venetoclax (a selective BCL-2 inhibitor) has limited single-agent activity in AML (response rate ~19%). Azacitidine (a hypomethylating agent/DNA methyltransferase inhibitor) also has modest single-agent activity (~28% complete remission rate). However, the combination (VIALE-A trial) achieves ~66% complete remission in newly diagnosed elderly AML patients — far exceeding the additive expectation (~40%). Open Targets identifies DNMT3A (score 0.8296) and CEBPA (0.8444) as top AML targets; ClinVar reports 352 pathogenic DNMT3A variants. Propose at least 3 mechanistic hypotheses for this synergistic (not additive) combination effect.",
+  "ideal": "**Hypothesis 1 (Strongest evidence): Azacitidine reduces MCL-1 expression, overcoming the primary resistance mechanism to venetoclax.** AML blasts frequently co-express BCL-2 (venetoclax target) and MCL-1 (anti-apoptotic protein NOT inhibited by venetoclax). MCL-1 sequesters pro-apoptotic BH3 proteins (BIM, BAK), preventing apoptosis even when BCL-2 is blocked. Azacitidine reduces MCL-1 protein through multiple mechanisms: (a) DNA demethylation at the MCL-1 promoter can paradoxically increase expression of MCL-1 antisense transcripts, (b) azacitidine incorporation into RNA (it's also an RNA analog) disrupts MCL-1 mRNA processing, (c) azacitidine-induced ER stress activates the integrated stress response, which selectively reduces MCL-1 translation (MCL-1 mRNA is short-lived and translation-dependent). With MCL-1 reduced, cells become fully dependent on BCL-2 → venetoclax kills efficiently.\n\n**Hypothesis 2 (Mechanistically validated): Azacitidine activates pro-apoptotic BH3 genes through demethylation.** Hypermethylation of promoters for pro-apoptotic genes (NOXA, BIM, BAD, HRK) is common in AML, reducing their expression. Azacitidine reverses this methylation, restoring expression of BH3-only proteins that activate apoptosis. These newly expressed BH3 proteins provide the \"priming\" signal that venetoclax needs — venetoclax blocks BCL-2 from neutralizing them, and the combination tips the balance toward apoptosis. Neither agent alone generates sufficient pro-apoptotic signal.\n\n**Hypothesis 3 (Metabolic): Venetoclax targets the mitochondrial metabolism that AML LSCs depend on.** Leukemic stem cells (LSCs) in AML rely heavily on oxidative phosphorylation (OXPHOS) rather than glycolysis. BCL-2 inhibition disrupts the electron transport chain (BCL-2 interacts with Complex IV). Azacitidine reduces amino acid uptake (particularly cysteine, via suppression of SLC7A11), starving LSCs of substrates for the TCA cycle. The combination creates a double metabolic hit: reduced fuel supply (azacitidine) + disrupted OXPHOS machinery (venetoclax), selectively killing metabolically inflexible LSCs while sparing normal HSCs that can switch to glycolysis.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "data_to_mechanism",
+    "chain_id": "chain26",
+    "topic": "Unexpected synergy between venetoclax and azacitidine in AML",
+    "step": 1,
+    "step_role": "Interpret ambiguous data",
+    "depends_on": "nothing — this is the seed question",
+    "what_cascades": "Wrong synergy mechanism → wrong combination optimization.",
+    "data_provenance": "- Open Targets AML (EFO_0000222): CEBPA 0.8444, DNMT3A 0.8296, FLT3 0.8219 (queried 2026-02-17)\n- ClinVar DNMT3A: 352 pathogenic variants (queried 2026-02-17)\n- PDB 2QRV: DNMT3A-DNMT3L complex, 2.89 Å, released 2007-12-04 (queried 2026-02-17)\n- Clinical trial NCT03839771: Ivosidenib/enasidenib + induction, Phase III, ACTIVE_NOT_RECRUITING (queried 2026-02-17)"
+  }
+}

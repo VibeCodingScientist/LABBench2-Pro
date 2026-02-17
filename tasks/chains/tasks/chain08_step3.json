@@ -1,15 +1,18 @@
 {
   "id": "chain08_step3",
   "category": "ChainTask",
-  "question": "[FILL: Ask for experimental validation plan.\nExample: 'Design an experiment to test whether the deep-sea enzyme adaptations you predicted actually confer cold/pressure tolerance. Compare the deep-sea variant to the human homolog. Include: expression system, purification strategy, and the specific activity measurements at different temperatures and pressures.']",
-  "ideal": "[FILL: Complete experimental plan.\nExample: 'Express both variants in E. coli BL21(DE3) with His-tag, purify by Ni-NTA + size exclusion. Measure enzyme kinetics (kcat/Km) at 4C, 15C, 25C, 37C at atmospheric pressure. For pressure: use a high-pressure spectrophotometric cell to measure activity at 1, 100, 200, 500 atm at 4C. Predict: deep-sea variant maintains >50% activity at 4C/200atm where human homolog retains <10%. Thermal stability by DSF: expect lower Tm for deep-sea variant (flexibility tradeoff).']",
+  "question": "Design a comprehensive experiment to test whether the three substitutions (P135G, I250V, A222S) confer cold and/or pressure tolerance to this LDH. You must compare the deep-sea *Shewanella* LDH to the mesophilic *Lactobacillus* LDH, and also test individual point mutations to deconvolve contributions. Describe: protein expression, purification, activity measurements, and key predictions with quantitative expectations.",
+  "ideal": "**Expression & Purification:**\n- Clone both LDH genes (codon-optimized for *E. coli*) plus 6 point mutants into pET28a with N-terminal His₆ tag:\n  - Shewanella WT (cold-adapted)\n  - Lactobacillus WT (mesophilic)\n  - Lactobacillus G135P, V250I, S222A (revert each cold mutation individually)\n  - Shewanella P135G→revert, etc. (introduce mesophilic residues into cold-adapted)\n- Express in *E. coli* BL21(DE3) at 16°C (for solubility of cold-adapted variants)\n- Purify: Ni-NTA affinity → size exclusion (Superdex 200, confirm tetramer)\n\n**Activity measurements — Temperature profile:**\n- Kinetics (pyruvate → lactate, monitor NADH consumption at A340) at 4, 10, 15, 20, 25, 30, 37, 45°C\n- Measure kcat, Km(pyruvate), Km(NADH), catalytic efficiency (kcat/Km) at each temperature\n- **Prediction:** Shewanella LDH: kcat/Km peaks at 10-15°C, retains >50% activity at 4°C vs. 37°C optimum. Lactobacillus: peaks at 37°C, <10% activity at 4°C.\n\n**Activity measurements — Pressure profile (requires high-pressure equipment):**\n- Fluorescence-based kinetic assay in a diamond anvil cell or high-pressure optical cell\n- Measure activity at 1, 100, 250, 500, 750 atm at two temperatures (4°C and 25°C)\n- **Prediction:** Shewanella: <20% activity loss at 500 atm. Lactobacillus: >60% loss at 500 atm.\n\n**Stability measurements:**\n- DSF (differential scanning fluorimetry): measure Tm for all variants at 1 atm\n- **Prediction:** Shewanella Tm ~40°C (lower than Lactobacillus ~55°C), reflecting flexibility-stability trade-off\n\n**Deconvolution by point mutants:**\n- P135G single reversion in Lactobacillus: predict ~2-fold improvement at 4°C (flexibility)\n- A222S single mutation in Lactobacillus: predict minimal cold effect but improved activity at 250+ atm\n- I250V in Lactobacillus: predict modest cold improvement, slight pressure sensitivity\n\nThis separates the contributions of each residue to cold vs. pressure adaptation.",
   "verification": "llm-judge",
   "source": "pro-chain",
   "meta": {
     "chain": "sequence_to_function",
+    "chain_id": "chain08",
+    "topic": "Psychrophilic lactate dehydrogenase from a deep-sea organism",
     "step": 3,
-    "step_role": "Design biochemical validation of computational predictions",
-    "depends_on": "Must test the specific adaptation hypotheses from step 2",
-    "what_cascades": "Terminal step"
+    "step_role": "Design validation experiment",
+    "depends_on": "chain08_step2",
+    "what_cascades": "Terminal step.",
+    "data_provenance": "| Data Type | Identifier | Details | Query Date |\n|-----------|-----------|---------|------------|\n| Organism | *Shewanella benthica* | Deep-sea cold seep, 4°C, 500 atm, Mariana Trench | 2026-02-17 |\n| Protein Family | L-lactate dehydrogenase | EC 1.1.1.27, Rossmann fold, homotetramer ~35 kDa/subunit | 2026-02-17 |\n| Substitutions | P135G, I250V, A222S | Cold/pressure adaptation mutations vs. mesophilic *Lactobacillus* LDH | 2026-02-17 |\n| Catalytic Residues | His193, Arg169, Asp166 | Based on LDH family conservation (canonical numbering) | 2026-02-17 |"
   }
 }

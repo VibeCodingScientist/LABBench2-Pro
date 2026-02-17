@@ -1,15 +1,17 @@
 {
   "id": "chain04_step2",
   "category": "ChainTask",
-  "question": "[FILL: Present additional contradictory evidence.\nExample: 'A follow-up study by a different group tested drug X in 3 cell lines (4T1, B16, LLC) with n=10 per group. Results: 4T1 showed 15% reduction (p=0.21), B16 showed 5% increase (p=0.73), LLC showed 32% reduction (p=0.01). How does this change your assessment from the previous analysis?']",
-  "ideal": "[FILL: Updated assessment integrating both studies.\nExample: 'This substantially weakens the original claim. 1) The 4T1 effect did not replicate (40% → 15%, now non-significant with larger n). 2) Results are inconsistent across cell lines — B16 shows no effect. 3) Only LLC shows a significant effect, but this could be cell-line-specific rather than a general anti-cancer property. The evidence now suggests drug X may have narrow, cell-line-specific activity rather than broad anti-cancer efficacy.']",
+  "question": "A follow-up peer-reviewed study (n=12 per group) tests compound X in three models:\n- BT142 (patient-derived, endogenous IDH1-R132H, orthotopic): 2-HG reduction 35%, tumor volume 12% reduction (p=0.31)\n- U87-IDH1R132H (subcutaneous, replication): 2-HG reduction 80%, tumor volume 38% reduction (p=0.01)\n- TS603 (patient-derived, endogenous IDH1-R132H, subcutaneous): 2-HG reduction 25%, tumor volume 8% increase (p=0.62)\n\nBrain PK: compound X brain-to-plasma ratio = 0.05 (poor BBB penetration). How does this change your assessment from Step 1?",
+  "ideal": "This substantially weakens the case for compound X:\n1. **Original finding partially replicated** in U87 model (38% vs. 50% reduction) but only in the artificial overexpression system.\n2. **Patient-derived lines show minimal effect:** BT142 orthotopic (12%, NS) and TS603 (actually grew 8%). This pattern — large effect in overexpression, small in endogenous — suggests compound X potency depends on supraphysiological target expression.\n3. **2-HG reduction correlates with tumor response:** 80% 2-HG reduction → tumor shrinkage; 25-35% → no response. The drug likely doesn't achieve sufficient target engagement in endogenous-expression contexts.\n4. **Brain penetration is a dealbreaker:** Brain:plasma = 0.05 is far below the 0.3–0.5 threshold for CNS drugs. This explains the orthotopic failure — insufficient drug reaches the tumor.\n5. **Conclusion:** Compound X is a moderately potent IDH1-R132H inhibitor in vitro but fails in vivo due to poor BBB penetration. Not suitable for glioma. May have utility in peripheral IDH1-mutant cancers (cholangiocarcinoma, AML) if re-evaluated, but ivosidenib (brain:plasma ~0.3) is already superior.",
   "verification": "llm-judge",
   "source": "pro-chain",
   "meta": {
     "chain": "critical_appraisal",
+    "chain_id": "chain04",
+    "topic": "IDH1 inhibitor efficacy in glioma",
     "step": 2,
-    "step_role": "Update assessment with new conflicting data",
-    "depends_on": "Must compare new data against the evaluation made in step 1",
-    "what_cascades": "Failure to properly update → wrong experimental recommendation"
+    "step_role": "Integrate contradictory evidence",
+    "depends_on": "chain04_step1",
+    "what_cascades": "Failure to identify BBB as key issue → inappropriate experimental recommendation."
   }
 }

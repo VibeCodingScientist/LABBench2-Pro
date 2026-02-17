@@ -1,0 +1,17 @@
+{
+  "id": "chain24_step3",
+  "category": "ChainTask",
+  "question": "You are designing a new PCSK9 inhibitor trial specifically powered for cardiovascular mortality. Using FOURIER data: CV death rate ~1.8%/year (placebo equivalent), expected HR ~0.85 with PCSK9 inhibition (based on CTT calibration for the LDL-C reduction achieved), 1:1 randomization. Calculate the required sample size and study duration to achieve 80% power at two-sided α=0.05.",
+  "ideal": "Using the log-rank test power formula for a survival endpoint:\n\n**Parameters:**\n- CV death rate (control): λ₀ = 0.018/year\n- Expected HR: 0.85 (i.e., treatment rate λ₁ = 0.018 × 0.85 = 0.0153/year)\n- Need total events (d) for 80% power:\n\nd = 4 × (Z₀.₀₂₅ + Z₀.₂₀)² / (ln(HR))²\nd = 4 × (1.96 + 0.842)² / (ln(0.85))²\nd = 4 × (2.802)² / (-0.1625)²\nd = 4 × 7.851 / 0.0264\nd = 31.4 / 0.0264\nd ≈ **1,189 CV death events needed**\n\n**Sample size and duration trade-offs:**\n- Option A: n = 30,000 (similar to FOURIER), follow-up 5 years. Expected events: ~30,000 × 0.0167 (average rate) × 5 ≈ 2,505 events → well-powered (even over-powered for HR 0.85). \n- Option B: n = 50,000, follow-up 3 years. Expected: ~50,000 × 0.0167 × 3 ≈ 2,505 events.\n- Option C: n = 20,000, follow-up 5 years. Expected: ~1,670 events → adequate but less margin.\n\n**Recommended design:** n = 25,000-30,000, follow-up minimum 4-5 years. This provides robust power for CV mortality while being practically feasible with injectable PCSK9 inhibitors.\n\n**Key caveat:** The control group rate (1.8%/year) assumes background statin therapy. If the trial is conducted in the era of highly effective LDL-lowering (most patients already on high-intensity statins), the residual CV death rate may be lower, requiring even more events. An adaptive design with pre-specified event-driven analysis (trigger at 1,200 CV deaths regardless of calendar time) is preferred.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "paper_to_experiment",
+    "chain_id": "chain24",
+    "topic": "PCSK9 and LDL receptor regulation in cardiovascular disease",
+    "step": 3,
+    "step_role": "Statistical test selection",
+    "depends_on": "chain24_step2",
+    "what_cascades": "Terminal step."
+  }
+}

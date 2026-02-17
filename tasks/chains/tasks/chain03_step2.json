@@ -1,15 +1,17 @@
 {
   "id": "chain03_step2",
   "category": "ChainTask",
-  "question": "[FILL: Give results and ask for multiple testing correction.\nExample: 'Using the approach you recommended, you obtain p-values for 20,000 genes. 1,247 genes have p < 0.05. How should you correct for multiple testing? If you apply Benjamini-Hochberg FDR correction at q < 0.05, approximately how many genes do you expect to remain significant, and how many would be false positives?']",
-  "ideal": "[FILL: Correct MTC reasoning.\nExample: 'Apply Benjamini-Hochberg (BH) procedure for FDR control. At FDR q < 0.05, approximately 5% of the significant genes are expected to be false positives. If ~800 genes survive BH correction, expect ~40 false positives. Bonferroni would be too conservative for 20,000 tests (threshold = 2.5e-6), likely missing many true positives.']",
+  "question": "Your DESeq2 analysis (paired model, n=15 per group) returns the following: 22,487 genes tested, 2,841 genes with raw p < 0.05, 1,573 genes with Benjamini-Hochberg adjusted p (FDR) < 0.05, 312 genes with FDR < 0.01. A collaborator suggests also running Bonferroni correction \"to be safe.\" (a) How many genes would survive Bonferroni at α=0.05? (b) Is this appropriate for this experiment? (c) The collaborator also notes that 2,841/22,487 = 12.6% of genes are significant at p<0.05, far above 5% — is this evidence that something is wrong? (d) What is the expected number of false positives at FDR < 0.05?",
+  "ideal": "(a) Bonferroni threshold = 0.05/22,487 ≈ 2.2×10⁻⁶. Likely **50-150 genes** would survive (roughly the most extreme subset). (b) **Bonferroni is inappropriate** here — it controls the family-wise error rate (probability of *any* false positive), which is overly conservative for genomics where we expect many true positives. BH-FDR is standard because it controls the *proportion* of false discoveries, trading a small false positive rate for much greater power. (c) 12.6% at nominal p<0.05 is **expected and correct** — it reflects a true biological signal. Under the null (no DE genes), you'd expect exactly 5%. The excess (12.6% − 5% = 7.6% × 22,487 ≈ 1,700 genes) is the estimated true positive signal. This is the basis of the BH procedure. (d) At FDR < 0.05 with 1,573 significant genes, the expected number of false positives ≤ 0.05 × 1,573 ≈ **79 genes**. The remaining ~1,494 are expected true positives.",
   "verification": "llm-judge",
   "source": "pro-chain",
   "meta": {
     "chain": "stats_pipeline",
+    "chain_id": "chain03",
+    "topic": "Differential expression in triple-negative breast cancer",
     "step": 2,
-    "step_role": "Apply multiple testing correction to step 1's framework",
-    "depends_on": "Must use the statistical framework from step 1",
-    "what_cascades": "Wrong correction → inflated or deflated gene lists"
+    "step_role": "Multiple testing correction",
+    "depends_on": "chain03_step1",
+    "what_cascades": "Applying Bonferroni → losing >90% of real signal → missing key pathways."
   }
 }

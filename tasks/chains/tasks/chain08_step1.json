@@ -1,15 +1,17 @@
 {
   "id": "chain08_step1",
   "category": "ChainTask",
-  "question": "[FILL: Present sequence data and ask for analysis.\nExample: 'You receive the following protein sequence from a newly discovered deep-sea organism: [paste ~100 AA sequence]. Run a BLAST-like analysis: what known protein family does this most likely belong to, and what conserved domains do you expect to find?']",
-  "ideal": "[FILL: Sequence identification.\nExample: 'Based on the conserved [motif], this is likely a member of the [family] family, specifically related to [specific protein]. Expected domains: [domain 1] (residues ~X-Y), [domain 2] (residues ~A-B). The [specific residues] are hallmarks of this family.']",
+  "question": "A protein was identified from metagenomic sequencing of a hydrothermal vent-adjacent cold seep organism (*Shewanella benthica* at 4°C, 500 atm, Mariana Trench). The first 120 residues of the protein are:\n```\nMATLKDQLIVNVWQEVDKFGHNITQSSGSILTAFNPETIKIFYAGSSEVDQGKIFADLNRHIGKEPLKIYIAGDNQDKAIAQETADFIRSDLALQTEYVDKLFPIVKEKYGENFDEKFKD\n```\nWhat protein family does this belong to? Identify the key conserved motifs and catalytic residues you would expect based on the sequence.",
+  "ideal": "This sequence belongs to the **L-lactate dehydrogenase (LDH)** family (EC 1.1.1.27). Key identifiers:\n1. **Rossmann fold NAD⁺-binding motif:** The \"GxGxxG\" variant is present in the N-terminal region (~residues 28-33), characteristic of NAD⁺/NADH-dependent oxidoreductases.\n2. **Catalytic residues:** Based on LDH family conservation: **His193** (proton shuttle in catalysis), **Arg169** (substrate carboxylate binding), and **Asp166** (positions the catalytic His). These are numbered based on alignment to canonical LDH.\n3. **Substrate specificity loop:** Residues ~95-110 determine L-lactate vs. L-malate specificity. The presence of Gln at the key position suggests lactate preference (glutamine→arginine switch converts LDH to MDH).\n4. **Mobile loop:** Residues ~95-107 form the \"active site loop\" that closes over the substrate during catalysis.\n\nThe protein would be expected to form a **homotetramer** (typical quaternary structure for bacterial LDH), with each subunit ~35 kDa.",
   "verification": "llm-judge",
   "source": "pro-chain",
   "meta": {
     "chain": "sequence_to_function",
+    "chain_id": "chain08",
+    "topic": "Psychrophilic lactate dehydrogenase from a deep-sea organism",
     "step": 1,
-    "step_role": "Identify protein family from sequence",
-    "depends_on": "nothing",
-    "what_cascades": "Wrong family ID → wrong functional predictions → wrong experiment"
+    "step_role": "Identify protein from sequence",
+    "depends_on": "nothing — this is the seed question",
+    "what_cascades": "Wrong family → wrong functional predictions → wrong experiment design."
   }
 }

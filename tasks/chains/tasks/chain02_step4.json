@@ -1,15 +1,18 @@
 {
   "id": "chain02_step4",
   "category": "ChainTask",
-  "question": "[FILL: Ask for an experimental plan to validate the prediction.\nExample: 'Design a 3-step experimental plan to validate your predicted SAR modification (phenyl extension into the hydrophobic pocket). Include: synthesis approach, binding assay, and selectivity assessment against the 12 other human CA isoforms.']",
-  "ideal": "[FILL: Concrete experimental plan.\nExample: '1) Synthesis: Couple 4-aminobenzenesulfonamide with biphenyl-4-boronic acid via Suzuki coupling to extend into the pocket. 2) Binding: Measure Ki using a CO2 hydration stopped-flow assay (Khalifah method) comparing parent vs. extended compound against CA-II. 3) Selectivity: Profile against CA-I, CA-IV, CA-IX, CA-XII panel using the same assay — the hydrophobic pocket varies across isoforms, so selectivity is expected.']",
+  "question": "Design a 4-step preclinical validation plan for your reversible fourth-generation EGFR inhibitor lead compound targeting L858R/T790M/C797S. Include: (1) biochemical potency, (2) cellular efficacy, (3) selectivity, and (4) in vivo proof of concept. Specify assays, cell lines, and key success criteria.",
+  "ideal": "(1) **Biochemical:** Caliper mobility-shift kinase assay measuring IC50 against recombinant EGFR L858R/T790M/C797S, plus WT and single/double mutant panel. Success: IC50 <10 nM against triple mutant, >100-fold selectivity over WT EGFR. (2) **Cellular:** Ba/F3 cells engineered with EGFR L858R/T790M/C797S (IL-3 independent growth), measure proliferation inhibition (CellTiter-Glo). Also test in patient-derived NSCLC cell lines with confirmed triple mutation (if available). Success: EC50 <100 nM, complete pathway suppression (pEGFR western). (3) **Selectivity:** KINOMEscan or similar panel against 468 kinases at 1 µM. Calculate selectivity score S(10). Key off-targets to monitor: ERBB2, ERBB4, BLK, BMX (kinases with Cys at gatekeeper+6 position). Success: S(10) <0.05. (4) **In vivo:** Ba/F3 EGFR triple-mutant subcutaneous xenograft in nude mice, BID oral dosing, 21-day study. Success: >60% tumor growth inhibition, no body weight loss >10%. Include osimertinib as negative control (expected inactive) and vehicle.",
   "verification": "llm-judge",
   "source": "pro-chain",
   "meta": {
     "chain": "structure_to_drug",
+    "chain_id": "chain02",
+    "topic": "EGFR kinase domain inhibition and resistance",
     "step": 4,
-    "step_role": "Design validation experiment for the SAR prediction",
-    "depends_on": "Must design experiments specific to the modification chosen in step 3",
-    "what_cascades": "Terminal step"
+    "step_role": "Experimental validation plan",
+    "depends_on": "chain02_step3",
+    "what_cascades": "Terminal step.",
+    "data_provenance": "| Data Type | Identifier | Details | Query Date |\n|-----------|-----------|---------|------------|\n| PDB | [1M17](https://www.rcsb.org/structure/1M17) | EGFR kinase domain bound to erlotinib, active conformation | 2026-02-17 |\n| Open Targets | EGFR-NSCLC | Association score: 0.885 (referenced in Step 1) | 2026-02-17 |\n| Gene | EGFR | Gatekeeper residue T790, key residues Met793, Leu788, Thr854 | 2026-02-17 |\n| Compound | Erlotinib | First-generation EGFR TKI | 2026-02-17 |\n| Compound | Osimertinib | Third-generation EGFR TKI, covalent bond to Cys797 | 2026-02-17 |\n| Compound | BLU-945, BLU-701 | Fourth-generation reversible EGFR inhibitors (referenced) | 2026-02-17 |"
   }
 }

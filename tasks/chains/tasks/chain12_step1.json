@@ -1,0 +1,18 @@
+{
+  "id": "chain12_step1",
+  "category": "ChainTask",
+  "question": "The JAK2 V617F mutation, found in >95% of polycythemia vera and ~50-60% of essential thrombocythemia and primary myelofibrosis, constitutively activates the JAK-STAT signaling pathway. The crystal structure of the JAK2 JH1 kinase domain (PDB: 4IVA, resolution 1.5 Å) reveals the catalytic domain spanning residues 545-809 (UniProt O60674, 1132 aa total), with the active site proton acceptor at Asp976 in the JH1 pseudokinase domain. ClinVar lists 200 pathogenic JAK2 variants. What is the structural mechanism by which the V617F mutation in the JH2 pseudokinase domain (which has no catalytic activity) constitutively activates the JH1 kinase domain?",
+  "ideal": "In wild-type JAK2, the JH2 pseudokinase domain (residues 545-809) acts as a negative regulator of the JH1 kinase domain (residues 849-1132) through direct physical interaction. Val617 is located in the C-helix of the JH2 domain, at the JH1-JH2 interface. This valine participates in hydrophobic contacts that stabilize the autoinhibitory JH2-JH1 interaction, keeping JH1 in an inactive conformation. The V617F mutation introduces a bulky phenylalanine that disrupts these interface contacts: (1) steric clash destabilizes the JH2-JH1 inhibitory interaction, (2) the phenylalanine may form new intramolecular contacts within JH2 that stabilize a conformation incompatible with JH1 suppression, and (3) loss of autoinhibition results in constitutive JH1 kinase activity, leading to ligand-independent phosphorylation of STATs (primarily STAT5 in erythroid lineage). This drives uncontrolled proliferation of hematopoietic progenitors, producing the MPN phenotype.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "paper_to_experiment",
+    "chain_id": "chain12",
+    "topic": "JAK2 V617F in myeloproliferative neoplasms",
+    "step": 1,
+    "step_role": "Extract key finding from literature",
+    "depends_on": "nothing — this is the seed question",
+    "what_cascades": "Wrong mechanism → wrong interpretation of inhibitor resistance.",
+    "data_provenance": "- PDB 4IVA: Queried 2026-02-17, resolution 1.5 Å, released 2013-05-22, X-ray. Title: \"JAK2 kinase (JH1 domain) in complex with inhibitor\"\n- UniProt O60674 (JAK2): 1132 aa. Domains: FERM (37-380), atypical SH2 (401-482), Protein kinase 1/JH2 (545-809), Active site at 976. Queried 2026-02-17.\n- ClinVar JAK2: 200 pathogenic variants (queried 2026-02-17 15:55 UTC)\n- Open Targets JAK2-myelofibrosis: association score = 0.7417 (queried 2026-02-17)"
+  }
+}

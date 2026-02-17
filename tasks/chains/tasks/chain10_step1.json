@@ -1,15 +1,17 @@
 {
   "id": "chain10_step1",
   "category": "ChainTask",
-  "question": "[FILL: Present two conflicting papers and ask for assessment.\nExample: 'Paper A (Nature, 2022, n=500 patients): Reports that biomarker Z predicts 5-year survival in pancreatic cancer with AUC=0.89. Paper B (Lancet Oncol, 2024, n=1200 patients): Reports AUC=0.61 for the same biomarker in the same cancer type. What are the most likely explanations for this discrepancy?']",
-  "ideal": "[FILL: Systematic analysis of discrepancy sources.\nExample: 'Key explanations: 1) Overfitting in Paper A — smaller cohort (500 vs 1200) may have inflated AUC, especially if feature selection used the same data for training and testing. 2) Population differences — cohort composition (stage distribution, ethnicity, treatment history) may differ. 3) Assay differences — different antibody clones, cutoff values, or measurement platforms. 4) Paper B may have pre-registered their analysis while Paper A may have done post-hoc optimization. 5) Publication bias — Paper A's striking result was publishable in Nature; a replication with lower AUC still merits publication. The larger, more recent study (Paper B) is generally more credible.']",
+  "question": "Two major studies report contradictory results on ctDNA methylation as a biomarker for early-stage non-small cell lung cancer (NSCLC) detection:\n\n**Paper A** (Nature Medicine 2020, single-center, n=236 NSCLC + 245 controls): A 10-gene methylation panel in cell-free DNA achieved AUC=0.92 for stage I NSCLC vs. healthy controls. Sensitivity 78% at 95% specificity.\n\n**Paper B** (Lancet Respiratory Medicine 2023, multi-center prospective, n=1,100 NSCLC + 2,200 controls from 12 sites): The SAME 10-gene panel achieved AUC=0.68. Sensitivity 31% at 95% specificity for stage I.\n\nBoth used bisulfite sequencing. The specificity-matched sensitivity dropped from 78% → 31%. Provide at least 5 specific reasons for this discrepancy, ranked by likelihood.",
+  "ideal": "1. **Overfitting in Paper A.** With n=236 cases and a 10-gene panel, there's a high risk that the model was trained and reported on overlapping data (or an insufficiently separated validation set). The effective degrees of freedom may approach the sample size, inflating apparent performance. Paper B's larger, independent cohort reveals the true (lower) performance.\n\n2. **Population heterogeneity.** Paper A (single-center) recruited a homogenous population. Paper B (12 sites) includes diverse demographics, comorbidities (COPD, infections — both cause cfDNA methylation changes), and pre-analytical variation. The biomarker likely works well in the specific population of Paper A but doesn't generalize.\n\n3. **Pre-analytical variability across sites.** cfDNA is exquisitely sensitive to blood draw technique, processing time, centrifugation protocol, and storage temperature. Multi-site studies inevitably introduce tube-type differences, processing delays, and freeze-thaw cycles that degrade the signal. Bisulfite conversion efficiency may vary across sites.\n\n4. **Spectrum bias (case-mix differences).** Paper A may have enriched for higher-volume stage I tumors (T1c vs. T1a) or symptomatic stage I patients. Paper B's prospective design likely includes more incidental findings and smaller tumors with less ctDNA shedding.\n\n5. **Batch effects in bisulfite sequencing.** Multi-site sequencing runs (Paper B) introduce systematic batch effects that aren't present in single-center studies. Even with the same protocol, different sequencing instruments and operators produce variable bisulfite conversion rates, read depth, and error profiles.\n\n6. **Publication/optimization bias in Paper A.** Researchers may have tested multiple gene panels and reported the best-performing one (researcher degrees of freedom), without correction for multiple comparisons. The \"10-gene panel\" may be the result of post-hoc optimization that doesn't replicate.",
   "verification": "llm-judge",
   "source": "pro-chain",
   "meta": {
     "chain": "evidence_synthesis",
+    "chain_id": "chain10",
+    "topic": "Circulating tumor DNA (ctDNA) for early lung cancer detection",
     "step": 1,
-    "step_role": "Critically compare conflicting literature",
-    "depends_on": "nothing",
-    "what_cascades": "Uncritical acceptance of either paper → wrong clinical recommendation"
+    "step_role": "Compare conflicting papers",
+    "depends_on": "nothing — this is the seed question",
+    "what_cascades": "Uncritical acceptance → wrong clinical recommendation."
   }
 }

@@ -1,0 +1,17 @@
+{
+  "id": "chain24_step2",
+  "category": "ChainTask",
+  "question": "The FOURIER trial (evolocumab, n=27,564) showed: LDL-C reduction from 92 mg/dL to 30 mg/dL (59% reduction). Primary endpoint (cardiovascular death, MI, stroke, hospitalization for angina, coronary revascularization): HR=0.85, p<0.001. But cardiovascular DEATH alone: HR=1.05, p=0.51 (non-significant, numerically slightly higher). A critic argues this means evolocumab \"reduces events but doesn't save lives.\" Evaluate this claim quantitatively. Consider: (a) Was the trial powered to detect a mortality difference? (b) What is the expected mortality reduction for a 59% LDL-C lowering based on the statin literature (CTT meta-analysis shows 10% CV mortality reduction per 1 mmol/L LDL-C reduction)?",
+  "ideal": "**(a) Power analysis for mortality endpoint:**\nFOURIER had 1,616 primary endpoint events but only 251 CV deaths over 2.2 years median follow-up. With 251 events, the trial had ~25% power to detect a 15% mortality reduction (the plausible range). To detect a 15% CV mortality reduction with 80% power, you'd need ~1,200 CV deaths, requiring either 5× more patients or 5× longer follow-up. **The trial was massively underpowered for the mortality endpoint.** The HR of 1.05 (p=0.51) is entirely consistent with either no effect OR a 15% benefit — the confidence interval likely spans ~0.80 to 1.35.\n\n**(b) Expected benefit from CTT calibration:**\nLDL-C reduced by 62 mg/dL = 1.6 mmol/L. CTT meta-analysis (statins) shows ~10% CV mortality reduction per 1 mmol/L over 5 years. Expected: ~16% CV mortality reduction for 1.6 mmol/L reduction, BUT this assumes 5 years of treatment. FOURIER had only 2.2 years median follow-up. Extrapolating: at 2.2 years, the expected mortality reduction is ~7-10%, corresponding to ~18-25 fewer CV deaths out of 251 — well within the noise of the study.\n\n**(c) Conclusion:** The critic's argument is statistically naive. The non-significant mortality result does NOT mean \"no mortality benefit\" — it means the trial was too short and too small to detect the expected mortality benefit. The primary endpoint result (HR=0.85) is consistent with CTT-predicted benefit. Long-term open-label extension data (FOURIER-OLE, 7+ years) will be needed to confirm mortality benefit. This is a classic example of interpreting \"absence of evidence\" as \"evidence of absence\" — a fundamental statistical error.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "paper_to_experiment",
+    "chain_id": "chain24",
+    "topic": "PCSK9 and LDL receptor regulation in cardiovascular disease",
+    "step": 2,
+    "step_role": "Quantitative data interpretation",
+    "depends_on": "chain24_step1",
+    "what_cascades": "Wrong statistical reasoning → reject effective therapy."
+  }
+}

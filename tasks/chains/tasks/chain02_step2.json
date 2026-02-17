@@ -1,15 +1,17 @@
 {
   "id": "chain02_step2",
   "category": "ChainTask",
-  "question": "[FILL: Ask about the binding mechanism given the structural info.\nExample: 'Given the active site architecture you described (His94/96/119 zinc coordination), how do sulfonamide inhibitors like acetazolamide bind to carbonic anhydrase II? What is the key interaction with the zinc ion?']",
-  "ideal": "[FILL: Binding mechanism.\nExample: 'The sulfonamide NH group displaces the zinc-bound water/hydroxide, forming a direct N-Zn coordination bond. The sulfonamide oxygen atoms form hydrogen bonds with Thr199, and the aromatic ring makes hydrophobic contacts with the pocket.']",
+  "question": "Given the EGFR-erlotinib binding mode you described (hinge hydrogen bond to Met793, gatekeeper T790), explain how the third-generation inhibitor osimertinib overcomes T790M resistance. What is the key chemical difference between erlotinib and osimertinib that enables this? What new vulnerability does osimertinib's mechanism create?",
+  "ideal": "Osimertinib overcomes T790M through two mechanisms: (1) **It is designed to accommodate methionine** at position 790 — the pyrimidine core is smaller than erlotinib's quinazoline and the binding pose avoids steric clash with the bulkier M790 side chain. (2) **It forms an irreversible covalent bond** with **Cys797** in the solvent-exposed region of the ATP site via a Michael acceptor acrylamide warhead. This covalent bond compensates for reduced non-covalent affinity against T790M. The vulnerability this creates: the **C797S** tertiary mutation eliminates the cysteine nucleophile required for covalent binding, ablating osimertinib's potency. C797S is the dominant mechanism of acquired resistance to osimertinib in ~10-15% of progressing patients. When C797S occurs in *trans* with T790M, the cancer remains sensitive to combination first + third-gen TKIs; in *cis*, neither works alone.",
   "verification": "llm-judge",
   "source": "pro-chain",
   "meta": {
     "chain": "structure_to_drug",
+    "chain_id": "chain02",
+    "topic": "EGFR kinase domain inhibition and resistance",
     "step": 2,
-    "step_role": "Explain inhibitor binding using structural context from step 1",
-    "depends_on": "Must reference the specific active site residues from step 1",
-    "what_cascades": "Wrong binding model → wrong SAR predictions"
+    "step_role": "Explain binding mechanism",
+    "depends_on": "chain02_step1",
+    "what_cascades": "Wrong binding mechanism → wrong SAR prediction."
   }
 }

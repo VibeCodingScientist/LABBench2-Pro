@@ -1,15 +1,17 @@
 {
   "id": "chain07_step1",
   "category": "ChainTask",
-  "question": "[FILL: Present a surprising experimental observation.\nExample: 'A CRISPR knockout of transcription factor ZEB1 in A549 lung cancer cells unexpectedly INCREASED cell migration in a wound healing assay (2.1x faster closure vs. wild-type, p<0.001). ZEB1 is a known promoter of epithelial-mesenchymal transition (EMT) and migration. How do you explain this paradox?']",
-  "ideal": "[FILL: Plausible mechanistic explanations.\nExample: 'Possible explanations: 1) ZEB1 KO may derepress ZEB2, a paralog that can compensate and even hyperactivate EMT. 2) ZEB1 loss may trigger a collective migration phenotype (which is faster than mesenchymal single-cell migration) by restoring E-cadherin-mediated cell-cell junctions. 3) The wound healing assay measures 2D sheet migration, not invasion — ZEB1 KO cells may move faster as a sheet but lose 3D invasive capacity. The assay may not be measuring what the authors think.']",
+  "question": "ZEB1 is a well-established promoter of epithelial-mesenchymal transition (EMT): it represses E-cadherin (CDH1) and drives mesenchymal gene expression. You perform CRISPR knockout of ZEB1 in A549 lung adenocarcinoma cells (confirmed by western blot — no detectable ZEB1 protein). Scratch wound-healing assay shows ZEB1-KO cells close the wound 2.1× faster than WT (p<0.001, n=6). This contradicts the expectation that losing an EMT driver should reduce migration. Propose at least 3 mechanistic hypotheses to explain this paradox, ranking them by plausibility.",
+  "ideal": "**Hypothesis 1 (Most plausible): Collective vs. individual migration switch.** ZEB1-KO restores E-cadherin, converting cells from mesenchymal (individual, slow but invasive) to epithelial (collective, fast sheet migration). Wound-healing assays measure 2D collective migration, which is enhanced by cell-cell adhesion via E-cadherin-mediated coordination. The ZEB1-KO cells move faster as a *sheet* but may have lost the ability to invade through matrix as *individuals*. This is a known phenomenon: epithelial collectives can migrate faster than mesenchymal single cells in 2D.\n\n**Hypothesis 2 (Plausible): ZEB2 paralog compensation.** A549 cells express both ZEB1 and ZEB2. ZEB1 knockout may relieve a negative regulatory feedback on ZEB2, causing ZEB2 upregulation. ZEB2 can promote a hybrid EMT state that paradoxically enhances motility. Additionally, ZEB1 and ZEB2 have non-redundant target gene profiles — ZEB2 may activate distinct pro-migratory programs (e.g., MMP expression) not activated by ZEB1.\n\n**Hypothesis 3 (Possible): Proliferation confound.** The wound-healing assay doesn't distinguish migration from proliferation. If ZEB1-KO increases proliferation rate (ZEB1 has antiproliferative functions via p21/CDKN1A derepression paradoxically — but actually ZEB1 represses senescence), faster wound closure could reflect faster gap-filling by division, not migration per se.\n\n**Hypothesis 4 (Less likely): Rho GTPase rewiring.** Loss of ZEB1 may alter the Rac1/RhoA balance. Mesenchymal cells use RhoA-driven contractile migration; epithelial cells use Rac1-driven lamellipodia. Rac1-dependent migration is faster in unconfined 2D environments.",
   "verification": "llm-judge",
   "source": "pro-chain",
   "meta": {
     "chain": "paradox_resolution",
+    "chain_id": "chain07",
+    "topic": "CRISPR KO of ZEB1 paradoxically increases migration",
     "step": 1,
-    "step_role": "Generate hypotheses to explain a paradoxical result",
-    "depends_on": "nothing",
-    "what_cascades": "If model can't generate plausible explanations, it can't design discriminating experiments"
+    "step_role": "Explain paradoxical result",
+    "depends_on": "nothing — this is the seed question",
+    "what_cascades": "Can't generate good hypotheses → can't design discriminating experiments."
   }
 }

@@ -1,15 +1,17 @@
 {
   "id": "chain06_step2",
   "category": "ChainTask",
-  "question": "[FILL: Ask the model to fix the protocol and predict the outcome.\nExample: 'You fix the blocking step (switching from milk to BSA). Now you see a strong band at ~42 kDa and a weaker band at ~44 kDa. Are these the expected sizes for phospho-ERK1/2? What do the relative intensities suggest about ERK1 vs ERK2 activation in your HeLa cells?']",
-  "ideal": "[FILL: Band interpretation.\nExample: 'Yes — ERK2 (MAPK1) is 42 kDa and ERK1 (MAPK3) is 44 kDa. The stronger 42 kDa band indicates ERK2 is more highly phosphorylated/activated than ERK1 in these cells. This is typical for HeLa cells, where ERK2 is the dominant isoform. The presence of both bands confirms the antibody is working correctly and detecting both isoforms.']",
+  "question": "After switching to 0.1% NP-40, adding GTPγS/MgCl₂, and reducing IP time to 45 min, you now see: anti-HA blot of FLAG IP shows a strong band at ~87 kDa and a weaker band at ~95 kDa. BRAF's predicted molecular weight is 84.4 kDa. Are these bands consistent with BRAF? What explains the two bands and their different intensities? What additional control would confirm these are specifically BRAF?",
+  "ideal": "The **87 kDa band** is consistent with BRAF (predicted 84.4 kDa; proteins typically run slightly above predicted MW on SDS-PAGE due to post-translational modifications and SDS binding variability). The **95 kDa band** is likely **phosphorylated BRAF** — activation loop phosphorylation (at S446, S447, D448, and the critical T599/S602 phosphosites) causes a mobility shift of ~8-10 kDa on standard SDS-PAGE gels, which is a well-documented phenomenon for RAF kinases. The weaker intensity of the 95 kDa band indicates that only a fraction of co-IPed BRAF is in the fully phosphorylated/activated state, consistent with the signaling cascade (KRAS-GTP recruits BRAF, but activation requires additional events including dimerization and phosphorylation).\n\n**Controls to confirm identity:** (1) Treat the IP sample with lambda phosphatase — the 95 kDa band should collapse into the 87 kDa band. (2) Blot with anti-pBRAF-S445 antibody — should label only the upper band. (3) Perform IP from cells expressing FLAG-KRAS-G12V without HA-BRAF — neither band should appear (rules out non-specific HA antibody cross-reactivity).",
   "verification": "llm-judge",
   "source": "pro-chain",
   "meta": {
     "chain": "protocol_troubleshoot",
+    "chain_id": "chain06",
+    "topic": "Co-immunoprecipitation of KRAS-BRAF interaction",
     "step": 2,
-    "step_role": "Interpret experimental result after fixing the protocol",
-    "depends_on": "Must connect the fix from step 1 to the observed result",
-    "what_cascades": "Wrong band assignment → wrong downstream interpretation"
+    "step_role": "Interpret corrected result",
+    "depends_on": "chain06_step1",
+    "what_cascades": "Wrong band assignment → wrong interpretation of interaction dynamics."
   }
 }

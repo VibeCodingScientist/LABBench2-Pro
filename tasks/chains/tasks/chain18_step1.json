@@ -1,0 +1,18 @@
+{
+  "id": "chain18_step1",
+  "category": "ChainTask",
+  "question": "The crystal structure of SARS-CoV-2 main protease (Mpro, also called 3CLpro) in complex with nirmatrelvir (PF-07321332, the active component of Paxlovid) was determined at room temperature (PDB: 7SI9, resolution 2.0 Å). Mpro is a cysteine protease that cleaves the viral polyproteins pp1a and pp1ab at 11 sites, making it essential for viral replication. Identify the catalytic residues, describe the substrate-binding pocket architecture, and explain why Mpro is considered an excellent antiviral drug target.",
+  "ideal": "Mpro functions as a **homodimer** with each protomer containing three domains. The active site is located between domains I and II and contains the **catalytic dyad: Cys145 (nucleophilic cysteine) and His41 (general base)**. Unlike serine proteases with a catalytic triad, Mpro uses a dyad mechanism where His41 activates Cys145 for nucleophilic attack on the substrate peptide bond.\n\nThe substrate-binding pocket has defined subsites: **S1 pocket** (deep, recognizes glutamine at P1 position — Mpro exclusively cleaves after Gln, which is unusual), **S2 pocket** (hydrophobic, accommodates Leu/Val at P2), **S4 pocket** (shallow, accepts small hydrophobic residues at P4), and **S1' pocket** (accommodates small residues at P1'). Nirmatrelvir mimics the peptide substrate: its pyrrolidinone occupies S1 (mimicking Gln), the dimethyl cyclopropyl group fills S2, and the trifluoroacetamide group occupies S4. Crucially, nirmatrelvir contains a **nitrile warhead** that forms a **reversible covalent thioimidate bond** with Cys145.\n\n**Why Mpro is an excellent target:** (1) **No human homolog** — human cells have no cysteine protease with Gln specificity, enabling selectivity (ChEMBL CHEMBL4802135: Mpro IC50 = 0.79 nM, CHEMBL5112747, with minimal off-target activity). (2) **Essential for replication** — all 11 cleavage sites must be processed. (3) **Conserved across coronaviruses** — potential for pan-coronavirus inhibitors. (4) **Structural conservation** — the active site is under strong purifying selection, making resistance harder to develop.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "structure_to_drug",
+    "chain_id": "chain18",
+    "topic": "SARS-CoV-2 main protease inhibition by nirmatrelvir",
+    "step": 1,
+    "step_role": "Identify structural features",
+    "depends_on": "nothing — this is the seed question",
+    "what_cascades": "Wrong active site or pocket description → wrong SAR analysis.",
+    "data_provenance": "- PDB 7SI9: Queried 2026-02-17, resolution 2.0 Å, released 2021-10-20, X-ray. Title: \"Room temperature X-ray structure of SARS-CoV-2 main protease (Mpro) in complex with PF-07321332\"\n- ChEMBL CHEMBL4802135 (nirmatrelvir): IC50 = 0.79 nM (Mpro, CHEMBL5112747); IC50 = 75 nM (CHEMBL5106611); IC50 = 31 nM (CHEMBL5142713). Queried 2026-02-17."
+  }
+}

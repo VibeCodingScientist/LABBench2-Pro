@@ -1,0 +1,17 @@
+{
+  "id": "chain15_step2",
+  "category": "ChainTask",
+  "question": "The Trikafta triple combination restores ~50% of wild-type CFTR function in F508del/F508del patients. However, ~10% of CF patients carry mutations in both alleles that are not responsive to modulators (e.g., nonsense mutations like G542X creating premature stop codons, or splice mutations). For a patient compound heterozygous for F508del/G542X, Trikafta can only rescue the F508del allele. Given that normal CFTR chloride conductance requires proper channel assembly and ~50% of WT function is the threshold for avoiding significant lung disease, estimate whether rescuing one allele is sufficient and what additional strategies could help.",
+  "ideal": "**One-allele rescue with Trikafta provides partial but likely insufficient benefit:**\n\nQuantitative estimate: Each allele contributes ~50% of total CFTR mRNA. The G542X allele produces no functional protein (nonsense-mediated mRNA decay + truncated non-functional protein). The F508del allele with Trikafta: baseline ~2% trafficking × Trikafta rescue to ~50% of WT per-molecule function × some increase in surface trafficking (Trikafta raises to ~40-60% of WT surface levels). Net: ~25-30% of WT function from the rescued F508del allele alone.\n\n**Clinical prediction:** 25-30% of WT function is in the \"borderline\" zone. Patients with >50% function are asymptomatic; 25-50% may have mild disease. This patient would likely see improvement (reduced sweat chloride, improved FEV1) but not normalization.\n\n**Additional strategies for the G542X allele:**\n1. **Readthrough agents:** Ataluren (PTC124) promotes ribosomal readthrough of premature stop codons. Could partially restore full-length CFTR from the G542X allele. However, clinical trials showed limited efficacy (Phase III failed primary endpoint).\n2. **mRNA therapy:** Nebulized lipid nanoparticle-delivered CFTR mRNA to airway epithelium. Provides transient WT CFTR expression independent of genotype. Currently in Phase I/II trials (e.g., MRT5005).\n3. **Gene editing:** CRISPR-based correction of G542X in airway basal stem cells ex vivo, followed by re-engraftment. Technically feasible but delivery to sufficient airway surface remains unsolved.\n4. **NMD inhibition + Trikafta:** If G542X mRNA is stabilized by NMD inhibition, the truncated protein may still not function — but if any readthrough occurs, Trikafta could then help fold/gate the full-length protein produced.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "genetics_to_therapy",
+    "chain_id": "chain15",
+    "topic": "CFTR F508del in cystic fibrosis",
+    "step": 2,
+    "step_role": "Structural consequence of mutation",
+    "depends_on": "chain15_step1",
+    "what_cascades": "Wrong rescue estimate → wrong clinical expectation."
+  }
+}

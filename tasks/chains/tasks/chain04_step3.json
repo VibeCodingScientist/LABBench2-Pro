@@ -1,15 +1,18 @@
 {
   "id": "chain04_step3",
   "category": "ChainTask",
-  "question": "[FILL: Ask what experiment would resolve the discrepancy.\nExample: 'Given the conflicting results across cell lines, design a definitive experiment to determine whether drug X has genuine anti-cancer activity. Specify: cell lines, sample sizes, controls, primary endpoint, and statistical analysis plan.']",
-  "ideal": "[FILL: Well-designed definitive experiment.\nExample: 'Panel of 6+ cell lines across 3 cancer types, n=15/group (powered for 25% effect at alpha=0.05, 80% power), vehicle control + positive control (standard-of-care), primary endpoint = tumor volume at day 21, dose-response (3 doses), two-way ANOVA (drug x cell line) to test for interaction. Pre-register the analysis plan. Include pharmacokinetic confirmation of drug exposure.']",
+  "question": "Based on your analysis — compound X has poor BBB penetration explaining orthotopic failure, moderate potency only at high target expression — design a definitive experiment that either rescues compound X for glioma or definitively kills the program. Specify: model, groups, sample sizes, endpoints, analysis plan, and decision criteria.",
+  "ideal": "**Two-arm experiment testing whether the pharmacology problem is solvable:**\n\n**Arm 1 — BBB bypass (proof-of-mechanism):**\n- Model: BT142 orthotopic xenograft in nude mice\n- Groups (n=15 each): (a) Vehicle IP, (b) Compound X 50mg/kg BID oral, (c) Compound X 10mg/kg direct intracranial infusion via osmotic minipump (Alzet), (d) Ivosidenib 50mg/kg BID oral (positive control)\n- Endpoints: 2-HG in tumor (LC-MS/MS at sacrifice day 28), tumor volume (MRI days 0, 14, 28), survival\n- **Decision criterion:** If intracranial compound X (Arm c) reduces 2-HG >70% and tumor volume >30% but oral (Arm b) does not → pharmacology is valid, invest in BBB-penetrant analog. If intracranial also fails → target engagement insufficient even with adequate exposure → kill compound X.\n\n**Arm 2 — Peripheral IDH1 tumor (backup indication):**\n- Model: ICC (intrahepatic cholangiocarcinoma) patient-derived xenograft with endogenous IDH1-R132H, subcutaneous\n- Groups (n=12): Vehicle, Compound X 25/50/100 mg/kg BID, Ivosidenib 150mg/kg QD\n- Endpoints: 2-HG, tumor volume, PK at each dose\n- **Decision criterion:** Compound X must achieve comparable 2-HG reduction and tumor response to ivosidenib at tolerable doses to justify further development.\n\n**Analysis:** Two-way ANOVA with Dunnett's post-hoc (vs. vehicle). Pre-registered protocol. Pre-specify that the program stops if Arm 1c fails.",
   "verification": "llm-judge",
   "source": "pro-chain",
   "meta": {
     "chain": "critical_appraisal",
+    "chain_id": "chain04",
+    "topic": "IDH1 inhibitor efficacy in glioma",
     "step": 3,
-    "step_role": "Design experiment to resolve the conflicting evidence",
-    "depends_on": "Must address the specific discrepancies identified in steps 1-2",
-    "what_cascades": "Terminal step"
+    "step_role": "Design definitive experiment",
+    "depends_on": "chain04_step2",
+    "what_cascades": "Terminal step.",
+    "data_provenance": "| Data Type | Identifier | Details | Query Date |\n|-----------|-----------|---------|------------|\n| PDB | [3INM](https://www.rcsb.org/structure/3INM) | IDH1-R132H mutant active site, resolution 2.1 Å | 2026-02-17 |\n| Gene | IDH1 | R132H mutation, 2-hydroxyglutarate (2-HG) production | 2026-02-17 |\n| Cell Line | U87 | Glioma cell line (overexpressing IDH1-R132H) | 2026-02-17 |\n| Cell Line | BT142, TS603 | Patient-derived IDH1-mutant glioma lines | 2026-02-17 |\n| Compound | Ivosidenib (AG-120) | FDA-approved IDH1 inhibitor (comparator) | 2026-02-17 |"
   }
 }

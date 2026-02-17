@@ -1,15 +1,17 @@
 {
   "id": "chain10_step2",
   "category": "ChainTask",
-  "question": "[FILL: Ask for meta-analytic reasoning.\nExample: 'Three additional studies emerge: Study C (n=300, AUC=0.78), Study D (n=150, AUC=0.85), Study E (n=800, AUC=0.65). Considering all 5 studies, what is your best estimate of the true predictive value of biomarker Z? How would you formally combine these results, and what does the pattern of results suggest about the likely source of heterogeneity?']",
-  "ideal": "[FILL: Meta-analytic reasoning.\nExample: 'A random-effects meta-analysis of the AUCs (weighted by sample size or inverse variance) would give a pooled estimate around AUC ~0.70-0.72. The pattern is clear: smaller studies (A: 0.89, D: 0.85) report higher AUCs than larger studies (B: 0.61, E: 0.65), classic evidence of small-study effects / publication bias / overfitting. I2 heterogeneity would be high (>75%). The true AUC is likely 0.65-0.72 — moderate but not the excellent discrimination Paper A claimed. A funnel plot would likely show asymmetry confirming bias.']",
+  "question": "Three additional studies have since been published on the same 10-gene ctDNA methylation panel for stage I NSCLC detection:\n\n| Study | Design | N (cases+controls) | Sites | AUC | Sensitivity @95% Spec |\n|---|---|---|---|---|---|\n| C | Prospective cohort | 180+360 | 3 | 0.79 | 52% |\n| D | Retrospective | 95+190 | 1 | 0.88 | 71% |\n| E | Prospective cohort | 650+1300 | 8 | 0.71 | 38% |\n\nTogether with Papers A (AUC=0.92, n=481) and B (AUC=0.68, n=3300): (a) What is your best estimate of the true AUC? (b) What statistical pattern is evident across all 5 studies? (c) How would you formally combine these results, and what method-specific issues apply? (d) If you generated a funnel plot, what would you expect to see?",
+  "ideal": "**(a) Best estimate of true AUC: ~0.70-0.73.** Weight heavily toward the larger, prospective, multi-center studies (B and E). A sample-size-weighted average gives approximately: (0.92×481 + 0.68×3300 + 0.79×540 + 0.88×285 + 0.71×1950) / (481+3300+540+285+1950) ≈ 0.72.\n\n**(b) Clear small-study effect / inverse correlation between sample size and AUC:**\n- n=285 → AUC 0.88\n- n=481 → AUC 0.92\n- n=540 → AUC 0.79\n- n=1950 → AUC 0.71\n- n=3300 → AUC 0.68\n\nSmaller studies show systematically higher AUC. This is the classic pattern of **publication bias and/or overfitting** — small studies with impressive results get published; small studies with modest results don't. Additionally, single-center studies (Papers A, D) outperform multi-center ones (B, C, E), suggesting the performance boost reflects controlled conditions, not generalizable signal.\n\n**(c) Formal meta-analysis approach:**\n- Use a **bivariate random-effects model** (Reitsma model) that jointly models sensitivity and specificity, since they are correlated via the threshold effect\n- Transform AUC or use paired sensitivity/specificity at the common 95% specificity threshold\n- Report **pooled sensitivity at 95% specificity** with 95% CI from the random-effects model\n- Expect high heterogeneity: I² likely >75%, with τ² reflecting genuine between-study variation\n- **Issue:** AUC pooling is problematic because AUC is a summary measure across all thresholds. Pooling sensitivity at a fixed specificity is preferred for clinical interpretation.\n\n**(d) Funnel plot expectation:** Plot study precision (1/SE or √n) on y-axis vs. effect size (AUC or log-DOR) on x-axis. Expected: **asymmetric funnel** — small studies (bottom) skewed toward high AUC (right), while large studies (top) cluster around AUC 0.70. A formal test (Deeks' funnel plot asymmetry test for diagnostic studies) would likely be significant (p<0.05), confirming publication bias / small-study effects.",
   "verification": "llm-judge",
   "source": "pro-chain",
   "meta": {
     "chain": "evidence_synthesis",
+    "chain_id": "chain10",
+    "topic": "Circulating tumor DNA (ctDNA) for early lung cancer detection",
     "step": 2,
-    "step_role": "Synthesize multiple studies using meta-analytic thinking",
-    "depends_on": "Must integrate the critical assessment from step 1 with the new data",
-    "what_cascades": "Wrong pooled estimate → wrong clinical utility assessment"
+    "step_role": "Meta-analytic reasoning",
+    "depends_on": "chain10_step1",
+    "what_cascades": "Wrong pooled estimate → wrong clinical utility assessment."
   }
 }

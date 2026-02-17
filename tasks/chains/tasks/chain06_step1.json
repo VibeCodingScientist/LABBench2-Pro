@@ -1,15 +1,17 @@
 {
   "id": "chain06_step1",
   "category": "ChainTask",
-  "question": "[FILL: Describe a protocol step and ask the model to identify what could go wrong.\nExample: 'You are performing a Western blot for phospho-ERK1/2 in HeLa cell lysates. You lyse cells in RIPA buffer, run SDS-PAGE on a 12% gel, transfer to PVDF membrane, block with 5% non-fat milk in TBST, and incubate with anti-phospho-ERK1/2 antibody (1:1000) overnight at 4C. You see no signal despite positive control working. What is the most likely error in this protocol?']",
-  "ideal": "[FILL: The specific error.\nExample: 'Blocking with non-fat milk for a phospho-specific antibody. Milk contains casein, a phosphoprotein, which competes with phospho-epitopes and blocks the antibody from binding. Should use 5% BSA in TBST for phospho-antibodies.']",
+  "question": "You are studying the KRAS-BRAF interaction in HEK293T cells overexpressing FLAG-KRAS-G12V and HA-BRAF (PDB: 1UWH shows wild-type BRAF structure). Your co-immunoprecipitation protocol: lyse in NP-40 buffer (50mM Tris pH 7.4, 150mM NaCl, 1% NP-40, protease inhibitors), immunoprecipitate with anti-FLAG M2 beads 2h at 4°C, wash 3× with lysis buffer, elute with 2× Laemmli sample buffer, western blot with anti-HA. **Result:** Strong FLAG-KRAS band in IP input and IP lanes (anti-FLAG blot). But anti-HA western shows strong BRAF band in input but NO band in the IP lane. Positive control (cells expressing FLAG-BRAF alone, IP with anti-FLAG) works fine. What is the most likely reason for failing to co-IP BRAF with KRAS?",
+  "ideal": "The most likely issue is that **KRAS-BRAF interaction requires GTP loading, and you are not preserving the active GTP-bound state during lysis.** Although KRAS-G12V is constitutively active (impaired GTPase activity), the 2-hour incubation at 4°C in lysis buffer allows residual GTPase activity and does not include GTPγS to lock KRAS in the active conformation. More critically: **1% NP-40 is too harsh** for this transient signaling complex. The KRAS-BRAF interaction involves the KRAS effector domain (residues 29-40; UniProt P01116 Switch I region at 29-35) binding the BRAF RAS-binding domain, which is a relatively low-affinity interaction (Kd ~0.1-1 µM). 1% NP-40 disrupts this weak interaction during the extended IP. **Fix:** (1) Switch to milder detergent: 0.5% Triton X-100 or 0.1% NP-40, (2) add 100 µM GTPγS and 5mM MgCl₂ to lysis buffer to lock KRAS-GTP, (3) shorten IP to 30–45 minutes, (4) add phosphatase inhibitors (the interaction is partly stabilized by BRAF phosphorylation).",
   "verification": "llm-judge",
   "source": "pro-chain",
   "meta": {
     "chain": "protocol_troubleshoot",
+    "chain_id": "chain06",
+    "topic": "Co-immunoprecipitation of KRAS-BRAF interaction",
     "step": 1,
-    "step_role": "Diagnose a protocol error from symptoms",
-    "depends_on": "nothing",
-    "what_cascades": "Wrong diagnosis → wrong fix → wasted experiment"
+    "step_role": "Diagnose protocol error",
+    "depends_on": "nothing — this is the seed question",
+    "what_cascades": "Wrong diagnosis → wrong fix → continued failure."
   }
 }

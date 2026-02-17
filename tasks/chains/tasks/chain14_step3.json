@@ -1,0 +1,17 @@
+{
+  "id": "chain14_step3",
+  "category": "ChainTask",
+  "question": "Based on your analysis — modest clinical benefit in selected patients, poor real-world generalization, amyloid reduction confirmed but functional impact unclear — design a trial that would definitively establish whether amyloid-clearing therapy provides clinically meaningful benefit. Specify: patient selection, endpoint, comparator, duration, and key design features.",
+  "ideal": "**Adaptive platform trial testing amyloid clearance + downstream combination:**\n\n**Population:** Biomarker-confirmed early AD (positive amyloid PET AND p-tau181/217 >2× ULN), age 60-80, MMSE 22-30, CDR-global 0.5-1.0. Exclude anticoagulant users and those with >4 microbleeds on baseline MRI.\n\n**Design:** 2×2 factorial, adaptive with interim futility analysis at 12 months:\n- Arm 1: Lecanemab + placebo tau (anti-amyloid alone)\n- Arm 2: Lecanemab + anti-tau antibody (e.g., E2814; combination)\n- Arm 3: Anti-tau antibody alone\n- Arm 4: Placebo + placebo\n\n**Primary endpoint:** Time to progression from MCI to dementia (CDR-global 0 to ≥1, or CDR-global 0.5 to ≥1.0 confirmed at 2 consecutive visits) — this is a **functional milestone** that patients and caregivers understand, not a continuous scale score.\n\n**Key secondary:** CDR-SB at 36 months, ADAS-Cog14, Amsterdam IADL, quality-adjusted life years (QALYs).\n\n**Duration:** 36 months (vs. 18 in Clarity AD). The widening treatment-placebo curves suggest longer observation is critical.\n\n**Sample size:** n=1,200 per arm (4,800 total), powered at 80% to detect a 25% relative reduction in dementia conversion (estimated ~40% conversion in placebo over 3 years → ~30% in treatment arm).\n\n**Design features:** (1) Stratify by ApoE4 status, baseline CDR, age. (2) Pre-registered digital biomarkers (smartphone cognitive tests, actigraphy) as exploratory endpoints. (3) Independent DSMB with stopping rules for ARIA-related SAEs. (4) Built-in health economic analysis: track all costs (drug, MRIs, hospitalizations) for cost-effectiveness.\n\n**Decision criterion:** If neither lecanemab alone nor combination delays dementia conversion at 36 months, the amyloid-clearance strategy should be deprioritized in favor of downstream targets.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "critical_appraisal",
+    "chain_id": "chain14",
+    "topic": "Lecanemab efficacy in early Alzheimer's disease",
+    "step": 3,
+    "step_role": "Design definitive experiment",
+    "depends_on": "chain14_step2",
+    "what_cascades": "Terminal step."
+  }
+}

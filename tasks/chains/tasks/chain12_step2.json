@@ -1,0 +1,18 @@
+{
+  "id": "chain12_step2",
+  "category": "ChainTask",
+  "question": "Ruxolitinib is a JAK1/JAK2 inhibitor approved for myelofibrosis. ChEMBL data shows: ruxolitinib IC50 = 3 nM for JAK1 (CHEMBL1292865), 3 nM for JAK2 (CHEMBL1292866), 430 nM for JAK3 (CHEMBL1292867), and 19 nM for TYK2 (CHEMBL1292868). Calculate the selectivity ratios of JAK2 over JAK3 and TYK2. A patient with myelofibrosis responds to ruxolitinib initially (spleen reduction, symptom improvement) but develops anemia (hemoglobin drops from 10 to 7.5 g/dL). Based on the selectivity profile, explain this clinical observation.",
+  "ideal": "Selectivity ratios: JAK2/JAK3 = 430/3 = **143-fold**; JAK2/TYK2 = 19/3 = **6.3-fold**; JAK1/JAK2 = 3/3 = **1:1 (equipotent)**. The anemia is explained by ruxolitinib's **equal potency against JAK2 and JAK1**. Normal erythropoiesis depends on erythropoietin (EPO) signaling through JAK2 homodimers on erythroid progenitors. Ruxolitinib cannot selectively inhibit mutant JAK2 V617F vs. wild-type JAK2 — both are inhibited equally at therapeutic doses. This suppresses EPO-driven erythropoiesis, causing/worsening anemia. The spleen response occurs because the MPN clone is exquisitely dependent on JAK2-STAT signaling and is preferentially affected, but normal JAK2-dependent hematopoiesis is collateral damage. This is the fundamental limitation of pan-JAK2 inhibitors — they are pathway inhibitors, not mutation-selective. Dose reduction to manage anemia risks loss of disease control.",
+  "verification": "llm-judge",
+  "source": "pro-chain",
+  "meta": {
+    "chain": "paper_to_experiment",
+    "chain_id": "chain12",
+    "topic": "JAK2 V617F in myeloproliferative neoplasms",
+    "step": 2,
+    "step_role": "Quantitative data interpretation",
+    "depends_on": "chain12_step1",
+    "what_cascades": "Wrong selectivity interpretation → wrong prediction of clinical outcomes.",
+    "data_provenance": "- ChEMBL CHEMBL1789941 (ruxolitinib): JAK1 IC50 = 3 nM (CHEMBL1292865), JAK2 IC50 = 3 nM (CHEMBL1292866), JAK3 IC50 = 430 nM (CHEMBL1292867), TYK2 IC50 = 19 nM (CHEMBL1292868), JAK1 IC50 = 3.3 nM (replicate, CHEMBL2155753). Max phase = 4 (approved). Queried 2026-02-17.\n- Open Targets JAK2-myelofibrosis: 0.7417; MPL-myelofibrosis: 0.7375; CALR-myelofibrosis: 0.5646 (queried 2026-02-17)"
+  }
+}
