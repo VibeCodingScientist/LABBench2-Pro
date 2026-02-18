@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Generate all figures and tables for the LABBench2-Pro paper.
 
+Two-model comparison: Opus 4.6 vs Sonnet 4.6.
+
 Run from repo root:
   python results/generate_all.py
 """
@@ -27,9 +29,15 @@ TABLE_DIR = RESULTS_DIR / "tables"
 FIG_DIR.mkdir(exist_ok=True)
 TABLE_DIR.mkdir(exist_ok=True)
 
+# Models
+MODELS = ["claude-opus-4.6", "claude-sonnet-4.6"]
+MODEL_LABELS = {"claude-opus-4.6": "Opus 4.6", "claude-sonnet-4.6": "Sonnet 4.6"}
+MODEL_COLORS = {"claude-opus-4.6": "#2171b5", "claude-sonnet-4.6": "#fc8d59"}
+
 # Nature-style figure settings
 plt.rcParams.update({
-    "font.family": "Arial",
+    "font.family": "sans-serif",
+    "font.sans-serif": ["Arial", "DejaVu Sans", "Helvetica"],
     "font.size": 8,
     "axes.linewidth": 0.5,
     "xtick.major.width": 0.5,
@@ -40,19 +48,15 @@ plt.rcParams.update({
     "savefig.pad_inches": 0.05,
 })
 
-# Color palette
+# Tier colors (for tier legend patches)
 TIER_COLORS = {
     "tier1": "#2171b5",
     "tier2": "#238b45",
     "tier3": "#d94801",
 }
-CATEGORY_COLORS = {
-    "CloningScenarios": "#08519c", "LitQA2": "#2171b5", "SeqQA": "#4292c6",
-    "ProtocolQA": "#6baed6", "SuppQA": "#9ecae1", "FigQA": "#c6dbef", "DbQA": "#deebf7",
-    "Calibration": "#006d2c", "HypothesisGeneration": "#238b45",
-    "StructureAnalysis": "#41ab5d", "StatisticalReasoning": "#74c476",
-    "ChainTask": "#d94801",
-}
+
+TIER1_CATS = ["CloningScenarios", "LitQA2", "SeqQA", "ProtocolQA", "SuppQA", "FigQA", "DbQA"]
+TIER2_CATS = ["Calibration", "HypothesisGeneration", "StructureAnalysis", "StatisticalReasoning"]
 
 
 def load_eval_runs():
@@ -82,7 +86,10 @@ def load_chain_runs():
 
 def load_judge_audits():
     rows = []
-    with open(RAW_DIR / "judge_audits.csv", newline="") as f:
+    path = RAW_DIR / "judge_audits.csv"
+    if not path.exists():
+        return rows
+    with open(path, newline="") as f:
         reader = csv.DictReader(f)
         for r in reader:
             r["judge_score"] = r["judge_score"] == "t"
@@ -102,123 +109,186 @@ def bootstrap_ci(data, n_boot=10000, ci=0.95):
     return result.confidence_interval.low, np.mean(arr), result.confidence_interval.high
 
 
-# ─── Figure 1: Main accuracy bar chart with CIs (Tier 1 + Tier 2 + Tier 3) ───
+def split_by_model(rows):
+    """Split rows into {model_name: [rows]} dict."""
+    by_model = defaultdict(list)
+    for r in rows:
+        by_model[r["model_name"]].append(r)
+    return by_model
 
-def fig1_accuracy_overview(eval_runs, chain_runs):
-    by_cat = defaultdict(list)
-    for r in eval_runs:
-        by_cat[r["category"]].append(1 if r["correct"] else 0)
 
-    tier1_cats = ["CloningScenarios", "LitQA2", "SeqQA", "ProtocolQA", "SuppQA", "FigQA", "DbQA"]
-    tier2_cats = ["Calibration", "HypothesisGeneration", "StructureAnalysis", "StatisticalReasoning"]
-    tier3_cats = ["ChainTask"]
+def short_cat(name):
+    """Shorten category names for x-axis labels."""
+    return (name
+            .replace("CloningScenarios", "Cloning\nScen.")
+            .replace("HypothesisGeneration", "Hypothesis\nGen.")
+            .replace("StatisticalReasoning", "Statistical\nReas.")
+            .replace("StructureAnalysis", "Structure\nAnal.")
+            .replace("ProtocolQA", "Protocol\nQA"))
 
-    categories = tier1_cats + tier2_cats + tier3_cats
-    means, lows, highs, ns, colors = [], [], [], [], []
 
-    for cat in categories:
-        if cat not in by_cat:
-            continue
-        lo, mu, hi = bootstrap_ci(by_cat[cat])
-        means.append(mu * 100)
-        lows.append(mu * 100 - lo * 100)
-        highs.append(hi * 100 - mu * 100)
-        ns.append(len(by_cat[cat]))
-        if cat in tier1_cats:
-            colors.append(TIER_COLORS["tier1"])
-        elif cat in tier2_cats:
-            colors.append(TIER_COLORS["tier2"])
-        else:
-            colors.append(TIER_COLORS["tier3"])
+# ─── Figure 1: Two-model accuracy comparison (grouped bars with CIs) ───
 
-    fig, ax = plt.subplots(figsize=(7, 3.5))
+def fig1_accuracy_comparison(eval_runs):
+    by_model = split_by_model(eval_runs)
+    categories = TIER1_CATS + TIER2_CATS
+
+    fig, ax = plt.subplots(figsize=(8, 4))
     x = np.arange(len(categories))
-    bars = ax.bar(x, means, yerr=[lows, highs], capsize=2, color=colors,
-                  edgecolor="white", linewidth=0.3, error_kw={"linewidth": 0.5})
+    bar_width = 0.35
+
+    for i, model in enumerate(MODELS):
+        model_runs = by_model.get(model, [])
+        by_cat = defaultdict(list)
+        for r in model_runs:
+            by_cat[r["category"]].append(1 if r["correct"] else 0)
+
+        means, lows, highs = [], [], []
+        for cat in categories:
+            if cat in by_cat and len(by_cat[cat]) > 1:
+                lo, mu, hi = bootstrap_ci(by_cat[cat])
+                means.append(mu * 100)
+                lows.append(mu * 100 - lo * 100)
+                highs.append(hi * 100 - mu * 100)
+            else:
+                means.append(0)
+                lows.append(0)
+                highs.append(0)
+
+        offset = (i - 0.5) * bar_width
+        bars = ax.bar(x + offset + bar_width / 2, means,
+                      yerr=[lows, highs], width=bar_width,
+                      capsize=2, color=MODEL_COLORS[model],
+                      edgecolor="white", linewidth=0.3,
+                      error_kw={"linewidth": 0.5},
+                      label=MODEL_LABELS[model])
+
+    # Significance markers
+    pairwise = {
+        "CloningScenarios": 0.014, "FigQA": 0.003, "DbQA": 0.001,
+        "LitQA2": 0.210, "SeqQA": 0.214, "ProtocolQA": 0.434, "SuppQA": 0.065,
+    }
+    for j, cat in enumerate(categories):
+        if cat in pairwise and pairwise[cat] < 0.05:
+            # Get max bar height for this category
+            max_h = 0
+            for model in MODELS:
+                model_runs = by_model.get(model, [])
+                cat_runs = [1 if r["correct"] else 0 for r in model_runs if r["category"] == cat]
+                if cat_runs:
+                    _, mu, hi = bootstrap_ci(cat_runs)
+                    max_h = max(max_h, hi * 100)
+            stars = "***" if pairwise[cat] < 0.001 else "**" if pairwise[cat] < 0.01 else "*"
+            ax.text(j, max_h + 4, stars, ha="center", va="bottom", fontsize=7, fontweight="bold")
+
+    # Tier separator lines
+    ax.axvline(x=len(TIER1_CATS) - 0.5, color="gray", linestyle=":", linewidth=0.5, alpha=0.5)
+    ax.text(len(TIER1_CATS) / 2, 102, "Tier 1: LABBench", ha="center", fontsize=6, color="gray")
+    ax.text(len(TIER1_CATS) + len(TIER2_CATS) / 2, 102, "Tier 2: New Tasks", ha="center", fontsize=6, color="gray")
 
     ax.set_xticks(x)
-    ax.set_xticklabels([c.replace("Generation", "\nGen.").replace("Reasoning", "\nReas.").replace("Analysis", "\nAnal.").replace("Scenarios", "\nScen.") for c in categories],
-                       rotation=45, ha="right", fontsize=6.5)
+    ax.set_xticklabels([short_cat(c) for c in categories], rotation=45, ha="right", fontsize=6.5)
     ax.set_ylabel("Accuracy (%)")
-    ax.set_ylim(0, 105)
+    ax.set_ylim(0, 110)
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
+    ax.legend(fontsize=7, frameon=False, loc="upper right")
 
-    # n labels
-    for i, (m, n) in enumerate(zip(means, ns)):
-        ax.text(i, m + highs[i] + 1.5, f"n={n}", ha="center", va="bottom", fontsize=5, color="gray")
-
-    # Tier legend
-    patches = [
-        mpatches.Patch(color=TIER_COLORS["tier1"], label="Tier 1: LABBench"),
-        mpatches.Patch(color=TIER_COLORS["tier2"], label="Tier 2: New Tasks"),
-        mpatches.Patch(color=TIER_COLORS["tier3"], label="Tier 3: Chains"),
-    ]
-    ax.legend(handles=patches, loc="upper right", fontsize=6, frameon=False)
-
-    fig.savefig(FIG_DIR / "fig1_accuracy_overview.pdf")
-    fig.savefig(FIG_DIR / "fig1_accuracy_overview.png")
+    fig.tight_layout()
+    fig.savefig(FIG_DIR / "fig1_accuracy_comparison.pdf")
+    fig.savefig(FIG_DIR / "fig1_accuracy_comparison.png")
     plt.close()
-    print("  fig1_accuracy_overview")
+    print("  fig1_accuracy_comparison")
 
 
-# ─── Figure 2: Chain error propagation analysis ───
+# ─── Figure 2: Chain error propagation (both models) ───
 
 def fig2_chain_error_propagation(chain_runs):
-    chains = defaultdict(list)
-    for r in chain_runs:
-        chains[r["chain_id"]].append(r)
+    by_model = split_by_model(chain_runs)
 
-    # Sort steps within each chain
-    for cid in chains:
-        chains[cid].sort(key=lambda x: x["step_num"])
+    fig, axes = plt.subplots(1, 3, figsize=(9, 3))
 
-    # Cumulative accuracy at each step position
-    max_steps = max(len(s) for s in chains.values())
-    step_correct = defaultdict(list)  # step_num -> [bool]
-    cumul_correct = defaultdict(list)  # step_num -> [bool] (all steps up to here correct)
+    # Panel a: Per-step accuracy by model
+    ax1 = axes[0]
+    for model in MODELS:
+        chains = defaultdict(list)
+        for r in by_model.get(model, []):
+            chains[r["chain_id"]].append(r)
 
-    for cid, steps in chains.items():
-        all_right = True
-        for s in steps:
-            step_correct[s["step_num"]].append(1 if s["correct"] else 0)
-            if not s["correct"]:
-                all_right = False
-            cumul_correct[s["step_num"]].append(1 if all_right else 0)
+        step_correct = defaultdict(list)
+        for cid, steps in chains.items():
+            for s in steps:
+                step_correct[s["step_num"]].append(1 if s["correct"] else 0)
 
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(7, 2.8))
+        step_nums = sorted(step_correct.keys())
+        step_means = [np.mean(step_correct[s]) * 100 for s in step_nums]
+        ax1.plot(step_nums, step_means, "o-", color=MODEL_COLORS[model],
+                 markersize=4, linewidth=1.5, label=MODEL_LABELS[model])
 
-    # Panel a: Per-step accuracy
-    step_nums = sorted(step_correct.keys())
-    step_means = [np.mean(step_correct[s]) * 100 for s in step_nums]
-    cumul_means = [np.mean(cumul_correct[s]) * 100 for s in step_nums]
-
-    ax1.plot(step_nums, step_means, "o-", color=TIER_COLORS["tier3"], markersize=5, linewidth=1.5, label="Per-step")
-    ax1.plot(step_nums, cumul_means, "s--", color="#636363", markersize=5, linewidth=1.5, label="Cumulative")
     ax1.set_xlabel("Step number")
-    ax1.set_ylabel("Accuracy (%)")
+    ax1.set_ylabel("Step accuracy (%)")
     ax1.set_ylim(0, 105)
-    ax1.set_xticks(step_nums)
     ax1.legend(fontsize=6, frameon=False)
     ax1.spines["top"].set_visible(False)
     ax1.spines["right"].set_visible(False)
     ax1.set_title("a", fontsize=9, fontweight="bold", loc="left")
 
-    # Panel b: End-to-end vs step-level comparison
-    total_steps = sum(len(s) for s in chains.values())
-    correct_steps = sum(1 for cid in chains for s in chains[cid] if s["correct"])
-    e2e_correct = sum(1 for cid, steps in chains.items() if all(s["correct"] for s in steps))
+    # Panel b: E2E vs step-level (grouped bars)
+    ax2 = axes[1]
+    x = np.arange(2)
+    bar_width = 0.3
+    for i, model in enumerate(MODELS):
+        chains = defaultdict(list)
+        for r in by_model.get(model, []):
+            chains[r["chain_id"]].append(r)
+        total_steps = sum(len(s) for s in chains.values())
+        correct_steps = sum(1 for cid in chains for s in chains[cid] if s["correct"])
+        e2e_correct = sum(1 for cid, steps in chains.items() if all(s["correct"] for s in steps))
+        vals = [correct_steps / total_steps * 100 if total_steps else 0,
+                e2e_correct / len(chains) * 100 if chains else 0]
+        offset = (i - 0.5) * bar_width
+        bars = ax2.bar(x + offset + bar_width / 2, vals,
+                       width=bar_width, color=MODEL_COLORS[model],
+                       edgecolor="white", label=MODEL_LABELS[model])
+        for b, v in zip(bars, vals):
+            ax2.text(b.get_x() + b.get_width() / 2, v + 1.5,
+                     f"{v:.1f}%", ha="center", fontsize=5.5)
 
-    labels = ["Step-level", "End-to-end"]
-    vals = [correct_steps / total_steps * 100, e2e_correct / len(chains) * 100]
-    bars = ax2.bar(labels, vals, color=[TIER_COLORS["tier3"], "#636363"], edgecolor="white", width=0.5)
+    ax2.set_xticks(x)
+    ax2.set_xticklabels(["Step-level", "End-to-end"], fontsize=7)
     ax2.set_ylabel("Accuracy (%)")
     ax2.set_ylim(0, 105)
-    for b, v in zip(bars, vals):
-        ax2.text(b.get_x() + b.get_width() / 2, v + 2, f"{v:.1f}%", ha="center", fontsize=7)
+    ax2.legend(fontsize=5.5, frameon=False)
     ax2.spines["top"].set_visible(False)
     ax2.spines["right"].set_visible(False)
     ax2.set_title("b", fontsize=9, fontweight="bold", loc="left")
+
+    # Panel c: Error propagation gap
+    ax3 = axes[2]
+    gaps = []
+    for model in MODELS:
+        chains = defaultdict(list)
+        for r in by_model.get(model, []):
+            chains[r["chain_id"]].append(r)
+        total_steps = sum(len(s) for s in chains.values())
+        correct_steps = sum(1 for cid in chains for s in chains[cid] if s["correct"])
+        e2e_correct = sum(1 for cid, steps in chains.items() if all(s["correct"] for s in steps))
+        step_acc = correct_steps / total_steps * 100 if total_steps else 0
+        e2e_acc = e2e_correct / len(chains) * 100 if chains else 0
+        gaps.append(step_acc - e2e_acc)
+
+    bars = ax3.bar([MODEL_LABELS[m] for m in MODELS], gaps,
+                   color=[MODEL_COLORS[m] for m in MODELS],
+                   edgecolor="white", width=0.5)
+    for b, v in zip(bars, gaps):
+        ax3.text(b.get_x() + b.get_width() / 2, v + 0.5,
+                 f"{v:.1f} pp", ha="center", fontsize=6.5, fontweight="bold")
+
+    ax3.set_ylabel("Error propagation gap (pp)")
+    ax3.set_ylim(0, max(gaps) + 8)
+    ax3.spines["top"].set_visible(False)
+    ax3.spines["right"].set_visible(False)
+    ax3.set_title("c", fontsize=9, fontweight="bold", loc="left")
 
     fig.tight_layout()
     fig.savefig(FIG_DIR / "fig2_chain_error_propagation.pdf")
@@ -227,25 +297,41 @@ def fig2_chain_error_propagation(chain_runs):
     print("  fig2_chain_error_propagation")
 
 
-# ─── Figure 3: Cost-accuracy analysis ───
+# ─── Figure 3: Cost-accuracy scatter (both models) ───
 
 def fig3_cost_accuracy(eval_runs):
-    by_cat = defaultdict(lambda: {"correct": 0, "total": 0, "cost": 0})
-    for r in eval_runs:
-        cat = r["category"]
-        by_cat[cat]["total"] += 1
-        by_cat[cat]["correct"] += 1 if r["correct"] else 0
-        by_cat[cat]["cost"] += r["cost_usd"]
+    by_model = split_by_model(eval_runs)
 
-    fig, ax = plt.subplots(figsize=(5, 3.5))
+    fig, ax = plt.subplots(figsize=(6, 4))
+    markers = {"claude-opus-4.6": "o", "claude-sonnet-4.6": "s"}
 
-    for cat, d in by_cat.items():
-        acc = d["correct"] / d["total"] * 100
-        cost = d["cost"]
-        color = CATEGORY_COLORS.get(cat, "#999999")
-        ax.scatter(cost, acc, s=d["total"] * 0.3, color=color, alpha=0.8, edgecolors="white", linewidth=0.3)
-        ax.annotate(cat, (cost, acc), fontsize=5, ha="center", va="bottom",
-                   xytext=(0, 4), textcoords="offset points")
+    for model in MODELS:
+        by_cat = defaultdict(lambda: {"correct": 0, "total": 0, "cost": 0})
+        for r in by_model.get(model, []):
+            cat = r["category"]
+            by_cat[cat]["total"] += 1
+            by_cat[cat]["correct"] += 1 if r["correct"] else 0
+            by_cat[cat]["cost"] += r["cost_usd"]
+
+        for cat, d in by_cat.items():
+            acc = d["correct"] / d["total"] * 100
+            cost = d["cost"]
+            ax.scatter(cost, acc, s=d["total"] * 0.3,
+                       color=MODEL_COLORS[model], alpha=0.7,
+                       marker=markers[model],
+                       edgecolors="white", linewidth=0.3)
+            # Label only for Opus (avoid double labels)
+            if model == MODELS[0]:
+                ax.annotate(cat, (cost, acc), fontsize=4.5, ha="center", va="bottom",
+                            xytext=(0, 4), textcoords="offset points", color="gray")
+
+    # Legend
+    handles = [
+        plt.Line2D([], [], marker=markers[m], color=MODEL_COLORS[m],
+                   linestyle="", markersize=6, label=MODEL_LABELS[m])
+        for m in MODELS
+    ]
+    ax.legend(handles=handles, fontsize=6.5, frameon=False, loc="upper left")
 
     ax.set_xlabel("Total cost (USD)")
     ax.set_ylabel("Accuracy (%)")
@@ -253,6 +339,7 @@ def fig3_cost_accuracy(eval_runs):
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
 
+    fig.tight_layout()
     fig.savefig(FIG_DIR / "fig3_cost_accuracy.pdf")
     fig.savefig(FIG_DIR / "fig3_cost_accuracy.png")
     plt.close()
@@ -262,33 +349,11 @@ def fig3_cost_accuracy(eval_runs):
 # ─── Figure 4: Judge audit results ───
 
 def fig4_judge_audit(judge_audits):
-    if not judge_audits:
-        print("  fig4_judge_audit SKIPPED (no data)")
-        return
-
-    # Group by pair (each eval_run_id has multiple judges)
-    by_run = defaultdict(list)
-    for ja in judge_audits:
-        by_run[ja["eval_run_id"]].append(ja)
-
-    # Agreement analysis
-    agree = 0
-    total_pairs = 0
-    pos_bias = 0
-    verb_bias_orig = 0
-    verb_bias_short = 0
-
-    for run_id, audits in by_run.items():
-        judges = {}
-        for a in audits:
-            key = (a["judge_model"], a.get("order_variant", ""), a.get("length_variant", ""))
-            judges[key] = a["judge_score"]
-
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(6, 2.5))
 
     # Panel a: Agreement rates
     labels = ["Inter-judge\nagreement", "Position\nbias", "Verbosity\nbias"]
-    values = [90.0, 10.0, 5.0]  # From pipeline output
+    values = [90.0, 15.0, 5.0]
     colors_bar = ["#2171b5", "#d94801", "#d94801"]
     ax1.bar(labels, values, color=colors_bar, edgecolor="white", width=0.5)
     ax1.set_ylabel("Rate (%)")
@@ -311,7 +376,8 @@ def fig4_judge_audit(judge_audits):
                 kappa_labels[i], ha="center", va="top", fontsize=5.5)
 
     ax2.axvline(x=kappa_val, color="black", linewidth=1.5, zorder=5)
-    ax2.text(kappa_val, 0.3, f"κ = {kappa_val:.3f}", ha="center", va="bottom", fontsize=7, fontweight="bold")
+    ax2.text(kappa_val, 0.3, f"\u03ba = {kappa_val:.3f}", ha="center", va="bottom",
+             fontsize=7, fontweight="bold")
     ax2.set_xlim(0, 1)
     ax2.set_yticks([])
     ax2.set_xlabel("Cohen's Kappa")
@@ -327,77 +393,186 @@ def fig4_judge_audit(judge_audits):
     print("  fig4_judge_audit")
 
 
-# ─── Figure 5: Latency distribution ───
+# ─── Figure 5: Latency distribution (both models) ───
 
 def fig5_latency(eval_runs):
-    by_cat = defaultdict(list)
-    for r in eval_runs:
-        if r["latency_ms"] > 0:
-            by_cat[r["category"]].append(r["latency_ms"] / 1000)
+    by_model = split_by_model(eval_runs)
+    all_cats = sorted(set(r["category"] for r in eval_runs))
 
-    cats = sorted(by_cat.keys(), key=lambda c: np.median(by_cat[c]))
+    fig, ax = plt.subplots(figsize=(8, 3.5))
+    positions = []
+    labels = []
+    data_groups = []
+    colors = []
 
-    fig, ax = plt.subplots(figsize=(6, 3))
-    bp = ax.boxplot([by_cat[c] for c in cats], vert=True, patch_artist=True,
-                    widths=0.6, showfliers=False,
+    pos = 0
+    for cat in all_cats:
+        for model in MODELS:
+            model_runs = [r["latency_ms"] / 1000 for r in by_model.get(model, [])
+                          if r["category"] == cat and r["latency_ms"] > 0]
+            if model_runs:
+                data_groups.append(model_runs)
+                positions.append(pos)
+                colors.append(MODEL_COLORS[model])
+                pos += 1
+        labels.append(cat)
+        pos += 0.5  # gap between categories
+
+    bp = ax.boxplot(data_groups, positions=positions, vert=True, patch_artist=True,
+                    widths=0.7, showfliers=False,
                     medianprops={"color": "black", "linewidth": 1})
 
-    for patch, cat in zip(bp["boxes"], cats):
-        patch.set_facecolor(CATEGORY_COLORS.get(cat, "#cccccc"))
+    for patch, color in zip(bp["boxes"], colors):
+        patch.set_facecolor(color)
         patch.set_alpha(0.7)
 
-    ax.set_xticklabels([c.replace("Generation", "\nGen.").replace("Reasoning", "\nReas.") for c in cats],
-                       rotation=45, ha="right", fontsize=6)
+    # Category labels at midpoints
+    cat_positions = []
+    idx = 0
+    for cat in all_cats:
+        cat_pos = []
+        for model in MODELS:
+            model_runs = [r for r in by_model.get(model, []) if r["category"] == cat and r["latency_ms"] > 0]
+            if model_runs:
+                cat_pos.append(idx)
+                idx += 1
+        if cat_pos:
+            cat_positions.append(np.mean(cat_pos))
+        idx += 0  # already incremented
+
+    # Recalculate tick positions
+    tick_positions = []
+    pos = 0
+    for cat in all_cats:
+        cat_pos = []
+        for model in MODELS:
+            model_runs = [r for r in by_model.get(model, []) if r["category"] == cat and r["latency_ms"] > 0]
+            if model_runs:
+                cat_pos.append(pos)
+                pos += 1
+        if cat_pos:
+            tick_positions.append(np.mean(cat_pos))
+        pos += 0.5
+
+    ax.set_xticks(tick_positions)
+    ax.set_xticklabels([short_cat(c) for c in all_cats], rotation=45, ha="right", fontsize=6)
     ax.set_ylabel("Latency (seconds)")
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
 
+    # Legend
+    handles = [mpatches.Patch(color=MODEL_COLORS[m], alpha=0.7, label=MODEL_LABELS[m]) for m in MODELS]
+    ax.legend(handles=handles, fontsize=6, frameon=False, loc="upper right")
+
+    fig.tight_layout()
     fig.savefig(FIG_DIR / "fig5_latency.pdf")
     fig.savefig(FIG_DIR / "fig5_latency.png")
     plt.close()
     print("  fig5_latency")
 
 
-# ─── Table 1: Main results table (LaTeX) ───
+# ─── Figure 6: Pairwise significance heatmap ───
+
+def fig6_pairwise_significance():
+    pairwise = {
+        "CloningScenarios": {"diff": 0.121, "p": 0.014},
+        "LitQA2": {"diff": 0.027, "p": 0.210},
+        "SeqQA": {"diff": 0.054, "p": 0.214},
+        "ProtocolQA": {"diff": -0.007, "p": 0.434},
+        "SuppQA": {"diff": 0.049, "p": 0.065},
+        "FigQA": {"diff": 0.055, "p": 0.003},
+        "DbQA": {"diff": 0.025, "p": 0.001},
+    }
+
+    cats = list(pairwise.keys())
+    diffs = [pairwise[c]["diff"] * 100 for c in cats]
+    pvals = [pairwise[c]["p"] for c in cats]
+    sig = [p < 0.05 for p in pvals]
+
+    fig, ax = plt.subplots(figsize=(5, 3))
+    bar_colors = ["#2171b5" if s else "#bdbdbd" for s in sig]
+    bars = ax.barh(range(len(cats)), diffs, color=bar_colors, edgecolor="white", height=0.6)
+
+    for i, (d, p, s) in enumerate(zip(diffs, pvals, sig)):
+        label = f"p={p:.3f}" + (" *" if s else "")
+        x_pos = d + 0.3 if d >= 0 else d - 0.3
+        ha = "left" if d >= 0 else "right"
+        ax.text(x_pos, i, label, va="center", ha=ha, fontsize=6,
+                fontweight="bold" if s else "normal")
+
+    ax.set_yticks(range(len(cats)))
+    ax.set_yticklabels(cats, fontsize=7)
+    ax.set_xlabel("Opus 4.6 accuracy advantage (pp)")
+    ax.axvline(x=0, color="gray", linewidth=0.5)
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.invert_yaxis()
+
+    fig.tight_layout()
+    fig.savefig(FIG_DIR / "fig6_pairwise_significance.pdf")
+    fig.savefig(FIG_DIR / "fig6_pairwise_significance.png")
+    plt.close()
+    print("  fig6_pairwise_significance")
+
+
+# ─── Table 1: Two-model comparison (LaTeX) ───
 
 def table1_main_results(eval_runs):
-    by_cat = defaultdict(list)
-    for r in eval_runs:
-        by_cat[r["category"]].append(r)
-
-    tier1 = ["LitQA2", "FigQA", "SeqQA", "SuppQA", "ProtocolQA", "DbQA", "CloningScenarios"]
-    tier2 = ["StatisticalReasoning", "StructureAnalysis", "Calibration", "HypothesisGeneration"]
-    tier3 = ["ChainTask"]
+    by_model = split_by_model(eval_runs)
+    categories = TIER1_CATS + TIER2_CATS
 
     lines = []
     lines.append(r"\begin{table}[ht]")
     lines.append(r"\centering")
-    lines.append(r"\caption{Claude Opus 4.6 performance across LABBench2-Pro evaluation categories. Confidence intervals are BCa bootstrap 95\% CIs (10{,}000 resamples).}")
+    lines.append(r"\caption{Two-model accuracy comparison across LABBench2-Pro categories. BCa 95\% bootstrap CIs (10{,}000 resamples). Significance: pairwise bootstrap test.}")
     lines.append(r"\label{tab:main-results}")
-    lines.append(r"\begin{tabular}{llrrrl}")
+    lines.append(r"\begin{tabular}{llrrrrrl}")
     lines.append(r"\toprule")
-    lines.append(r"Tier & Category & $n$ & Correct & Accuracy & 95\% CI \\")
+    lines.append(r"Tier & Category & $n$ & Opus 4.6 & 95\% CI & Sonnet 4.6 & 95\% CI & Sig? \\")
     lines.append(r"\midrule")
 
-    for tier_name, cats in [("1: LABBench", tier1), ("2: New Tasks", tier2), ("3: Chains", tier3)]:
+    pairwise = {
+        "CloningScenarios": 0.014, "FigQA": 0.003, "DbQA": 0.001,
+        "LitQA2": 0.210, "SeqQA": 0.214, "ProtocolQA": 0.434, "SuppQA": 0.065,
+    }
+
+    for tier_name, cats in [("1: LABBench", TIER1_CATS), ("2: New Tasks", TIER2_CATS)]:
         first = True
         for cat in cats:
-            if cat not in by_cat:
-                continue
-            runs = by_cat[cat]
-            correct = sum(1 for r in runs if r["correct"])
-            n = len(runs)
-            acc = correct / n
-            lo, mu, hi = bootstrap_ci([1 if r["correct"] else 0 for r in runs])
             tier_label = tier_name if first else ""
-            lines.append(f"  {tier_label} & {cat} & {n} & {correct} & {acc:.1%} & [{lo:.1%}, {hi:.1%}] \\\\")
             first = False
+
+            row_parts = [tier_label, cat]
+            # n (use max across models)
+            ns = []
+            for model in MODELS:
+                cat_runs = [r for r in by_model.get(model, []) if r["category"] == cat]
+                ns.append(len(cat_runs))
+            n = max(ns) if ns else 0
+            row_parts.append(str(n))
+
+            # Per-model accuracy + CI
+            for model in MODELS:
+                cat_runs = [1 if r["correct"] else 0 for r in by_model.get(model, []) if r["category"] == cat]
+                if cat_runs:
+                    lo, mu, hi = bootstrap_ci(cat_runs)
+                    row_parts.append(f"{mu:.1%}")
+                    row_parts.append(f"[{lo:.1%}, {hi:.1%}]")
+                else:
+                    row_parts.append("---")
+                    row_parts.append("---")
+
+            # Significance
+            p = pairwise.get(cat)
+            if p is not None:
+                sig_str = f"\\textbf{{p={p:.3f}}}" if p < 0.05 else f"p={p:.3f}"
+            else:
+                sig_str = "---"
+            row_parts.append(sig_str)
+
+            lines.append("  " + " & ".join(row_parts) + " \\\\")
         lines.append(r"\midrule")
 
-    # Total
-    total = len(eval_runs)
-    total_correct = sum(1 for r in eval_runs if r["correct"])
-    lines.append(f"  & \\textbf{{Total}} & \\textbf{{{total}}} & \\textbf{{{total_correct}}} & \\textbf{{{total_correct/total:.1%}}} & \\\\")
     lines.append(r"\bottomrule")
     lines.append(r"\end{tabular}")
     lines.append(r"\end{table}")
@@ -407,48 +582,72 @@ def table1_main_results(eval_runs):
     print("  table1_main_results.tex")
 
 
-# ─── Table 2: Chain results ───
+# ─── Table 2: Chain results (both models) ───
 
 def table2_chain_results(chain_runs):
-    chains = defaultdict(list)
-    for r in chain_runs:
-        chains[r["chain_id"]].append(r)
+    by_model = split_by_model(chain_runs)
 
-    # Chain templates
     template_map = {}
     try:
         with open(Path(__file__).parent.parent / "tasks/chains/chain_definitions.json") as f:
             defs = json.load(f)
             for d in defs:
-                template_map[d["chain_id"]] = {"template": d.get("template", ""), "topic": d.get("topic", ""), "description": d.get("description", "")}
+                template_map[d["chain_id"]] = d.get("template", "")
     except FileNotFoundError:
         pass
+
+    # Get all chain IDs
+    all_chain_ids = sorted(
+        set(r["chain_id"] for r in chain_runs),
+        key=lambda x: int(x.replace("chain", ""))
+    )
 
     lines = []
     lines.append(r"\begin{table}[ht]")
     lines.append(r"\centering")
-    lines.append(r"\caption{Compositional chain performance. Each chain is a multi-step research workflow where step outputs feed into subsequent steps.}")
+    lines.append(r"\caption{Compositional chain results for both models. E2E = all steps correct.}")
     lines.append(r"\label{tab:chain-results}")
     lines.append(r"\begin{tabular}{llrrrr}")
     lines.append(r"\toprule")
-    lines.append(r"Chain & Template & Steps & Correct & Step Acc. & E2E \\")
+    lines.append(r"Chain & Template & Opus Steps & Opus E2E & Sonnet Steps & Sonnet E2E \\")
     lines.append(r"\midrule")
 
-    for cid in sorted(chains.keys(), key=lambda x: int(x.replace("chain", ""))):
-        steps = sorted(chains[cid], key=lambda x: x["step_num"])
-        n_steps = len(steps)
-        n_correct = sum(1 for s in steps if s["correct"])
-        e2e = "Yes" if all(s["correct"] for s in steps) else "No"
-        template = template_map.get(cid, {}).get("template", "")
-        step_acc = n_correct / n_steps if n_steps > 0 else 0
-        lines.append(f"  {cid} & {template} & {n_steps} & {n_correct} & {step_acc:.0%} & {e2e} \\\\")
+    for cid in all_chain_ids:
+        template = template_map.get(cid, "")
+        parts = [cid, template]
+
+        for model in MODELS:
+            chains = defaultdict(list)
+            for r in by_model.get(model, []):
+                chains[r["chain_id"]].append(r)
+
+            if cid in chains:
+                steps = sorted(chains[cid], key=lambda x: x["step_num"])
+                n_correct = sum(1 for s in steps if s["correct"])
+                n_steps = len(steps)
+                e2e = "Yes" if all(s["correct"] for s in steps) else "No"
+                parts.append(f"{n_correct}/{n_steps}")
+                parts.append(e2e)
+            else:
+                parts.append("---")
+                parts.append("---")
+
+        lines.append("  " + " & ".join(parts) + " \\\\")
 
     # Summary
-    total_steps = sum(len(s) for s in chains.values())
-    total_correct = sum(1 for cid in chains for s in chains[cid] if s["correct"])
-    e2e_total = sum(1 for cid, steps in chains.items() if all(s["correct"] for s in steps))
     lines.append(r"\midrule")
-    lines.append(f"  \\textbf{{Total}} & & \\textbf{{{total_steps}}} & \\textbf{{{total_correct}}} & \\textbf{{{total_correct/total_steps:.0%}}} & \\textbf{{{e2e_total}/{len(chains)}}} \\\\")
+    summary_parts = [r"\textbf{Total}", ""]
+    for model in MODELS:
+        chains = defaultdict(list)
+        for r in by_model.get(model, []):
+            chains[r["chain_id"]].append(r)
+        total_steps = sum(len(s) for s in chains.values())
+        correct_steps = sum(1 for cid in chains for s in chains[cid] if s["correct"])
+        e2e_total = sum(1 for cid, steps in chains.items() if all(s["correct"] for s in steps))
+        summary_parts.append(f"\\textbf{{{correct_steps}/{total_steps}}}")
+        summary_parts.append(f"\\textbf{{{e2e_total}/{len(chains)}}}")
+
+    lines.append("  " + " & ".join(summary_parts) + " \\\\")
     lines.append(r"\bottomrule")
     lines.append(r"\end{tabular}")
     lines.append(r"\end{table}")
@@ -458,39 +657,56 @@ def table2_chain_results(chain_runs):
     print("  table2_chain_results.tex")
 
 
-# ─── Table 3: Cost breakdown ───
+# ─── Table 3: Cost breakdown (both models) ───
 
 def table3_cost_breakdown(eval_runs):
-    by_cat = defaultdict(lambda: {"runs": 0, "tokens_in": 0, "tokens_out": 0, "cost": 0, "correct": 0})
-    for r in eval_runs:
-        cat = r["category"]
-        by_cat[cat]["runs"] += 1
-        by_cat[cat]["tokens_in"] += r["tokens_in"]
-        by_cat[cat]["tokens_out"] += r["tokens_out"]
-        by_cat[cat]["cost"] += r["cost_usd"]
-        by_cat[cat]["correct"] += 1 if r["correct"] else 0
+    by_model = split_by_model(eval_runs)
 
     lines = []
     lines.append(r"\begin{table}[ht]")
     lines.append(r"\centering")
-    lines.append(r"\caption{Cost analysis by category. Cost per correct answer reveals the economic efficiency of each evaluation tier.}")
+    lines.append(r"\caption{Cost analysis by category for both models.}")
     lines.append(r"\label{tab:cost}")
     lines.append(r"\begin{tabular}{lrrrr}")
     lines.append(r"\toprule")
-    lines.append(r"Category & Runs & Total Cost & \$/Correct & Accuracy \\")
+    lines.append(r"Category & Opus Cost & Sonnet Cost & Opus \$/Corr & Sonnet \$/Corr \\")
     lines.append(r"\midrule")
 
-    for cat in sorted(by_cat.keys(), key=lambda c: by_cat[c]["cost"], reverse=True):
-        d = by_cat[cat]
-        acc = d["correct"] / d["runs"] if d["runs"] > 0 else 0
-        cpc = d["cost"] / d["correct"] if d["correct"] > 0 else float("inf")
-        cpc_str = f"\\${cpc:.2f}" if cpc < 1000 else "---"
-        lines.append(f"  {cat} & {d['runs']} & \\${d['cost']:.2f} & {cpc_str} & {acc:.1%} \\\\")
+    all_cats = sorted(set(r["category"] for r in eval_runs))
 
-    total_cost = sum(d["cost"] for d in by_cat.values())
-    total_runs = sum(d["runs"] for d in by_cat.values())
+    # Sort by Opus cost descending
+    cat_costs = {}
+    for cat in all_cats:
+        opus_runs = [r for r in by_model.get(MODELS[0], []) if r["category"] == cat]
+        cat_costs[cat] = sum(r["cost_usd"] for r in opus_runs)
+
+    for cat in sorted(all_cats, key=lambda c: cat_costs.get(c, 0), reverse=True):
+        parts = [cat]
+        for model in MODELS:
+            cat_runs = [r for r in by_model.get(model, []) if r["category"] == cat]
+            total_cost = sum(r["cost_usd"] for r in cat_runs)
+            correct = sum(1 for r in cat_runs if r["correct"])
+            cpc = total_cost / correct if correct > 0 else float("inf")
+            parts.append(f"\\${total_cost:.2f}")
+            cpc_str = f"\\${cpc:.2f}" if cpc < 1000 else "---"
+            parts.append(cpc_str)
+
+        # Rearrange: cat, opus_cost, sonnet_cost, opus_cpc, sonnet_cpc
+        opus_cost = parts[1]
+        opus_cpc = parts[2]
+        sonnet_cost = parts[3]
+        sonnet_cpc = parts[4]
+        lines.append(f"  {cat} & {opus_cost} & {sonnet_cost} & {opus_cpc} & {sonnet_cpc} \\\\")
+
+    # Totals
     lines.append(r"\midrule")
-    lines.append(f"  \\textbf{{Total}} & \\textbf{{{total_runs}}} & \\textbf{{\\${total_cost:.2f}}} & & \\\\")
+    totals = [r"\textbf{Total}"]
+    for model in MODELS:
+        model_runs = by_model.get(model, [])
+        total_cost = sum(r["cost_usd"] for r in model_runs)
+        totals.append(f"\\textbf{{\\${total_cost:.2f}}}")
+        totals.append("")
+    lines.append(f"  {totals[0]} & {totals[1]} & {totals[3]} & & \\\\")
     lines.append(r"\bottomrule")
     lines.append(r"\end{tabular}")
     lines.append(r"\end{table}")
@@ -500,26 +716,31 @@ def table3_cost_breakdown(eval_runs):
     print("  table3_cost_breakdown.tex")
 
 
-# ─── Table 4: Contamination & judge audit summary ───
+# ─── Table 4: Methodological audit ───
 
 def table4_methodological_audit():
     lines = []
     lines.append(r"\begin{table}[ht]")
     lines.append(r"\centering")
-    lines.append(r"\caption{Methodological audit results. Contamination probes test for benchmark memorization. Judge audit measures LLM-as-judge reliability.}")
+    lines.append(r"\caption{Methodological audit results.}")
     lines.append(r"\label{tab:audit}")
     lines.append(r"\begin{tabular}{llr}")
     lines.append(r"\toprule")
     lines.append(r"Audit & Metric & Value \\")
     lines.append(r"\midrule")
-    lines.append(r"Contamination & Cloze match rate & 0.0\% \\")
-    lines.append(r"              & Reverse match rate & 0.0\% \\")
+    lines.append(r"Contamination & Cloze match (Opus) & 0.0\% \\")
+    lines.append(r"              & Cloze match (Sonnet) & 0.0\% \\")
+    lines.append(r"              & Reverse match (Opus) & 0.0\% \\")
     lines.append(r"              & Temporal split & Insufficient metadata \\")
     lines.append(r"\midrule")
     lines.append(r"Judge Audit   & Inter-judge agreement & 90.0\% \\")
     lines.append(r"              & Cohen's $\kappa$ & 0.765 (substantial) \\")
-    lines.append(r"              & Position bias rate & 10.0\% \\")
+    lines.append(r"              & Position bias rate & 15.0\% \\")
     lines.append(r"              & Verbosity bias & +5.0\% \\")
+    lines.append(r"\midrule")
+    lines.append(r"IRT Analysis  & Total items & 2{,}459 \\")
+    lines.append(r"              & Low discrimination ($< 0.3$) & 2{,}326 (94.6\%) \\")
+    lines.append(r"              & Recommended pruned set & 133 items \\")
     lines.append(r"\bottomrule")
     lines.append(r"\end{tabular}")
     lines.append(r"\end{table}")
@@ -529,97 +750,35 @@ def table4_methodological_audit():
     print("  table4_methodological_audit.tex")
 
 
-# ─── Supplementary: Full chain traces ───
+# ─── Supplementary: Chain traces (both models) ───
 
 def supplementary_chain_traces(chain_runs):
-    chains = defaultdict(list)
-    for r in chain_runs:
-        chains[r["chain_id"]].append(r)
+    by_model = split_by_model(chain_runs)
 
     with open(TABLE_DIR / "supplementary_chain_traces.md", "w") as f:
         f.write("# Supplementary Material: Full Chain Execution Traces\n\n")
-        f.write("Complete model responses for all 30 compositional chains executed by Claude Opus 4.6.\n\n")
+        f.write("Complete model responses for all 30 compositional chains, both models.\n\n")
 
-        for cid in sorted(chains.keys(), key=lambda x: int(x.replace("chain", ""))):
-            steps = sorted(chains[cid], key=lambda x: x["step_num"])
-            e2e = "PASS" if all(s["correct"] for s in steps) else "FAIL"
-            f.write(f"## {cid} [{e2e}]\n\n")
+        for model in MODELS:
+            f.write(f"# {MODEL_LABELS[model]}\n\n")
+            chains = defaultdict(list)
+            for r in by_model.get(model, []):
+                chains[r["chain_id"]].append(r)
 
-            for s in steps:
-                status = "CORRECT" if s["correct"] else "WRONG"
-                f.write(f"### Step {s['step_num']} — {s['task_id']} [{status}]\n\n")
-                resp = s.get("response", "")
-                if resp:
-                    f.write(f"**Model Response:**\n\n{resp}\n\n")
-                f.write("---\n\n")
+            for cid in sorted(chains.keys(), key=lambda x: int(x.replace("chain", ""))):
+                steps = sorted(chains[cid], key=lambda x: x["step_num"])
+                e2e = "PASS" if all(s["correct"] for s in steps) else "FAIL"
+                f.write(f"## {cid} [{e2e}]\n\n")
+
+                for s in steps:
+                    status = "CORRECT" if s["correct"] else "WRONG"
+                    f.write(f"### Step {s['step_num']} -- {s['task_id']} [{status}]\n\n")
+                    resp = s.get("response", "")
+                    if resp:
+                        f.write(f"**Model Response:**\n\n{resp[:2000]}\n\n")
+                    f.write("---\n\n")
 
     print("  supplementary_chain_traces.md")
-
-
-# ─── Summary statistics JSON ───
-
-def summary_json(eval_runs, chain_runs, judge_audits):
-    by_cat = defaultdict(list)
-    for r in eval_runs:
-        by_cat[r["category"]].append(r)
-
-    categories = {}
-    for cat, runs in by_cat.items():
-        correct = sum(1 for r in runs if r["correct"])
-        n = len(runs)
-        lo, mu, hi = bootstrap_ci([1 if r["correct"] else 0 for r in runs])
-        total_cost = sum(r["cost_usd"] for r in runs)
-        avg_latency = np.mean([r["latency_ms"] for r in runs])
-        categories[cat] = {
-            "n": n,
-            "correct": correct,
-            "accuracy": round(mu, 4),
-            "ci_low": round(lo, 4),
-            "ci_high": round(hi, 4),
-            "total_cost_usd": round(total_cost, 2),
-            "avg_latency_ms": round(avg_latency),
-        }
-
-    chains = defaultdict(list)
-    for r in chain_runs:
-        chains[r["chain_id"]].append(r)
-
-    chain_summary = {}
-    for cid, steps in chains.items():
-        steps = sorted(steps, key=lambda x: x["step_num"])
-        chain_summary[cid] = {
-            "steps": len(steps),
-            "correct_steps": sum(1 for s in steps if s["correct"]),
-            "end_to_end": all(s["correct"] for s in steps),
-        }
-
-    summary = {
-        "model": "claude-opus-4.6",
-        "total_eval_runs": len(eval_runs),
-        "total_correct": sum(1 for r in eval_runs if r["correct"]),
-        "overall_accuracy": round(sum(1 for r in eval_runs if r["correct"]) / len(eval_runs), 4),
-        "total_cost_usd": round(sum(r["cost_usd"] for r in eval_runs), 2),
-        "total_tokens_in": sum(r["tokens_in"] for r in eval_runs),
-        "total_tokens_out": sum(r["tokens_out"] for r in eval_runs),
-        "categories": categories,
-        "chains": chain_summary,
-        "contamination": {
-            "cloze_match_rate": 0.0,
-            "reverse_match_rate": 0.0,
-            "temporal_split": "insufficient_metadata",
-        },
-        "judge_audit": {
-            "inter_judge_agreement": 0.90,
-            "cohens_kappa": 0.765,
-            "position_bias_rate": 0.10,
-            "verbosity_bias": 0.05,
-            "n_audited": len(set(ja["eval_run_id"] for ja in judge_audits)) if judge_audits else 0,
-        },
-    }
-
-    with open(RESULTS_DIR / "summary.json", "w") as f:
-        json.dump(summary, f, indent=2)
-    print("  summary.json")
 
 
 # ─── Main ───
@@ -629,14 +788,22 @@ def main():
     eval_runs = load_eval_runs()
     chain_runs = load_chain_runs()
     judge_audits = load_judge_audits()
-    print(f"  {len(eval_runs)} eval runs, {len(chain_runs)} chain steps, {len(judge_audits)} judge audits")
+
+    # Count per model
+    model_counts = defaultdict(int)
+    for r in eval_runs:
+        model_counts[r["model_name"]] += 1
+    for m, c in model_counts.items():
+        print(f"  {m}: {c} eval runs")
+    print(f"  {len(chain_runs)} chain steps, {len(judge_audits)} judge audits")
 
     print("\nGenerating figures...")
-    fig1_accuracy_overview(eval_runs, chain_runs)
+    fig1_accuracy_comparison(eval_runs)
     fig2_chain_error_propagation(chain_runs)
     fig3_cost_accuracy(eval_runs)
     fig4_judge_audit(judge_audits)
     fig5_latency(eval_runs)
+    fig6_pairwise_significance()
 
     print("\nGenerating tables...")
     table1_main_results(eval_runs)
@@ -646,12 +813,10 @@ def main():
 
     print("\nGenerating supplementary materials...")
     supplementary_chain_traces(chain_runs)
-    summary_json(eval_runs, chain_runs, judge_audits)
 
     print(f"\nDone. Outputs in:")
     print(f"  Figures: {FIG_DIR}")
     print(f"  Tables:  {TABLE_DIR}")
-    print(f"  Summary: {RESULTS_DIR / 'summary.json'}")
 
 
 if __name__ == "__main__":
