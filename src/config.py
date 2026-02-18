@@ -25,6 +25,7 @@ REDIS_URL = os.environ.get("REDIS_URL", "redis://localhost:6380/0")
 MODEL_REGISTRY = {
     "claude-opus-4.6": {"provider": "anthropic", "model": "claude-opus-4-6"},
     "claude-opus-4.5": {"provider": "anthropic", "model": "claude-opus-4-5-20250929"},
+    "claude-sonnet-4.6": {"provider": "anthropic", "model": "claude-sonnet-4-6"},
     "claude-sonnet-4.5": {"provider": "anthropic", "model": "claude-sonnet-4-5-20250929"},
     "gpt-5.2-pro": {"provider": "openai", "model": "gpt-5.2-pro"},
     "gemini-3-pro": {"provider": "google", "model": "gemini-3.0-pro"},
@@ -34,6 +35,7 @@ MODEL_REGISTRY = {
 COST_TABLE = {
     "claude-opus-4.6": {"input": 15.00, "output": 75.00},
     "claude-opus-4.5": {"input": 15.00, "output": 75.00},
+    "claude-sonnet-4.6": {"input": 3.00, "output": 15.00},
     "claude-sonnet-4.5": {"input": 3.00, "output": 15.00},
     "gpt-5.2-pro": {"input": 2.50, "output": 10.00},
     "gemini-3-pro": {"input": 1.25, "output": 5.00},

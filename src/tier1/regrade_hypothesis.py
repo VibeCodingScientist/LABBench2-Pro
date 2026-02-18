@@ -64,16 +64,27 @@ Respond with JSON only:
 {{"criterion_1_falsifiable": true/false, "criterion_1_reason": "...", "criterion_2_connected": true/false, "criterion_2_reason": "...", "criterion_3_novel": true/false, "criterion_3_reason": "...", "criterion_4_specific": true/false, "criterion_4_reason": "...", "total_pass": <0-4>, "correct": true/false}}"""
 
 
-async def regrade():
-    # Get all hypothesis eval runs with their responses and task metadata
-    rows = await fetch("""
-        SELECT e.id as eval_id, e.task_id, e.response, e.correct as old_correct,
-               e.score as old_score, t.meta as task_meta
-        FROM eval_runs e
-        JOIN tasks t ON t.id = e.task_id
-        WHERE t.category = 'HypothesisGeneration'
-        ORDER BY e.task_id
-    """)
+async def regrade(model_filter: str = None):
+    # Get hypothesis eval runs, optionally filtered by model
+    if model_filter:
+        rows = await fetch("""
+            SELECT e.id as eval_id, e.task_id, e.response, e.correct as old_correct,
+                   e.score as old_score, t.meta as task_meta
+            FROM eval_runs e
+            JOIN tasks t ON t.id = e.task_id
+            JOIN models m ON m.id = e.model_id
+            WHERE t.category = 'HypothesisGeneration' AND m.model_name = $1
+            ORDER BY e.task_id
+        """, model_filter)
+    else:
+        rows = await fetch("""
+            SELECT e.id as eval_id, e.task_id, e.response, e.correct as old_correct,
+                   e.score as old_score, t.meta as task_meta
+            FROM eval_runs e
+            JOIN tasks t ON t.id = e.task_id
+            WHERE t.category = 'HypothesisGeneration'
+            ORDER BY e.task_id
+        """)
 
     print(f"Re-grading {len(rows)} hypothesis responses with strict rubric")
     print(f"Original: {sum(1 for r in rows if r['old_correct'])}/{len(rows)} correct")
@@ -214,4 +225,8 @@ async def regrade():
 
 
 if __name__ == "__main__":
-    asyncio.run(regrade())
+    import argparse
+    parser = argparse.ArgumentParser(description="Re-grade hypothesis tasks with strict rubric")
+    parser.add_argument("--model", default=None, help="Filter by model name (e.g. claude-sonnet-4.6)")
+    args = parser.parse_args()
+    asyncio.run(regrade(model_filter=args.model))
