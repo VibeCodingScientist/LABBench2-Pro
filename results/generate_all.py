@@ -495,9 +495,10 @@ def fig6_pairwise_significance():
 
     for i, (d, p, s) in enumerate(zip(diffs, pvals, sig)):
         label = f"p={p:.3f}" + (" *" if s else "")
-        x_pos = d + 0.3 if d >= 0 else d - 0.3
-        ha = "left" if d >= 0 else "right"
-        ax.text(x_pos, i, label, va="center", ha=ha, fontsize=6,
+        # Always place label to the right of the bar end, but for tiny bars
+        # place it further right to avoid y-axis overlap
+        x_pos = max(d + 0.3, 0.8)
+        ax.text(x_pos, i, label, va="center", ha="left", fontsize=6,
                 fontweight="bold" if s else "normal")
 
     ax.set_yticks(range(len(cats)))
