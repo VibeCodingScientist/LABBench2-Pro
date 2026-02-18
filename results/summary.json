@@ -1,47 +1,20 @@
 {
   "model": "claude-opus-4.6",
   "total_eval_runs": 2454,
-  "total_correct": 708,
-  "overall_accuracy": 0.2885,
+  "total_correct": 705,
+  "overall_accuracy": 0.2873,
   "total_cost_usd": 102.81,
   "total_tokens_in": 766478,
   "total_tokens_out": 1217518,
   "categories": {
-    "Calibration": {
-      "n": 100,
-      "correct": 100,
-      "accuracy": 1.0,
-      "ci_low": NaN,
-      "ci_high": NaN,
-      "total_cost_usd": 1.11,
-      "avg_latency_ms": 4826
-    },
-    "ChainTask": {
-      "n": 93,
-      "correct": 83,
-      "accuracy": 0.8925,
-      "ci_low": 0.8172,
-      "ci_high": 0.9462,
-      "total_cost_usd": 10.3,
-      "avg_latency_ms": 33476
-    },
-    "CloningScenarios": {
-      "n": 33,
-      "correct": 13,
-      "accuracy": 0.3939,
-      "ci_low": 0.2424,
-      "ci_high": 0.5758,
-      "total_cost_usd": 5.25,
-      "avg_latency_ms": 24384
-    },
-    "DbQA": {
-      "n": 492,
-      "correct": 23,
-      "accuracy": 0.0467,
-      "ci_low": 0.0305,
-      "ci_high": 0.0671,
-      "total_cost_usd": 13.2,
-      "avg_latency_ms": 8585
+    "LitQA2": {
+      "n": 186,
+      "correct": 58,
+      "accuracy": 0.3118,
+      "ci_low": 0.2473,
+      "ci_high": 0.3817,
+      "total_cost_usd": 3.72,
+      "avg_latency_ms": 7491
     },
     "FigQA": {
       "n": 181,
@@ -52,14 +25,86 @@
       "total_cost_usd": 2.84,
       "avg_latency_ms": 6217
     },
+    "SeqQA": {
+      "n": 585,
+      "correct": 104,
+      "accuracy": 0.1778,
+      "ci_low": 0.1487,
+      "ci_high": 0.2103,
+      "total_cost_usd": 38.62,
+      "avg_latency_ms": 16282
+    },
+    "SuppQA": {
+      "n": 81,
+      "correct": 9,
+      "accuracy": 0.1111,
+      "ci_low": 0.0617,
+      "ci_high": 0.1975,
+      "total_cost_usd": 1.15,
+      "avg_latency_ms": 5857
+    },
+    "ProtocolQA": {
+      "n": 100,
+      "correct": 15,
+      "accuracy": 0.15,
+      "ci_low": 0.09,
+      "ci_high": 0.23,
+      "total_cost_usd": 3.16,
+      "avg_latency_ms": 11443
+    },
+    "DbQA": {
+      "n": 492,
+      "correct": 23,
+      "accuracy": 0.0467,
+      "ci_low": 0.0305,
+      "ci_high": 0.0691,
+      "total_cost_usd": 13.2,
+      "avg_latency_ms": 8585
+    },
+    "CloningScenarios": {
+      "n": 33,
+      "correct": 13,
+      "accuracy": 0.3939,
+      "ci_low": 0.2424,
+      "ci_high": 0.5758,
+      "total_cost_usd": 5.25,
+      "avg_latency_ms": 24384
+    },
+    "StatisticalReasoning": {
+      "n": 200,
+      "correct": 46,
+      "accuracy": 0.23,
+      "ci_low": 0.175,
+      "ci_high": 0.295,
+      "total_cost_usd": 11.22,
+      "avg_latency_ms": 11591
+    },
+    "StructureAnalysis": {
+      "n": 303,
+      "correct": 138,
+      "accuracy": 0.4554,
+      "ci_low": 0.3993,
+      "ci_high": 0.5147,
+      "total_cost_usd": 2.3,
+      "avg_latency_ms": 3387
+    },
+    "Calibration": {
+      "n": 100,
+      "correct": 100,
+      "accuracy": 1.0,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "total_cost_usd": 1.11,
+      "avg_latency_ms": 4826
+    },
     "HypothesisGeneration": {
       "n": 100,
       "correct_lenient": 100,
       "accuracy_lenient": 1.0,
       "correct_strict": 97,
       "accuracy_strict": 0.97,
-      "ci_low": NaN,
-      "ci_high": NaN,
+      "ci_low": 0.92,
+      "ci_high": 0.99,
       "total_cost_usd": 9.95,
       "regrade_cost_usd": 1.59,
       "avg_latency_ms": 27966,
@@ -71,59 +116,14 @@
         "threshold": "3_of_4"
       }
     },
-    "LitQA2": {
-      "n": 186,
-      "correct": 58,
-      "accuracy": 0.3118,
-      "ci_low": 0.2473,
-      "ci_high": 0.3817,
-      "total_cost_usd": 3.72,
-      "avg_latency_ms": 7491
-    },
-    "ProtocolQA": {
-      "n": 100,
-      "correct": 15,
-      "accuracy": 0.15,
-      "ci_low": 0.09,
-      "ci_high": 0.23,
-      "total_cost_usd": 3.16,
-      "avg_latency_ms": 11443
-    },
-    "SeqQA": {
-      "n": 585,
-      "correct": 104,
-      "accuracy": 0.1778,
-      "ci_low": 0.1487,
-      "ci_high": 0.2085,
-      "total_cost_usd": 38.62,
-      "avg_latency_ms": 16282
-    },
-    "StatisticalReasoning": {
-      "n": 200,
-      "correct": 46,
-      "accuracy": 0.23,
-      "ci_low": 0.175,
-      "ci_high": 0.29,
-      "total_cost_usd": 11.22,
-      "avg_latency_ms": 11591
-    },
-    "StructureAnalysis": {
-      "n": 303,
-      "correct": 138,
-      "accuracy": 0.4554,
-      "ci_low": 0.3993,
-      "ci_high": 0.5116,
-      "total_cost_usd": 2.3,
-      "avg_latency_ms": 3387
-    },
-    "SuppQA": {
-      "n": 81,
-      "correct": 9,
-      "accuracy": 0.1111,
-      "ci_low": 0.0538,
-      "ci_high": 0.1975,
-      "total_cost_usd": 1.15,
-      "avg_latency_ms": 5857
+    "ChainTask": {
+      "n": 93,
+      "correct": 83,
+      "accuracy": 0.8925,
+      "ci_low": 0.8172,
+      "ci_high": 0.9462,
+      "total_cost_usd": 10.3,
+      "avg_latency_ms": 33476
     }
   },
   "chains": {
