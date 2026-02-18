@@ -12,7 +12,14 @@ tasks/structures/*.json
 tasks/calibration/*.json
 tasks/hypothesis/*.json
 .pytest_cache/
+# Exclude generated data by default
 *.csv
 *.png
 *.pdf
+
+# But include results artifacts
+!results/raw/*.csv
+!results/figures/*.png
+!results/figures/*.pdf
+!results/*.json
 notebooks/.ipynb_checkpoints/

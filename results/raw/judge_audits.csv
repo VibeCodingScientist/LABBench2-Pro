@@ -1,0 +1,173 @@
+id,eval_run_id,judge_model,judge_score,order_variant,length_variant,explanation,run_at
+1,337,claude-sonnet-4.5,f,original,original,"```json
+{
+  ""correct"": false,
+  ""explanation"": ""The model response incorrectly identifies the dopamine transporter (DAT) as the neurotransmitter transporter affected, while the reference answer specifies VGlut2 (vesicular glutamate transporter 2), which is associated with glutamatergic neurons, not dopaminergic neurons.""
+}
+```",2026-02-18 12:23:08.018025+00
+2,337,claude-opus-4.6,f,original,original,"The model response identifies the dopamine transporter (DAT) as the neurotransmitter transporter affected, but the reference answer states it is VGlut2 (vesicular glutamate transporter 2). This is a critical factual error.",2026-02-18 12:23:08.03013+00
+3,337,claude-sonnet-4.5,f,reversed,,"```json
+{
+  ""correct"": false,
+  ""explanation"": ""The model incorrectly identifies the dopamine transporter (DAT) as the answer, when the correct neurotransmitter transporter is VGlut2 (vesicular glutamate transporter 2). While the model provides detailed mechanistic information about NIF and microglial phagocytosis, it identifies the wrong specific transporter.""
+}
+```",2026-02-18 12:23:08.049087+00
+4,371,claude-sonnet-4.5,f,original,original,"```json
+{
+  ""correct"": false,
+  ""explanation"": ""The model response provides 0.26 mm³ (2.6 × 10⁻¹⁰ m³) as the cytoplasm biovolume, which is off by approximately two orders of magnitude from the reference answer of 5.91 × 10⁻¹² m³. The reference answer indicates the cytoplasm volume is much smaller than what the model calculated.""
+}
+```",2026-02-18 12:23:23.271904+00
+5,371,claude-opus-4.6,f,original,original,"The reference answer gives the cytoplasm biovolume as 5.91 x 10^-12 m³, which equals 5.91 x 10^-3 mm³ or about 0.00591 mm³. The model response states approximately 0.26 mm³, which is off by roughly two orders of magnitude and does not match the reference answer.",2026-02-18 12:23:23.275711+00
+6,371,claude-sonnet-4.5,f,reversed,,"The model response gives 0.26 mm³ (2.6 × 10⁸ μm³), which converts to approximately 2.6 × 10⁻¹⁰ m³. The reference answer is 5.91 × 10⁻¹² m³, which is about 44 times smaller. The model's answer is off by nearly two orders of magnitude.",2026-02-18 12:23:23.279423+00
+7,394,claude-sonnet-4.5,f,original,original,"```json
+{""correct"": false, ""explanation"": ""The model response states 95% while the reference answer is 64%. This is a significant numerical discrepancy - the values differ by 31 percentage points, which is a substantial error for a specific quantitative finding.""}
+```",2026-02-18 12:23:37.985044+00
+8,394,claude-opus-4.6,f,original,original,"The model response states 95%, but the reference answer is 64%. These values are significantly different.",2026-02-18 12:23:37.988178+00
+9,394,claude-sonnet-4.5,f,reversed,,"```json
+{
+  ""correct"": false,
+  ""explanation"": ""The model stated 95% while the reference answer is 64%. This is a substantial numerical discrepancy (31 percentage points difference) for a specific quantitative measurement from the LTEE study.""
+}
+```",2026-02-18 12:23:37.990639+00
+10,297,claude-sonnet-4.5,f,original,original,"The model response states that French 2 and Indian 2 SNVs 'decrease' the binding affinity of ETS-1, while the reference answer indicates they cause a 'subtle increase' in affinity. These are opposite effects, making the model's answer factually incorrect.",2026-02-18 12:23:51.023462+00
+11,297,claude-opus-4.6,f,original,original,"The reference answer states that French 2 and Indian 2 SNVs cause a 'subtle increase' in ETS-1 affinity to DNA, while the model response claims they 'decrease (reduce)' the binding affinity. This is the opposite of the correct answer.",2026-02-18 12:23:51.02618+00
+12,297,claude-sonnet-4.5,f,reversed,,"The model response states that French 2 and Indian 2 SNVs decrease the binding affinity of ETS-1 to DNA, while the reference answer indicates these variants cause a 'subtle increase' in affinity. This is a directly contradictory answer.",2026-02-18 12:23:51.028668+00
+13,287,claude-sonnet-4.5,f,original,original,"```json
+{
+  ""correct"": false,
+  ""explanation"": ""The model response states that TDRD1 itself contains symmetrical dimethylarginine (sDMA) modifications, while the reference answer indicates TDRD1 has no dimethylarginine modifications at all. The model confuses TDRD1's function as a reader of sDMA marks on OTHER proteins (like PIWI proteins) with TDRD1 itself being modified with sDMA. These are fundamentally different claims.""
+}
+```",2026-02-18 12:24:11.888176+00
+14,287,claude-opus-4.6,f,original,original,"The reference answer states that TDRD1 has no dimethylarginine modifications, but the model response claims it has symmetrical dimethylarginine (sDMA) modifications. While TDRD1's Tudor domains do recognize sDMA on other proteins (like PIWI proteins), the model incorrectly states that TDRD1 itself is a target of arginine methylation with sDMA marks, contradicting the reference answer.",2026-02-18 12:24:11.891634+00
+15,287,claude-sonnet-4.5,t,reversed,,"```json
+{
+  ""correct"": false,
+  ""explanation"": ""The model incorrectly states that TDRD1 protein contains symmetrical dimethylarginine (sDMA) modifications. While the model is correct that TDRD1 recognizes and binds sDMA marks on other proteins (like PIWI proteins), the question asks whether TDRD1 itself has dimethylarginine modifications. The reference answer indicates TDRD1 has no dimethylarginine modifications at all. The model conflates TDRD1's role as a 'reader' of sDMA marks with TDRD1 itself being modified.""
+}
+```",2026-02-18 12:24:11.895354+00
+16,303,claude-sonnet-4.5,t,original,original,"The model response correctly states that chromatin occupancy of rTetR-VP48 does not significantly change when P300 is inhibited, which matches the reference answer of 'no change'. The response provides additional mechanistic detail explaining that P300 inhibition affects downstream transcriptional activation but not the binding of the activator to chromatin itself.",2026-02-18 12:24:25.802666+00
+17,303,claude-opus-4.6,t,original,original,"The model response correctly states that chromatin occupancy of rTetR-VP48 does not change when P300 is inhibited, which matches the reference answer of 'no change'.",2026-02-18 12:24:25.807528+00
+18,303,claude-sonnet-4.5,t,reversed,,"The model response correctly states that chromatin occupancy of rTetR-VP48 does not significantly change when P300 is inhibited, which matches the reference answer of 'no change'. The response goes further to explain the mechanistic reasoning - that DNA binding is independent of P300 cofactor activity - which is consistent with the core factual claim.",2026-02-18 12:24:25.810357+00
+19,426,claude-sonnet-4.5,f,original,original,"The model response fails to identify MYB44 as the correct answer. While it correctly explains ABA catabolism genes (CYP707A family) and biosynthesis genes, it does not mention MYB44, which is a transcription factor and not an ABA catabolism gene, making it the correct answer to the question about what is NOT an ABA catabolism gene.",2026-02-18 12:24:41.238014+00
+20,426,claude-opus-4.6,f,original,original,"The reference answer is MYB44, which is a transcription factor, not an ABA catabolism gene. The model response does not mention MYB44 at all and instead speculates about various ABA biosynthesis genes as possible answers.",2026-02-18 12:24:41.240636+00
+21,426,claude-sonnet-4.5,f,reversed,,"The model response discusses ABA biosynthesis genes (NCED, ABA2, AAO3, ABA1) and conjugation genes (BG1/BG2) as examples of non-catabolism genes, but does not mention MYB44, which is the specific correct answer. MYB44 is a transcription factor, not an ABA catabolism gene, and the model failed to identify it as the answer to this question.",2026-02-18 12:24:41.24261+00
+22,332,claude-sonnet-4.5,t,original,original,"```json
+{""correct"": true, ""explanation"": ""While there is no reference answer provided to compare against, the model response provides scientifically accurate information about HNRNPCL2's cellular processes based on its classification as an hnRNP C family member. The response appropriately covers mRNA processing/splicing, mRNA stability/transport, RNA binding, and gene expression regulation - all well-established functions of hnRNP proteins. The model also correctly notes that HNRNPCL2 is poorly characterized and that much function is inferred from homology to HNRNPC, which is an important scientific caveat. Without a reference answer to contradict this information, and given the response's alignment with known hnRNP biology, it should be considered correct.""}
+```",2026-02-18 12:25:00.470777+00
+23,332,claude-opus-4.6,f,original,original,"The reference answer is null, meaning there is no established/known answer for this question. The model provided specific functional claims about HNRNPCL2 that are largely inferred from homology to HNRNPC rather than being experimentally validated for HNRNPCL2 itself. Since the reference answer is null (indicating the answer is unknown or not established), the model's response presenting confident functional annotations is not aligned with the reference.",2026-02-18 12:25:00.477418+00
+24,332,claude-sonnet-4.5,t,reversed,,"```json
+{""correct"": true, ""explanation"": ""The model response accurately describes HNRNPCL2's involvement in key cellular processes including mRNA processing/splicing, mRNA stability and transport, RNA binding and ribonucleoprotein complex assembly, and gene expression regulation. These are consistent with the known functions of hnRNP C family members. The response appropriately acknowledges that HNRNPCL2 is poorly characterized and that many functions are inferred from homology to HNRNPC, which is scientifically accurate. The information about its chromosomal location and evolutionary origin through gene duplication is also correct.""}
+```",2026-02-18 12:25:00.480666+00
+25,348,claude-sonnet-4.5,f,original,original,"```json
+{""correct"": false, ""explanation"": ""The model response states that human α6 requires co-expression with human α4 (PSMA7) for functional complementation in yeast, while the reference answer indicates it should be human α7. These are different proteasome subunits, making this a factually incorrect answer.""}
+```",2026-02-18 12:25:16.775902+00
+26,348,claude-opus-4.6,f,original,original,"The model response says human α4 (PSMA7), but the reference answer states human α7. These are different subunits - α4 and α7 are distinct proteasome core subunits.",2026-02-18 12:25:16.779921+00
+27,348,claude-sonnet-4.5,f,reversed,,"The model incorrectly identifies human α4 (PSMA7) as the required co-expressed subunit, when the correct answer is human α7. The model's response contains factually incorrect information about which subunit enables functional complementation of the yeast knockout.",2026-02-18 12:25:16.792173+00
+28,304,claude-sonnet-4.5,t,original,original,"```json
+{
+  ""correct"": true,
+  ""explanation"": ""The model response correctly identifies the key mechanism: bempegaldesleukin uses PEG chains to sterically block CD25 (IL-2Rα) binding while preserving IL-2Rβγ binding, which is equivalent to the reference answer's concept of 'preferentially binding to b2b3 complex over b1b2b3 complex' (where b1=CD25/IL-2Rα, b2=IL-2Rβ, b3=IL-2Rγ). The model provides additional context about the mechanism and clinical outcomes, but captures the essential scientific principle.""
+}
+```",2026-02-18 12:25:36.146662+00
+29,304,claude-opus-4.6,t,original,original,"The model response correctly captures the key concept from the reference answer: that bempegaldesleukin preferentially binds to the IL-2Rβγ (β2γ3) dimeric complex over the trimeric IL-2Rαβγ (α1β2γ3) complex. The model explains this through steric blockade of the CD25/IL-2Rα binding site by PEG chains, which effectively results in preferential binding to the intermediate-affinity βγ receptor over the high-affinity αβγ receptor. This is consistent with the reference answer's statement about preferentially binding to the b2b3 complex over the b1b2b3 complex.",2026-02-18 12:25:36.149651+00
+30,304,claude-sonnet-4.5,t,reversed,,"The model response correctly explains that bempegaldesleukin overcomes Treg affinity by preferentially binding to the IL-2Rβγ (b2b3) intermediate-affinity receptor rather than the IL-2Rαβγ (b1b2b3) high-affinity receptor that Tregs express. This matches the reference answer's key concept, though with more mechanistic detail about how PEGylation achieves this selectivity through steric blockade of CD25 (IL-2Rα).",2026-02-18 12:25:36.152283+00
+31,387,claude-sonnet-4.5,f,original,original,"```json
+{
+  ""correct"": false,
+  ""explanation"": ""The model response states the mutation shifts the equilibrium 'toward the catalytically active (closed/super-open to closed) conformation' and 'destabilizes the super-open (inactive) conformation,' which is the opposite of the reference answer. The reference states the mutation shifts equilibrium TO the super-open state, not AWAY from it. The model incorrectly interprets the direction of the conformational change.""
+}
+```",2026-02-18 12:25:52.094726+00
+32,387,claude-opus-4.6,f,original,original,"The reference answer states that the A456V mutation shifts the equilibrium TO the super-open state, which accelerates glucose binding. The model response claims the opposite - that the mutation DESTABILIZES the super-open state and shifts the equilibrium AWAY from it toward more closed/active conformations. While the model's explanation sounds plausible from a general enzymology perspective, it contradicts the specific factual content of the reference answer regarding the direction of the conformational shift.",2026-02-18 12:25:52.098249+00
+33,387,claude-sonnet-4.5,f,reversed,,"```json
+{
+  ""correct"": false,
+  ""explanation"": ""The model response states the mutation 'destabilizes the super-open (inactive) conformation' and shifts the ensemble 'toward the catalytically active (closed) conformation', which is the opposite of the reference answer stating it shifts equilibrium 'to super-open state'. The model incorrectly describes the direction of the conformational shift.""
+}
+```",2026-02-18 12:25:52.100868+00
+34,376,claude-sonnet-4.5,f,original,original,"There is no reference answer provided (null), making it impossible to verify the factual accuracy of the model's response against a gold standard. While the model provides a detailed and plausible scientific explanation about PITPNM1's functions in neural stem cells, without a reference answer, we cannot confirm whether this information is correct or represents the specific answer expected for this benchmark question.",2026-02-18 12:26:08.926403+00
+35,376,claude-opus-4.6,f,original,original,"The reference answer is null, meaning there is no established reference to compare against. The model provides a detailed answer about PITPNM1's general molecular functions and extrapolates to neural stem cells, but much of the specific neural stem cell content appears to be speculative or inferred rather than established from direct experimental evidence. Without a reference answer to validate against, and given that the reference is null (which typically indicates the question may not have a well-established answer or the specific function in neural stem cells is not clearly documented), the model's confident and detailed response cannot be confirmed as correct.",2026-02-18 12:26:08.93019+00
+36,376,claude-sonnet-4.5,t,reversed,,"```json
+{""correct"": true, ""explanation"": ""The model response accurately describes PITPNM1's functions in neural stem cells, including its role in phospholipid transfer, membrane signaling, cell viability, receptor signaling regulation, and ER-plasma membrane contact sites. The information about its homology to Drosophila rdgB, its role in maintaining PI(4,5)P₂ levels, and its importance in cell division and neurogenesis are scientifically accurate. Without a reference answer to compare against, the response demonstrates comprehensive, factually correct knowledge about PITPNM1's functions in healthy mammalian neural stem cells based on established scientific understanding.""}
+```",2026-02-18 12:26:08.933704+00
+37,353,claude-sonnet-4.5,f,original,original,"```json
+{
+  ""correct"": false,
+  ""explanation"": ""The model response discusses MYC, BMI-1, and EZH2 as genes associated with relapse signatures in prostate cancer, but does not mention CXCL17, which is the specific answer given in the reference. The model provides general information about relapse-associated genes but misses the specific gene asked about in the question.""
+}
+```",2026-02-18 12:26:23.964929+00
+38,353,claude-opus-4.6,f,original,original,"The reference answer states that CXCL17 was most associated with the Relapse signature in prostate cancer. The model response mentions MYC target genes, BMI-1, and EZH2, but does not mention CXCL17 at all.",2026-02-18 12:26:23.968124+00
+39,353,claude-sonnet-4.5,f,reversed,,"The model response discusses MYC, BMI-1, and EZH2 as genes associated with relapse signatures in prostate cancer, but does not mention CXCL17, which is the specific answer indicated by the reference. While the model provides scientifically plausible answers about genes associated with prostate cancer relapse, it fails to identify the specific marker (CXCL17) that the question is asking about.",2026-02-18 12:26:23.9713+00
+40,406,claude-sonnet-4.5,t,original,original,"The model correctly identifies the SpyCatcher/SpyTag bioconjugation system, which is the same system referenced in the answer. 'Spytag003' is a specific variant of the SpyTag system, so the model's answer captures the essential correct information about the bioconjugation approach used.",2026-02-18 12:26:40.971364+00
+41,406,claude-opus-4.6,f,original,original,"The reference answer specifies 'Spytag003' as the bioconjugation system, while the model response gives the more general 'SpyCatcher/SpyTag' system. SpyTag003 is a specific, optimized version of the SpyTag system with improved reaction kinetics, and the question asks for the specific system used. The model's answer lacks this crucial specificity.",2026-02-18 12:26:40.974152+00
+42,406,claude-sonnet-4.5,t,reversed,,"```json
+{
+  ""correct"": true,
+  ""explanation"": ""The model correctly identifies the SpyCatcher/SpyTag bioconjugation system, which encompasses SpyTag003 mentioned in the reference. SpyTag003 is a variant of the SpyTag system, so the model's answer contains the key factual content even though it uses the more general system name rather than the specific variant.""
+}
+```",2026-02-18 12:26:40.97625+00
+43,313,claude-sonnet-4.5,f,original,original,"```json
+{
+  ""correct"": false,
+  ""explanation"": ""The model response states TMPRSS2 contains approximately 5 putative G4-forming sequences, while the reference answer indicates 80. This is a substantial quantitative discrepancy (off by a factor of 16), representing fundamentally different factual content regardless of methodological variations.""
+}
+```",2026-02-18 12:26:53.95874+00
+44,313,claude-opus-4.6,f,original,original,"The model response states approximately 5 putative G4-forming sequences, while the reference answer is 80. This is a significant discrepancy and the model's answer is incorrect.",2026-02-18 12:26:53.962002+00
+45,313,claude-sonnet-4.5,f,reversed,,"```json
+{
+  ""correct"": false,
+  ""explanation"": ""The model response states TMPRSS2 contains approximately 5 putative G4-forming sequences, while the reference answer indicates 80. This is a significant numerical discrepancy (5 vs 80) that cannot be attributed to minor methodological differences. The model's answer is off by more than an order of magnitude.""
+}
+```",2026-02-18 12:26:53.972906+00
+46,285,claude-sonnet-4.5,t,original,original,"The model response correctly affirms that hair cells/follicles do regenerate in wounds treated with verteporfin in mouse models, which matches the reference answer of 'Yes'. The response provides additional accurate context about the mechanism (YAP inhibition) and significance of this finding.",2026-02-18 12:27:06.628133+00
+47,285,claude-opus-4.6,t,original,original,"The model response correctly answers 'Yes' that hair cells (hair follicles) regenerate in wounds treated with verteporfin in mice models, matching the reference answer.",2026-02-18 12:27:06.632171+00
+48,285,claude-sonnet-4.5,t,reversed,,"The model response correctly answers 'Yes' that hair cells (hair follicles) do regenerate in wounds treated with verteporfin in mouse models, which matches the reference answer. The response provides extensive additional accurate context about the mechanism (YAP inhibition) and the significance of this finding, but the core factual claim aligns with the reference.",2026-02-18 12:27:06.635013+00
+49,316,claude-sonnet-4.5,f,original,original,"```json
+{
+  ""correct"": false,
+  ""explanation"": ""The model response states that 100% replacement shows no transfection, while the reference answer indicates that above 40% replacement shows no transfection. The model's answer of 100% is significantly different from the 40% threshold specified in the reference, representing a major factual discrepancy about when transfection loss occurs.""
+}
+```",2026-02-18 12:27:31.360624+00
+50,316,claude-opus-4.6,f,original,original,"The reference answer states that above 40% replacement of PEG with PEG-maleimide shows no transfection. The model response claims 100% replacement results in no transfection and mentions that >50% significantly diminishes transfection, but it does not identify the 40% threshold as the critical point where transfection is lost. The model's answer of 100% is substantially different from the reference answer of above 40%.",2026-02-18 12:27:31.363969+00
+51,316,claude-sonnet-4.5,f,reversed,,"Looking at this question, I need to compare what the model said versus the reference answer about the PEG-maleimide fraction that would show ""no transfection.""
+
+**Reference answer:** Above 40%
+
+**Model response key claim:** 100% replacement results in no (or negligible) transfection
+
+The model does state that 100% replacement causes no transfection, which is technically correct but incomplete. However, the model fails to identify the actual threshold. The reference answer indicates that **above 40%** shows no transfection, meaning the critical threshold is around 40%, not 100%.
+
+The model suggests the ""sweet spot is typically around 5-20% of total PEG replaced"" and mentions that ""replacing more than ~50% of total PEG with PEG-maleimide significantly diminishes transfection,"" but never identifies 40% as the specific threshold where transfection is lost.
+
+The question specifically asks ""What fraction...would show no transfection?"" - this is asking for the threshold value. The reference answer of ""Above 40%"" directly answers this by giving the critical fraction. The model's answer of ""100%"" is a point well beyond the threshold and doesn't properly identify where transfection loss begins.
+
+{""correct"": false, ""explanation"": ""The model states 100% replacement shows no transfection, but the reference answer indicates the threshold is 'above 40%'. The model failed to identify the correct critical fraction where transfection loss occurs, providing only an extreme endpoint rather than the actual threshold.""}",2026-02-18 12:27:31.366695+00
+52,318,claude-sonnet-4.5,t,original,original,"```json
+{
+  ""correct"": true,
+  ""explanation"": ""The model response correctly identifies that microglia-specific Ifnar1 deletion leads to preservation/protection of post-synaptic terminals, which is equivalent to 'attenuation of loss' stated in the reference answer. Both indicate that the deletion prevents the loss of post-synaptic structures that would otherwise occur in the disease model.""
+}
+```",2026-02-18 12:27:47.638734+00
+53,318,claude-opus-4.6,t,original,original,"The model response correctly states that microglia-specific Ifnar1 deletion in 5XFAD mice leads to preservation/rescue of post-synaptic terminals, which is equivalent to the reference answer's 'attenuation of loss.' The model provides additional mechanistic detail about complement-mediated synaptic stripping and microglial phagocytosis, but the core factual content matches.",2026-02-18 12:27:47.641668+00
+54,318,claude-sonnet-4.5,t,reversed,,"The model response correctly identifies that microglia-specific Ifnar1 deletion leads to preservation/rescue of post-synaptic terminals and reduces their loss, which aligns with the reference answer 'attenuation of loss.' The response provides additional mechanistic detail about complement-mediated synaptic stripping and microglial phagocytosis, but the core fact that the deletion attenuates the loss of post-synaptic terminals is accurate.",2026-02-18 12:27:47.644028+00
+55,319,claude-sonnet-4.5,t,original,original,"The model response correctly identifies Lagrange multipliers as one of the methods to constrain Wyckoff sites in symmetric molecular dynamics (mentioned in the 'Constraint enforcement' section under point 3). While the response provides extensive additional detail about Wyckoff sites, constraint formulations, and implementation approaches, it does contain the key factual content from the reference answer.",2026-02-18 12:28:04.68733+00
+56,319,claude-opus-4.6,t,original,original,"The model response explicitly mentions Lagrange multipliers as one of the constraint enforcement methods, which matches the reference answer. Additionally, the response provides extensive and accurate detail about other aspects of constraining Wyckoff sites in symmetric molecular dynamics, including holonomic constraint formulations and projection methods.",2026-02-18 12:28:04.6896+00
+57,319,claude-sonnet-4.5,t,reversed,,"```json
+{
+  ""correct"": true,
+  ""explanation"": ""The model response correctly identifies Lagrange multipliers as one of the methods to enforce holonomic constraints for Wyckoff sites (mentioned in section 3 under 'Constraint enforcement'). While the response provides additional context and alternative methods (SHAKE/RATTLE, projection methods), it does contain the key factual content of the reference answer.""
+}
+```",2026-02-18 12:28:04.692348+00
+58,270,claude-sonnet-4.5,f,original,original,"```json
+{
+  ""correct"": false,
+  ""explanation"": ""The model response states 25% eclose, while the reference answer indicates 80%. This is a significant factual discrepancy in the quantitative result.""
+}
+```",2026-02-18 12:28:18.455219+00
+59,270,claude-opus-4.6,f,original,original,"The model response states approximately 25% of H3.3K36R mutant Drosophila eclose, while the reference answer states approximately 80%. These values are significantly different.",2026-02-18 12:28:18.458034+00
+60,270,claude-sonnet-4.5,f,reversed,,"```json
+{
+  ""correct"": false,
+  ""explanation"": ""The model response states that approximately 25% of H3.3K36R mutant Drosophila eclose, while the reference answer indicates 80%. This is a significant factual error - the model underestimated the eclosion rate by more than threefold.""
+}
+```",2026-02-18 12:28:18.46017+00

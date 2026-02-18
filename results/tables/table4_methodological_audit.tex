@@ -1,0 +1,19 @@
+\begin{table}[ht]
+\centering
+\caption{Methodological audit results. Contamination probes test for benchmark memorization. Judge audit measures LLM-as-judge reliability.}
+\label{tab:audit}
+\begin{tabular}{llr}
+\toprule
+Audit & Metric & Value \\
+\midrule
+Contamination & Cloze match rate & 0.0\% \\
+              & Reverse match rate & 0.0\% \\
+              & Temporal split & Insufficient metadata \\
+\midrule
+Judge Audit   & Inter-judge agreement & 90.0\% \\
+              & Cohen's $\kappa$ & 0.765 (substantial) \\
+              & Position bias rate & 10.0\% \\
+              & Verbosity bias & +5.0\% \\
+\bottomrule
+\end{tabular}
+\end{table}

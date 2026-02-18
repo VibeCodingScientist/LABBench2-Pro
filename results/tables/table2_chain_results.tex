@@ -1,0 +1,43 @@
+\begin{table}[ht]
+\centering
+\caption{Compositional chain performance. Each chain is a multi-step research workflow where step outputs feed into subsequent steps.}
+\label{tab:chain-results}
+\begin{tabular}{llrrrr}
+\toprule
+Chain & Template & Steps & Correct & Step Acc. & E2E \\
+\midrule
+  chain01 & paper_to_experiment & 4 & 3 & 75% & No \\
+  chain02 & structure_to_drug & 4 & 4 & 100% & Yes \\
+  chain03 & stats_pipeline & 3 & 2 & 67% & No \\
+  chain04 & critical_appraisal & 3 & 3 & 100% & Yes \\
+  chain05 & genetics_to_therapy & 3 & 1 & 33% & No \\
+  chain06 & protocol_troubleshoot & 3 & 3 & 100% & Yes \\
+  chain07 & paradox_resolution & 3 & 2 & 67% & No \\
+  chain08 & sequence_to_function & 3 & 1 & 33% & No \\
+  chain09 & data_to_mechanism & 3 & 2 & 67% & No \\
+  chain10 & evidence_synthesis & 3 & 3 & 100% & Yes \\
+  chain11 & structure_to_drug & 4 & 4 & 100% & Yes \\
+  chain12 & paper_to_experiment & 4 & 4 & 100% & Yes \\
+  chain13 & stats_pipeline & 3 & 3 & 100% & Yes \\
+  chain14 & critical_appraisal & 3 & 3 & 100% & Yes \\
+  chain15 & genetics_to_therapy & 3 & 1 & 33% & No \\
+  chain16 & protocol_troubleshoot & 3 & 2 & 67% & No \\
+  chain17 & paradox_resolution & 3 & 3 & 100% & Yes \\
+  chain18 & structure_to_drug & 2 & 2 & 100% & Yes \\
+  chain19 & data_to_mechanism & 3 & 3 & 100% & Yes \\
+  chain20 & evidence_synthesis & 3 & 3 & 100% & Yes \\
+  chain21 & genetics_to_therapy & 3 & 2 & 67% & No \\
+  chain22 & protocol_troubleshoot & 3 & 3 & 100% & Yes \\
+  chain23 & sequence_to_function & 2 & 2 & 100% & Yes \\
+  chain24 & paper_to_experiment & 4 & 4 & 100% & Yes \\
+  chain25 & paradox_resolution & 3 & 2 & 67% & No \\
+  chain26 & data_to_mechanism & 3 & 3 & 100% & Yes \\
+  chain27 & evidence_synthesis & 3 & 3 & 100% & Yes \\
+  chain28 & sequence_to_function & 3 & 2 & 67% & No \\
+  chain29 & stats_pipeline & 3 & 2 & 67% & No \\
+  chain30 & critical_appraisal & 3 & 3 & 100% & Yes \\
+\midrule
+  \textbf{Total} & & \textbf{93} & \textbf{78} & \textbf{84%} & \textbf{18/30} \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -29,14 +29,14 @@ Run frontier models against the existing LABBench2 categories, then apply rigoro
 - **Judge Audit** — Run two LLM judges on the same responses, measure Cohen's kappa, test position bias (swap reference/response order) and verbosity bias (shorten responses, re-judge)
 - **Contamination Probes** — Cloze completion (can the model finish a truncated question?), reverse reconstruction (can it guess the question from the answer?), temporal split (chi-squared test on pre- vs post-cutoff accuracy)
 
-### Tier 2: New Task Categories (~550 tasks)
+### Tier 2: New Task Categories (703 tasks)
 
 Programmatically generated tasks with deterministic or rubric-graded ground truth:
 
 | Category | Count | Verification | Source |
 |---|---|---|---|
 | Statistical Reasoning | 200 | Programmatic (scipy) | Synthetic gene expression data |
-| Structure Analysis | 150 | Programmatic + LLM-judge | Real PDB structures (BioPython) + synthetic gel images |
+| Structure Analysis | 303 | Programmatic + LLM-judge | Real PDB structures (BioPython) + synthetic gel images |
 | Uncertainty Calibration | 100 | LLM-judge | LABBench2 questions with critical info stripped |
 | Hypothesis Generation | 100 | LLM-judge (rubric) | Real PubMed abstracts (NCBI Entrez) |
 
@@ -200,6 +200,57 @@ Currently supported (Anthropic fully implemented, others stubbed pending API key
 | gpt-5.2-pro | OpenAI | $2.50 | $10.00 |
 | gemini-3-pro | Google | $1.25 | $5.00 |
 
+## Results (Claude Opus 4.6, Feb 2026)
+
+Full run: 2,454 tasks, $102.81 total cost, 5h 5min. See [`results/RESULTS.md`](results/RESULTS.md) for complete analysis.
+
+### Tier 1: LABBench Categories (with 95% BCa Bootstrap CIs)
+
+| Category | n | Accuracy | 95% CI |
+|---|---|---|---|
+| CloningScenarios | 33 | **39.4%** | [24.2%, 57.6%] |
+| LitQA2 | 186 | **31.2%** | [24.7%, 38.2%] |
+| SeqQA | 585 | **17.8%** | [14.9%, 21.0%] |
+| ProtocolQA | 100 | **15.0%** | [9.0%, 23.0%] |
+| SuppQA | 81 | **11.1%** | [4.9%, 19.8%] |
+| FigQA | 181 | **10.5%** | [6.6%, 15.5%] |
+| DbQA | 492 | **4.7%** | [3.0%, 6.7%] |
+
+### Tier 2: New Tasks
+
+| Category | n | Accuracy | Verification |
+|---|---|---|---|
+| Calibration | 100 | **100.0%** | LLM-judge |
+| Hypothesis Generation | 100 | **100.0%** | LLM-judge |
+| Structure Analysis | 303 | **45.5%** | Programmatic |
+| Statistical Reasoning | 200 | **23.0%** | Programmatic |
+
+### Tier 3: Compositional Chains
+
+| Metric | Value |
+|---|---|
+| Step-level accuracy | 83/93 = **89.2%** |
+| End-to-end accuracy | 17/29 = **58.6%** |
+| Error propagation gap | **30.6 pp** |
+
+### Key Findings
+
+1. **Confidence intervals reveal false precision.** SuppQA and FigQA appear different (11.1% vs 10.5%) but their CIs overlap entirely.
+2. **The compositionality gap is real.** 89% per-step accuracy drops to 59% end-to-end. Models that answer individual questions well still fail multi-step research workflows.
+3. **LLM-judge grading is reliable but biased.** Cohen's kappa = 0.765 (substantial), with 10% position bias and 5% verbosity bias.
+4. **Zero contamination detected.** 0% cloze and reverse match rates — no benchmark memorization.
+
+### Methodological Audit
+
+| Metric | Value |
+|---|---|
+| Inter-judge agreement | 90.0% |
+| Cohen's kappa | 0.765 |
+| Position bias | 10.0% |
+| Verbosity bias | +5.0% |
+| Cloze contamination | 0.0% |
+| Reverse contamination | 0.0% |
+
 ## Design Principles
 
 - **Simplest thing that works.** No abstraction until it's needed twice.
@@ -209,12 +260,35 @@ Currently supported (Anthropic fully implemented, others stubbed pending API key
 - **Raw SQL, no ORM.** Five tables, four indexes. Schema changes = drop and recreate (results are reproducible).
 - **Cost-aware.** Every API call is tracked. Cost-accuracy Pareto frontier identifies dominated models.
 
+## Artifacts
+
+| Directory | Contents |
+|---|---|
+| `results/raw/` | All 2,454 eval traces, 93 chain traces, 60 judge audits (CSV) |
+| `results/figures/` | 5 publication-ready figures (PDF + PNG) |
+| `results/tables/` | 4 LaTeX tables + supplementary chain traces |
+| `results/summary.json` | Machine-readable results summary |
+| `paper/` | Draft manuscript |
+| `tasks/chains/` | 30 chains (96 steps) with verification report |
+
 ## Contributing
 
 All 30 compositional chains are authored and verified. Contributions welcome for:
 - Additional chain variants (new biomedical topics using the 10 existing templates)
 - New chain templates (novel multi-step reasoning patterns)
 - Running the benchmark against additional models (OpenAI, Google — provider stubs are implemented)
+- Running with tool-augmented models to measure skill-based improvement
+
+## Citation
+
+```bibtex
+@misc{labbench2pro2026,
+  title={LABBench2-Pro: A Methodological Audit and Extension of Scientific LLM Evaluation},
+  author={Weidener, Lukas},
+  year={2026},
+  url={https://github.com/VibeCodingScientist/LABBench2-Pro}
+}
+```
 
 ## License
 
