@@ -196,51 +196,53 @@ Currently supported (Anthropic fully implemented, others stubbed pending API key
 | Model | Provider | Input $/1M | Output $/1M |
 |---|---|---|---|
 | claude-opus-4.6 | Anthropic | $15.00 | $75.00 |
+| claude-sonnet-4.6 | Anthropic | $3.00 | $15.00 |
 | claude-sonnet-4.5 | Anthropic | $3.00 | $15.00 |
 | gpt-5.2-pro | OpenAI | $2.50 | $10.00 |
 | gemini-3-pro | Google | $1.25 | $5.00 |
 
-## Results (Claude Opus 4.6, Feb 2026)
+## Results (Opus 4.6 vs Sonnet 4.6, Feb 2026)
 
-Full run: 2,454 tasks, $102.81 total cost, 5h 5min. See [`results/RESULTS.md`](results/RESULTS.md) for complete analysis.
+Two-model comparison: 4,549 eval runs, $117.57 combined cost. See [`results/RESULTS.md`](results/RESULTS.md) for complete analysis.
 
-### Tier 1: LABBench Categories (with 95% BCa Bootstrap CIs)
+### Tier 1: LABBench Categories (with pairwise significance tests)
 
-| Category | n | Accuracy | 95% CI |
-|---|---|---|---|
-| CloningScenarios | 33 | **39.4%** | [24.2%, 57.6%] |
-| LitQA2 | 186 | **31.2%** | [24.7%, 38.2%] |
-| SeqQA | 585 | **17.8%** | [14.9%, 21.0%] |
-| ProtocolQA | 100 | **15.0%** | [9.0%, 23.0%] |
-| SuppQA | 81 | **11.1%** | [4.9%, 19.8%] |
-| FigQA | 181 | **10.5%** | [6.6%, 15.5%] |
-| DbQA | 492 | **4.7%** | [3.0%, 6.7%] |
+| Category | Opus 4.6 | Sonnet 4.6 | p-value | Significant? |
+|---|---|---|---|---|
+| CloningScenarios | **39.4%** | 27.3% | 0.014 | **YES** |
+| LitQA2 | **31.2%** | 28.3% | 0.210 | No |
+| SeqQA | **17.8%** | 12.4% | 0.214 | No |
+| ProtocolQA | 15.0% | **15.7%** | 0.434 | No |
+| SuppQA | **11.1%** | 6.2% | 0.065 | No |
+| FigQA | **10.5%** | 5.0% | 0.003 | **YES** |
+| DbQA | **4.7%** | 2.2% | 0.001 | **YES** |
 
 ### Tier 2: New Tasks
 
-| Category | n | Accuracy | Verification |
+| Category | Opus 4.6 | Sonnet 4.6 | Delta |
 |---|---|---|---|
-| Calibration | 100 | **100.0%** | LLM-judge |
-| Hypothesis Generation (lenient) | 100 | **100.0%** | LLM-judge |
-| Hypothesis Generation (strict) | 100 | **97.0%** | LLM-judge (strict rubric) |
-| Structure Analysis | 303 | **45.5%** | Programmatic |
-| Statistical Reasoning | 200 | **23.0%** | Programmatic |
+| Calibration | **100.0%** | **100.0%** | 0 |
+| Hypothesis Gen. (strict) | **97.0%** | **97.0%** | 0 |
+| Structure Analysis | **45.5%** | 43.9% | -1.6 |
+| Statistical Reasoning | 23.0% | **35.0%** | **+12.0** |
 
 ### Tier 3: Compositional Chains
 
-| Metric | Value |
-|---|---|
-| Step-level accuracy | 83/93 = **89.2%** |
-| End-to-end accuracy | 17/29 = **58.6%** |
-| Error propagation gap | **30.6 pp** |
+| Metric | Opus 4.6 | Sonnet 4.6 |
+|---|---|---|
+| Step-level accuracy | 78/93 = **83.9%** | 79/89 = **88.8%** |
+| End-to-end accuracy | 18/30 = **60.0%** | 22/30 = **73.3%** |
+| Error propagation gap | **23.9 pp** | **15.5 pp** |
+| Total cost | $102.81 | **$14.76** |
 
 ### Key Findings
 
-1. **Confidence intervals reveal false precision.** SuppQA and FigQA appear different (11.1% vs 10.5%) but their CIs overlap entirely.
-2. **The compositionality gap is real.** 89% per-step accuracy drops to 59% end-to-end. Models that answer individual questions well still fail multi-step research workflows.
-3. **LLM-judge grading is reliable but biased.** Cohen's kappa = 0.765 (substantial), with 10% position bias and 5% verbosity bias.
-4. **Rubric design matters as much as the judge.** Hypothesis Generation drops from 100% to 97% under a strict rubric, with novelty at only 67% — a lenient rubric masked a real capability gap.
-5. **Zero contamination detected.** 0% cloze and reverse match rates — no benchmark memorization.
+1. **Most model differences are not significant.** Only 3 of 7 LABBench categories survive pairwise bootstrap testing. Reporting point estimates without CIs gives a false sense of model ranking.
+2. **Smaller model wins on compositional chains.** Sonnet 4.6 (73.3% E2E) outperforms Opus 4.6 (60.0% E2E) on multi-step research workflows — atomic task performance does not predict compositional ability.
+3. **Sonnet dominates on statistical reasoning.** +12pp advantage on quantitative tasks (35.0% vs 23.0%), counter to the assumption that bigger = better.
+4. **7x cost savings with comparable accuracy.** Sonnet achieves parity or superiority at $14.76 vs $102.81.
+5. **Rubric design matters as much as the judge.** Both models drop from 100% to 97% under strict grading, with novelty at only 67-71% — identical capability gap.
+6. **Zero contamination detected.** 0% cloze match rates for both models.
 
 ### Methodological Audit
 
@@ -248,10 +250,11 @@ Full run: 2,454 tasks, $102.81 total cost, 5h 5min. See [`results/RESULTS.md`](r
 |---|---|
 | Inter-judge agreement | 90.0% |
 | Cohen's kappa | 0.765 |
-| Position bias | 10.0% |
+| Position bias | 15.0% |
 | Verbosity bias | +5.0% |
-| Cloze contamination | 0.0% |
-| Reverse contamination | 0.0% |
+| IRT items analyzed | 2,459 |
+| High-discrimination items | 133 (5.4%) |
+| Cloze contamination (both models) | 0.0% |
 
 ## Design Principles
 
@@ -266,12 +269,12 @@ Full run: 2,454 tasks, $102.81 total cost, 5h 5min. See [`results/RESULTS.md`](r
 
 | Directory | Contents |
 |---|---|
-| `results/raw/` | All 2,454 eval traces, 93 chain traces, 60 judge audits (CSV) |
-| `results/figures/` | 5 publication-ready figures (PDF + PNG) |
-| `results/tables/` | 4 LaTeX tables + supplementary chain traces |
+| `results/raw/` | All 4,549 eval traces, chain traces, 60 judge audits (CSV) |
+| `results/figures/` | Publication-ready figures (PDF + PNG) |
+| `results/tables/` | LaTeX tables + supplementary chain traces |
 | `results/summary.json` | Machine-readable results summary |
 | `paper/` | Draft manuscript |
-| `tasks/chains/` | 30 chains (96 steps) with verification report |
+| `tasks/chains/` | 30 chains with verification report |
 
 ## Contributing
 

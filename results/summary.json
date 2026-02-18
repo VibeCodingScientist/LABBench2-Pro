@@ -1,292 +1,95 @@
 {
-  "model": "claude-opus-4.6",
-  "total_eval_runs": 2454,
-  "total_correct": 705,
-  "overall_accuracy": 0.2873,
-  "total_cost_usd": 102.81,
-  "total_tokens_in": 766478,
-  "total_tokens_out": 1217518,
-  "categories": {
-    "LitQA2": {
-      "n": 186,
-      "correct": 58,
-      "accuracy": 0.3118,
-      "ci_low": 0.2473,
-      "ci_high": 0.3817,
-      "total_cost_usd": 3.72,
-      "avg_latency_ms": 7491
+  "models": ["claude-opus-4.6", "claude-sonnet-4.6"],
+  "total_eval_runs": 4549,
+  "combined_cost_usd": 117.57,
+  "claude-opus-4.6": {
+    "total_eval_runs": 2454,
+    "total_cost_usd": 102.81,
+    "total_tokens_in": 766478,
+    "total_tokens_out": 1217518,
+    "categories": {
+      "Calibration": {"n": 100, "correct": 100, "accuracy": 1.0, "total_cost_usd": 1.11, "avg_latency_ms": 4826},
+      "CloningScenarios": {"n": 33, "correct": 13, "accuracy": 0.394, "ci_low": 0.242, "ci_high": 0.576, "total_cost_usd": 5.25, "avg_latency_ms": 24384},
+      "DbQA": {"n": 492, "correct": 23, "accuracy": 0.047, "ci_low": 0.030, "ci_high": 0.067, "total_cost_usd": 13.20, "avg_latency_ms": 8585},
+      "FigQA": {"n": 181, "correct": 19, "accuracy": 0.105, "ci_low": 0.066, "ci_high": 0.155, "total_cost_usd": 2.84, "avg_latency_ms": 6217},
+      "HypothesisGeneration": {
+        "n": 100,
+        "correct_lenient": 100, "accuracy_lenient": 1.0,
+        "correct_strict": 97, "accuracy_strict": 0.97,
+        "total_cost_usd": 9.95, "regrade_cost_usd": 1.59, "avg_latency_ms": 27966,
+        "strict_rubric": {"falsifiable": 1.0, "connected": 0.95, "novel": 0.67, "specific": 0.95, "threshold": "3_of_4"}
+      },
+      "LitQA2": {"n": 186, "correct": 58, "accuracy": 0.312, "ci_low": 0.247, "ci_high": 0.382, "total_cost_usd": 3.72, "avg_latency_ms": 7491},
+      "ProtocolQA": {"n": 100, "correct": 15, "accuracy": 0.150, "ci_low": 0.090, "ci_high": 0.230, "total_cost_usd": 3.16, "avg_latency_ms": 11443},
+      "SeqQA": {"n": 585, "correct": 104, "accuracy": 0.178, "ci_low": 0.149, "ci_high": 0.210, "total_cost_usd": 38.62, "avg_latency_ms": 16282},
+      "StatisticalReasoning": {"n": 200, "correct": 46, "accuracy": 0.230, "ci_low": 0.175, "ci_high": 0.290, "total_cost_usd": 11.22, "avg_latency_ms": 11591},
+      "StructureAnalysis": {"n": 303, "correct": 138, "accuracy": 0.455, "ci_low": 0.399, "ci_high": 0.512, "total_cost_usd": 2.30, "avg_latency_ms": 3387},
+      "SuppQA": {"n": 81, "correct": 9, "accuracy": 0.111, "ci_low": 0.049, "ci_high": 0.198, "total_cost_usd": 1.15, "avg_latency_ms": 5857}
     },
-    "FigQA": {
-      "n": 181,
-      "correct": 19,
-      "accuracy": 0.105,
-      "ci_low": 0.0663,
-      "ci_high": 0.1547,
-      "total_cost_usd": 2.84,
-      "avg_latency_ms": 6217
-    },
-    "SeqQA": {
-      "n": 585,
-      "correct": 104,
-      "accuracy": 0.1778,
-      "ci_low": 0.1487,
-      "ci_high": 0.2103,
-      "total_cost_usd": 38.62,
-      "avg_latency_ms": 16282
-    },
-    "SuppQA": {
-      "n": 81,
-      "correct": 9,
-      "accuracy": 0.1111,
-      "ci_low": 0.0617,
-      "ci_high": 0.1975,
-      "total_cost_usd": 1.15,
-      "avg_latency_ms": 5857
-    },
-    "ProtocolQA": {
-      "n": 100,
-      "correct": 15,
-      "accuracy": 0.15,
-      "ci_low": 0.09,
-      "ci_high": 0.23,
-      "total_cost_usd": 3.16,
-      "avg_latency_ms": 11443
-    },
-    "DbQA": {
-      "n": 492,
-      "correct": 23,
-      "accuracy": 0.0467,
-      "ci_low": 0.0305,
-      "ci_high": 0.0691,
-      "total_cost_usd": 13.2,
-      "avg_latency_ms": 8585
-    },
-    "CloningScenarios": {
-      "n": 33,
-      "correct": 13,
-      "accuracy": 0.3939,
-      "ci_low": 0.2424,
-      "ci_high": 0.5758,
-      "total_cost_usd": 5.25,
-      "avg_latency_ms": 24384
-    },
-    "StatisticalReasoning": {
-      "n": 200,
-      "correct": 46,
-      "accuracy": 0.23,
-      "ci_low": 0.175,
-      "ci_high": 0.295,
-      "total_cost_usd": 11.22,
-      "avg_latency_ms": 11591
-    },
-    "StructureAnalysis": {
-      "n": 303,
-      "correct": 138,
-      "accuracy": 0.4554,
-      "ci_low": 0.3993,
-      "ci_high": 0.5147,
-      "total_cost_usd": 2.3,
-      "avg_latency_ms": 3387
-    },
-    "Calibration": {
-      "n": 100,
-      "correct": 100,
-      "accuracy": 1.0,
-      "ci_low": NaN,
-      "ci_high": NaN,
-      "total_cost_usd": 1.11,
-      "avg_latency_ms": 4826
-    },
-    "HypothesisGeneration": {
-      "n": 100,
-      "correct_lenient": 100,
-      "accuracy_lenient": 1.0,
-      "correct_strict": 97,
-      "accuracy_strict": 0.97,
-      "ci_low": 0.92,
-      "ci_high": 0.99,
-      "total_cost_usd": 9.95,
-      "regrade_cost_usd": 1.59,
-      "avg_latency_ms": 27966,
-      "strict_rubric": {
-        "falsifiable_pass_rate": 1.0,
-        "connected_pass_rate": 0.95,
-        "novel_pass_rate": 0.67,
-        "specific_pass_rate": 0.95,
-        "threshold": "3_of_4"
-      }
-    },
-    "ChainTask": {
-      "n": 93,
-      "correct": 83,
-      "accuracy": 0.8925,
-      "ci_low": 0.8172,
-      "ci_high": 0.9462,
-      "total_cost_usd": 10.3,
-      "avg_latency_ms": 33476
+    "chains": {
+      "total_chains": 30, "steps_completed": 93, "steps_correct": 78,
+      "step_accuracy": 0.839, "e2e_correct": 18, "e2e_accuracy": 0.600,
+      "error_propagation_gap_pp": 23.9
     }
   },
-  "chains": {
-    "chain01": {
-      "steps": 4,
-      "correct_steps": 3,
-      "end_to_end": false
+  "claude-sonnet-4.6": {
+    "total_eval_runs": 2095,
+    "total_cost_usd": 14.76,
+    "total_tokens_in": 577536,
+    "total_tokens_out": 868789,
+    "categories": {
+      "Calibration": {"n": 100, "correct": 100, "accuracy": 1.0, "total_cost_usd": 0.19, "avg_latency_ms": 4017},
+      "CloningScenarios": {"n": 33, "correct": 9, "accuracy": 0.273, "ci_low": 0.152, "ci_high": 0.455, "total_cost_usd": 0.97, "avg_latency_ms": 22155},
+      "DbQA": {"n": 493, "correct": 11, "accuracy": 0.022, "ci_low": 0.012, "ci_high": 0.039, "total_cost_usd": 2.64, "avg_latency_ms": 7555},
+      "FigQA": {"n": 181, "correct": 9, "accuracy": 0.050, "ci_low": 0.022, "ci_high": 0.088, "total_cost_usd": 0.47, "avg_latency_ms": 5812},
+      "HypothesisGeneration": {
+        "n": 100,
+        "correct_lenient": 100, "accuracy_lenient": 1.0,
+        "correct_strict": 97, "accuracy_strict": 0.97,
+        "total_cost_usd": 2.00, "regrade_cost_usd": 1.58, "avg_latency_ms": 29853,
+        "strict_rubric": {"falsifiable": 1.0, "connected": 0.90, "novel": 0.71, "specific": 0.94, "threshold": "3_of_4"}
+      },
+      "LitQA2": {"n": 187, "correct": 53, "accuracy": 0.283, "ci_low": 0.219, "ci_high": 0.353, "total_cost_usd": 0.70, "avg_latency_ms": 7360},
+      "ProtocolQA": {"n": 102, "correct": 16, "accuracy": 0.157, "ci_low": 0.098, "ci_high": 0.235, "total_cost_usd": 0.54, "avg_latency_ms": 10425},
+      "SeqQA": {"n": 298, "correct": 37, "accuracy": 0.124, "ci_low": 0.091, "ci_high": 0.164, "total_cost_usd": 3.37, "avg_latency_ms": 15113},
+      "StatisticalReasoning": {"n": 200, "correct": 70, "accuracy": 0.350, "total_cost_usd": 2.92, "avg_latency_ms": 12552},
+      "StructureAnalysis": {"n": 303, "correct": 133, "accuracy": 0.439, "total_cost_usd": 0.44, "avg_latency_ms": 2176},
+      "SuppQA": {"n": 81, "correct": 5, "accuracy": 0.062, "ci_low": 0.025, "ci_high": 0.136, "total_cost_usd": 0.17, "avg_latency_ms": 4398}
     },
-    "chain02": {
-      "steps": 4,
-      "correct_steps": 4,
-      "end_to_end": true
-    },
-    "chain03": {
-      "steps": 3,
-      "correct_steps": 2,
-      "end_to_end": false
-    },
-    "chain04": {
-      "steps": 3,
-      "correct_steps": 3,
-      "end_to_end": true
-    },
-    "chain05": {
-      "steps": 3,
-      "correct_steps": 1,
-      "end_to_end": false
-    },
-    "chain06": {
-      "steps": 3,
-      "correct_steps": 3,
-      "end_to_end": true
-    },
-    "chain07": {
-      "steps": 3,
-      "correct_steps": 2,
-      "end_to_end": false
-    },
-    "chain08": {
-      "steps": 3,
-      "correct_steps": 1,
-      "end_to_end": false
-    },
-    "chain09": {
-      "steps": 3,
-      "correct_steps": 2,
-      "end_to_end": false
-    },
-    "chain10": {
-      "steps": 3,
-      "correct_steps": 3,
-      "end_to_end": true
-    },
-    "chain11": {
-      "steps": 4,
-      "correct_steps": 4,
-      "end_to_end": true
-    },
-    "chain12": {
-      "steps": 4,
-      "correct_steps": 4,
-      "end_to_end": true
-    },
-    "chain13": {
-      "steps": 3,
-      "correct_steps": 3,
-      "end_to_end": true
-    },
-    "chain14": {
-      "steps": 3,
-      "correct_steps": 3,
-      "end_to_end": true
-    },
-    "chain15": {
-      "steps": 3,
-      "correct_steps": 1,
-      "end_to_end": false
-    },
-    "chain16": {
-      "steps": 3,
-      "correct_steps": 2,
-      "end_to_end": false
-    },
-    "chain17": {
-      "steps": 3,
-      "correct_steps": 3,
-      "end_to_end": true
-    },
-    "chain18": {
-      "steps": 2,
-      "correct_steps": 2,
-      "end_to_end": true
-    },
-    "chain19": {
-      "steps": 3,
-      "correct_steps": 3,
-      "end_to_end": true
-    },
-    "chain20": {
-      "steps": 3,
-      "correct_steps": 3,
-      "end_to_end": true
-    },
-    "chain21": {
-      "steps": 3,
-      "correct_steps": 2,
-      "end_to_end": false
-    },
-    "chain22": {
-      "steps": 3,
-      "correct_steps": 3,
-      "end_to_end": true
-    },
-    "chain23": {
-      "steps": 2,
-      "correct_steps": 2,
-      "end_to_end": true
-    },
-    "chain24": {
-      "steps": 4,
-      "correct_steps": 4,
-      "end_to_end": true
-    },
-    "chain25": {
-      "steps": 3,
-      "correct_steps": 2,
-      "end_to_end": false
-    },
-    "chain26": {
-      "steps": 3,
-      "correct_steps": 3,
-      "end_to_end": true
-    },
-    "chain27": {
-      "steps": 3,
-      "correct_steps": 3,
-      "end_to_end": true
-    },
-    "chain28": {
-      "steps": 3,
-      "correct_steps": 2,
-      "end_to_end": false
-    },
-    "chain29": {
-      "steps": 3,
-      "correct_steps": 2,
-      "end_to_end": false
-    },
-    "chain30": {
-      "steps": 3,
-      "correct_steps": 3,
-      "end_to_end": true
+    "chains": {
+      "total_chains": 30, "steps_completed": 89, "steps_correct": 79,
+      "step_accuracy": 0.888, "e2e_correct": 22, "e2e_accuracy": 0.733,
+      "error_propagation_gap_pp": 15.5
     }
+  },
+  "pairwise_tests": {
+    "CloningScenarios": {"diff": 0.121, "p_value": 0.014, "significant": true},
+    "LitQA2": {"diff": 0.027, "p_value": 0.210, "significant": false},
+    "SeqQA": {"diff": 0.054, "p_value": 0.214, "significant": false},
+    "ProtocolQA": {"diff": -0.007, "p_value": 0.434, "significant": false},
+    "SuppQA": {"diff": 0.049, "p_value": 0.065, "significant": false},
+    "FigQA": {"diff": 0.055, "p_value": 0.003, "significant": true},
+    "DbQA": {"diff": 0.025, "p_value": 0.001, "significant": true}
+  },
+  "irt_analysis": {
+    "total_items": 2459,
+    "low_discrimination": 2326,
+    "too_easy": 572,
+    "too_hard": 1642,
+    "recommended_pruned_set": 133,
+    "peak_theta": 0.50,
+    "effective_range": [-1.20, 2.20]
   },
   "contamination": {
-    "cloze_match_rate": 0.0,
-    "reverse_match_rate": 0.0,
+    "opus_cloze_match_rate": 0.0,
+    "opus_reverse_match_rate": 0.0,
+    "sonnet_cloze_match_rate": 0.0,
     "temporal_split": "insufficient_metadata"
   },
   "judge_audit": {
-    "inter_judge_agreement": 0.9,
+    "inter_judge_agreement": 0.90,
     "cohens_kappa": 0.765,
-    "position_bias_rate": 0.1,
+    "position_bias_rate": 0.15,
     "verbosity_bias": 0.05,
     "n_audited": 20
   }
