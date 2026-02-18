@@ -2,7 +2,7 @@
 
 ## Abstract
 
-We present LABBench2-Pro, a methodological audit and extension of FutureHouse's LABBench2 benchmark for evaluating large language models on biology research tasks. Our analysis identifies five categories of gaps in current scientific LLM evaluation: scoring reliability, statistical reporting, contamination risk, coverage gaps, and atomic-only evaluation. We address these through a three-tier framework: (1) a methodological audit of existing LABBench2 categories with bootstrap confidence intervals, IRT analysis, judge reliability testing, and contamination probes; (2) 703 new programmatically-generated tasks spanning statistical reasoning, structural biology, uncertainty calibration, and hypothesis generation; and (3) 30 compositional chains (93 steps) testing multi-step scientific reasoning where errors compound. Evaluating Claude Opus 4.6 across 2,454 tasks ($102.81 total cost), we find: (a) performance varies dramatically across categories (4.7%--100%), with confidence intervals revealing that many apparent differences are not statistically significant; (b) the model achieves 89.2% step-level accuracy on compositional chains but only 58.6% end-to-end, quantifying error propagation; (c) LLM-as-judge grading shows substantial inter-judge agreement (Cohen's kappa = 0.765) with measurable position bias (10%) and verbosity bias (+5%); and (d) zero contamination signal across cloze and reverse probes. All code, data, model traces, and analysis are publicly available.
+We present LABBench2-Pro, a methodological audit and extension of FutureHouse's LABBench2 benchmark for evaluating large language models on biology research tasks. Our analysis identifies five categories of gaps in current scientific LLM evaluation: scoring reliability, statistical reporting, contamination risk, coverage gaps, and atomic-only evaluation. We address these through a three-tier framework: (1) a methodological audit of existing LABBench2 categories with bootstrap confidence intervals, IRT analysis, judge reliability testing, and contamination probes; (2) 703 new programmatically-generated tasks spanning statistical reasoning, structural biology, uncertainty calibration, and hypothesis generation; and (3) 30 compositional chains (93 steps) testing multi-step scientific reasoning where errors compound. Evaluating Claude Opus 4.6 across 2,454 tasks ($102.81 total cost), we find: (a) performance varies dramatically across categories (4.7%--100%), with confidence intervals revealing that many apparent differences are not statistically significant; (b) the model achieves 89.2% step-level accuracy on compositional chains but only 58.6% end-to-end, quantifying error propagation; (c) LLM-as-judge grading shows substantial inter-judge agreement (Cohen's kappa = 0.765) with measurable position bias (10%) and verbosity bias (+5%); (d) zero contamination signal across cloze and reverse probes; and (e) rubric sensitivity analysis reveals that a lenient judge prompt inflates Hypothesis Generation from 97% (strict per-criterion rubric) to 100% (generic rubric), with novelty as the primary failure mode (67% pass rate). All code, data, model traces, and analysis are publicly available.
 
 ## 1. Introduction
 
@@ -111,11 +111,14 @@ Key observations:
 | Category | n | Correct | Accuracy |
 |---|---|---|---|
 | Calibration | 100 | 100 | 100.0% |
-| Hypothesis Generation | 100 | 100 | 100.0% |
+| Hypothesis Generation (lenient) | 100 | 100 | 100.0% |
+| Hypothesis Generation (strict) | 100 | 97 | 97.0% |
 | Structure Analysis | 303 | 138 | 45.5% |
 | Statistical Reasoning | 200 | 46 | 23.0% |
 
-**Calibration and Hypothesis Generation** achieved 100% accuracy, graded by LLM-judge. This ceiling effect warrants scrutiny---the judge audit (Section 3.4) quantifies potential judge leniency. These categories may require harder task variants or stricter rubrics.
+**Calibration** achieved 100% accuracy, suggesting frontier models reliably identify when insufficient information is available.
+
+**Hypothesis Generation** achieved 100% accuracy under the original lenient rubric. Re-grading with a strict per-criterion rubric (Section 3.6) reduced this to 97%, with per-criterion analysis revealing that novelty is the primary failure mode.
 
 **Structure Analysis** at 45.5% shows moderate capability on protein structure questions and gel image interpretation. This is the strongest performance on any programmatically-verified category.
 
@@ -173,7 +176,22 @@ Inter-judge agreement is substantial (kappa = 0.765) but not perfect. Position b
 
 No contamination signal was detected. The model could not complete truncated questions or reconstruct questions from answers, suggesting the benchmark content has not been memorized from training data.
 
-### 3.6 Cost Analysis
+### 3.6 Rubric Sensitivity Analysis
+
+The 100% accuracy on Hypothesis Generation under the original LLM-judge rubric prompted a rubric sensitivity analysis. The original grading prompt asked whether the response "contained the key factual content" of a rubric description---a low bar that any coherent response could clear. We designed a strict per-criterion rubric evaluating four dimensions independently:
+
+| Criterion | Pass Rate | Description |
+|---|---|---|
+| Falsifiable | 100/100 (100%) | Hypotheses include specific experimental designs |
+| Connected | 95/100 (95%) | Hypotheses logically follow from abstract findings |
+| Specific | 95/100 (95%) | Hypotheses name concrete biological entities |
+| Novel | 67/100 (67%) | Hypotheses go beyond obvious next steps |
+
+A response requires 3/4 criteria to pass. Under strict grading, accuracy dropped from 100% to **97%** (97/100). The per-criterion analysis reveals that **novelty is the primary failure mode**: while the model reliably generates falsifiable, connected, and specific hypotheses, only 67% of responses propose genuinely non-obvious extensions of the source material. The remaining 33% restate the abstract's implications or suggest experiments that any domain scientist would immediately propose.
+
+This result validates the paper's thesis about scoring reliability: a 3-percentage-point drop may seem small, but the per-criterion decomposition reveals that the lenient rubric was masking a substantial novelty deficit. The strict rubric cost $1.59 for 100 re-grades (Claude Sonnet 4.5 as judge).
+
+### 3.7 Cost Analysis
 
 Total evaluation cost: **$102.81** across 2,454 runs.
 
@@ -206,18 +224,20 @@ The 30.6 percentage-point gap between step-level (89.2%) and end-to-end (58.6%) 
 
 ### 4.3 Judge Reliability Is Quantifiable
 
-LLM-as-judge grading is increasingly common but rarely audited. Our results show it is reliable (kappa = 0.765) but not unbiased. The 100% accuracy on Calibration and Hypothesis Generation categories, both LLM-judge graded, should be interpreted with caution. Position and verbosity biases, while small, are systematic and should be measured and reported.
+LLM-as-judge grading is increasingly common but rarely audited. Our results show it is reliable (kappa = 0.765) but not unbiased. Position and verbosity biases, while small, are systematic and should be measured and reported.
+
+The rubric sensitivity analysis on Hypothesis Generation demonstrates a subtler problem: even with perfect inter-judge agreement, the rubric itself can be the source of inflation. A generic "does the response address the rubric" prompt produces 100% accuracy; a strict per-criterion decomposition reveals a 67% novelty pass rate hiding underneath. This suggests that **benchmarks using LLM-as-judge should report rubric sensitivity alongside inter-judge agreement**---the rubric matters as much as the judge.
 
 ### 4.4 Limitations
 
 - **Single model.** We evaluate only Claude Opus 4.6. Multi-model comparison is needed for IRT analysis and relative performance ranking.
 - **Judge audit sample size.** Twenty items provide directional signal but not precise estimates of bias rates.
 - **Temporal probe.** Insufficient date metadata in the dataset prevented the temporal contamination split.
-- **LLM-judge ceiling.** Categories graded by LLM-judge (Calibration, Hypothesis Generation) may have inflated accuracy due to lenient grading.
+- **LLM-judge ceiling.** Calibration remains at 100% under LLM-judge grading and may benefit from a similar rubric sensitivity analysis. Hypothesis Generation dropped to 97% under strict grading, but the novelty criterion (67%) warrants further investigation with human expert judges.
 
 ## 5. Conclusion
 
-LABBench2-Pro demonstrates that methodological rigor is not optional in LLM benchmarking. Confidence intervals reveal that many reported performance differences are not statistically significant. Compositional evaluation exposes a 31-point gap that atomic tasks cannot capture. Judge audits quantify biases that are otherwise invisible. Contamination probes provide a necessary baseline of trust. We release all code, tasks, model traces, and analysis to support reproducible scientific LLM evaluation.
+LABBench2-Pro demonstrates that methodological rigor is not optional in LLM benchmarking. Confidence intervals reveal that many reported performance differences are not statistically significant. Compositional evaluation exposes a 31-point gap that atomic tasks cannot capture. Judge audits quantify biases that are otherwise invisible. Rubric sensitivity analysis shows that grading rubric design can mask substantial capability gaps---a 100% headline accuracy concealed a 67% novelty pass rate. Contamination probes provide a necessary baseline of trust. We release all code, tasks, model traces, and analysis to support reproducible scientific LLM evaluation.
 
 ## Data Availability
 

@@ -37,11 +37,12 @@ TableQA was skipped (image loading issue with the HuggingFace dataset).
 | Category | n | Correct | Accuracy | Verification | Cost |
 |---|---|---|---|---|---|
 | Calibration | 100 | 100 | **100.0%** | LLM-judge | $1.11 |
-| Hypothesis Generation | 100 | 100 | **100.0%** | LLM-judge | $9.95 |
+| Hypothesis Generation (lenient) | 100 | 100 | **100.0%** | LLM-judge | $9.95 |
+| Hypothesis Generation (strict) | 100 | 97 | **97.0%** | LLM-judge (strict rubric) | $1.59 |
 | Structure Analysis | 303 | 138 | **45.5%** | Programmatic | $2.30 |
 | Statistical Reasoning | 200 | 46 | **23.0%** | Programmatic | $11.22 |
 
-**Note:** Calibration and Hypothesis Generation are LLM-judge graded. The 100% accuracy should be interpreted with caution—see Judge Audit below.
+**Note:** Calibration and Hypothesis Generation are LLM-judge graded. The original lenient rubric produced 100% on Hypothesis Generation; a strict per-criterion rubric reduced this to 97%. Per-criterion pass rates: Falsifiable 100%, Connected 95%, Novel 67%, Specific 95%. Novelty is the primary failure mode—see Rubric Sensitivity Analysis below.
 
 ## Tier 3: Compositional Chains
 
@@ -127,6 +128,19 @@ TableQA was skipped (image loading issue with the HuggingFace dataset).
 | Temporal split | — | Insufficient date metadata |
 
 **Interpretation:** No evidence of benchmark memorization detected. The model could not complete truncated questions or reconstruct questions from answers alone.
+
+### Rubric Sensitivity Analysis (Hypothesis Generation)
+
+The 100% accuracy under the original lenient rubric prompted a rubric sensitivity test. A strict per-criterion rubric was applied, evaluating each of 4 dimensions independently (3/4 must pass):
+
+| Criterion | Pass Rate | Description |
+|---|---|---|
+| Falsifiable | 100/100 (100%) | Hypotheses include specific experimental designs |
+| Connected | 95/100 (95%) | Hypotheses logically follow from abstract findings |
+| Specific | 95/100 (95%) | Hypotheses name concrete biological entities |
+| Novel | 67/100 (67%) | Hypotheses go beyond obvious next steps |
+
+**Result:** 100% → **97%** (97/100 correct under strict rubric). Novelty is the primary failure mode—the model reliably generates falsifiable, connected, and specific hypotheses but frequently proposes obvious extensions rather than genuinely creative follow-ups. Re-grading cost: $1.59 (Claude Sonnet 4.5 as judge).
 
 ### IRT Analysis
 

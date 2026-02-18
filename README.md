@@ -221,7 +221,8 @@ Full run: 2,454 tasks, $102.81 total cost, 5h 5min. See [`results/RESULTS.md`](r
 | Category | n | Accuracy | Verification |
 |---|---|---|---|
 | Calibration | 100 | **100.0%** | LLM-judge |
-| Hypothesis Generation | 100 | **100.0%** | LLM-judge |
+| Hypothesis Generation (lenient) | 100 | **100.0%** | LLM-judge |
+| Hypothesis Generation (strict) | 100 | **97.0%** | LLM-judge (strict rubric) |
 | Structure Analysis | 303 | **45.5%** | Programmatic |
 | Statistical Reasoning | 200 | **23.0%** | Programmatic |
 
@@ -238,7 +239,8 @@ Full run: 2,454 tasks, $102.81 total cost, 5h 5min. See [`results/RESULTS.md`](r
 1. **Confidence intervals reveal false precision.** SuppQA and FigQA appear different (11.1% vs 10.5%) but their CIs overlap entirely.
 2. **The compositionality gap is real.** 89% per-step accuracy drops to 59% end-to-end. Models that answer individual questions well still fail multi-step research workflows.
 3. **LLM-judge grading is reliable but biased.** Cohen's kappa = 0.765 (substantial), with 10% position bias and 5% verbosity bias.
-4. **Zero contamination detected.** 0% cloze and reverse match rates — no benchmark memorization.
+4. **Rubric design matters as much as the judge.** Hypothesis Generation drops from 100% to 97% under a strict rubric, with novelty at only 67% — a lenient rubric masked a real capability gap.
+5. **Zero contamination detected.** 0% cloze and reverse match rates — no benchmark memorization.
 
 ### Methodological Audit
 

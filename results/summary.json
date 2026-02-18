@@ -54,12 +54,22 @@
     },
     "HypothesisGeneration": {
       "n": 100,
-      "correct": 100,
-      "accuracy": 1.0,
+      "correct_lenient": 100,
+      "accuracy_lenient": 1.0,
+      "correct_strict": 97,
+      "accuracy_strict": 0.97,
       "ci_low": NaN,
       "ci_high": NaN,
       "total_cost_usd": 9.95,
-      "avg_latency_ms": 27966
+      "regrade_cost_usd": 1.59,
+      "avg_latency_ms": 27966,
+      "strict_rubric": {
+        "falsifiable_pass_rate": 1.0,
+        "connected_pass_rate": 0.95,
+        "novel_pass_rate": 0.67,
+        "specific_pass_rate": 0.95,
+        "threshold": "3_of_4"
+      }
     },
     "LitQA2": {
       "n": 186,

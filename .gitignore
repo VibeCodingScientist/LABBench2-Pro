@@ -23,3 +23,5 @@ tasks/hypothesis/*.json
 !results/figures/*.pdf
 !results/*.json
 notebooks/.ipynb_checkpoints/
+*.tar.gz
+screenshot_new.png
