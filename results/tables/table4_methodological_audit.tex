@@ -1,19 +1,24 @@
 \begin{table}[ht]
 \centering
-\caption{Methodological audit results. Contamination probes test for benchmark memorization. Judge audit measures LLM-as-judge reliability.}
+\caption{Methodological audit results.}
 \label{tab:audit}
 \begin{tabular}{llr}
 \toprule
 Audit & Metric & Value \\
 \midrule
-Contamination & Cloze match rate & 0.0\% \\
-              & Reverse match rate & 0.0\% \\
+Contamination & Cloze match (Opus) & 0.0\% \\
+              & Cloze match (Sonnet) & 0.0\% \\
+              & Reverse match (Opus) & 0.0\% \\
               & Temporal split & Insufficient metadata \\
 \midrule
 Judge Audit   & Inter-judge agreement & 90.0\% \\
               & Cohen's $\kappa$ & 0.765 (substantial) \\
-              & Position bias rate & 10.0\% \\
+              & Position bias rate & 15.0\% \\
               & Verbosity bias & +5.0\% \\
+\midrule
+IRT Analysis  & Total items & 2{,}459 \\
+              & Low discrimination ($< 0.3$) & 2{,}326 (94.6\%) \\
+              & Recommended pruned set & 133 items \\
 \bottomrule
 \end{tabular}
 \end{table}

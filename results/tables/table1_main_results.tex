@@ -1,27 +1,24 @@
 \begin{table}[ht]
 \centering
-\caption{Claude Opus 4.6 performance across LABBench2-Pro evaluation categories. Confidence intervals are BCa bootstrap 95\% CIs (10{,}000 resamples).}
+\caption{Two-model accuracy comparison across LABBench2-Pro categories. BCa 95\% bootstrap CIs (10{,}000 resamples). Significance: pairwise bootstrap test.}
 \label{tab:main-results}
-\begin{tabular}{llrrrl}
+\begin{tabular}{llrrrrrl}
 \toprule
-Tier & Category & $n$ & Correct & Accuracy & 95\% CI \\
+Tier & Category & $n$ & Opus 4.6 & 95\% CI & Sonnet 4.6 & 95\% CI & Sig? \\
 \midrule
-  1: LABBench & LitQA2 & 186 & 58 & 31.2% & [24.7%, 38.2%] \\
-   & FigQA & 181 & 19 & 10.5% & [6.6%, 15.5%] \\
-   & SeqQA & 585 & 104 & 17.8% & [14.7%, 21.0%] \\
-   & SuppQA & 81 & 9 & 11.1% & [6.2%, 19.8%] \\
-   & ProtocolQA & 100 & 15 & 15.0% & [9.0%, 23.0%] \\
-   & DbQA & 492 & 23 & 4.7% & [3.0%, 6.9%] \\
-   & CloningScenarios & 33 & 13 & 39.4% & [24.2%, 57.6%] \\
+  1: LABBench & CloningScenarios & 33 & 39.4% & [24.2%, 57.6%] & 27.3% & [15.2%, 45.5%] & \textbf{p=0.014} \\
+   & LitQA2 & 187 & 31.2% & [24.7%, 38.2%] & 28.3% & [21.9%, 35.3%] & p=0.210 \\
+   & SeqQA & 585 & 17.8% & [14.9%, 21.0%] & 12.4% & [9.1%, 16.4%] & p=0.214 \\
+   & ProtocolQA & 102 & 15.0% & [9.0%, 23.0%] & 15.7% & [9.8%, 24.3%] & p=0.434 \\
+   & SuppQA & 81 & 11.1% & [4.9%, 19.8%] & 6.2% & [2.5%, 13.6%] & p=0.065 \\
+   & FigQA & 181 & 10.5% & [6.6%, 15.5%] & 5.0% & [2.2%, 9.4%] & \textbf{p=0.003} \\
+   & DbQA & 493 & 4.7% & [3.0%, 6.7%] & 2.2% & [1.2%, 3.9%] & \textbf{p=0.001} \\
 \midrule
-  2: New Tasks & StatisticalReasoning & 200 & 46 & 23.0% & [17.5%, 29.0%] \\
-   & StructureAnalysis & 303 & 138 & 45.5% & [39.9%, 51.2%] \\
-   & Calibration & 100 & 100 & 100.0% & [nan%, nan%] \\
-   & HypothesisGeneration & 100 & 97 & 97.0% & [92.0%, 99.0%] \\
+  2: New Tasks & Calibration & 100 & 100.0% & [nan%, nan%] & 100.0% & [nan%, nan%] & --- \\
+   & HypothesisGeneration & 100 & 97.0% & [92.0%, 99.0%] & 97.0% & [92.0%, 99.0%] & --- \\
+   & StructureAnalysis & 303 & 45.5% & [40.3%, 51.5%] & 43.9% & [38.3%, 49.5%] & --- \\
+   & StatisticalReasoning & 200 & 23.0% & [17.5%, 29.0%] & 35.0% & [28.5%, 42.0%] & --- \\
 \midrule
-  3: Chains & ChainTask & 93 & 83 & 89.2% & [81.7%, 94.6%] \\
-\midrule
-  & \textbf{Total} & \textbf{2454} & \textbf{705} & \textbf{28.7%} & \\
 \bottomrule
 \end{tabular}
 \end{table}
