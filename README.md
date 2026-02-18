@@ -180,7 +180,7 @@ python -m src.tier3.cost_tracker
 
 ```bash
 # Direct SQL
-PGPASSWORD=dev psql -h localhost -U dev -d labbench2pro
+PGPASSWORD=dev psql -h localhost -p 5433 -U dev -d labbench2pro
 
 # Or start the API
 uvicorn src.api:app --host 0.0.0.0 --port 8000

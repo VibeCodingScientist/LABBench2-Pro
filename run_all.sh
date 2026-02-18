@@ -59,7 +59,7 @@ fi
 
 # Schema is auto-applied via docker-entrypoint-initdb.d, but re-apply if tables missing
 echo "Ensuring schema..."
-PGPASSWORD=dev psql -h localhost -U dev -d labbench2pro -f db/schema.sql 2>/dev/null || true
+PGPASSWORD=dev psql -h localhost -p 5433 -U dev -d labbench2pro -f db/schema.sql 2>/dev/null || true
 
 ###############################################################################
 # Phase 1: Generate Tier 2 Tasks (local, no API cost)
@@ -173,7 +173,7 @@ log "PIPELINE COMPLETE"
 echo "Finished: $(timestamp)"
 echo ""
 echo "Results are in PostgreSQL. Query with:"
-echo "  PGPASSWORD=dev psql -h localhost -U dev -d labbench2pro"
+echo "  PGPASSWORD=dev psql -h localhost -p 5433 -U dev -d labbench2pro"
 echo ""
 echo "Or start the API:"
 echo "  uvicorn src.api:app --host 0.0.0.0 --port 8000"

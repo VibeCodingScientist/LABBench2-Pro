@@ -18,8 +18,8 @@ NCBI_EMAIL = os.environ.get("NCBI_EMAIL", "")
 NCBI_API_KEY = os.environ.get("NCBI_API_KEY", "")
 
 # --- Infrastructure ---
-DATABASE_URL = os.environ.get("DATABASE_URL", "postgresql://dev:dev@localhost:5432/labbench2pro")
-REDIS_URL = os.environ.get("REDIS_URL", "redis://localhost:6379/0")
+DATABASE_URL = os.environ.get("DATABASE_URL", "postgresql://dev:dev@localhost:5433/labbench2pro")
+REDIS_URL = os.environ.get("REDIS_URL", "redis://localhost:6380/0")
 
 # --- Model registry ---
 MODEL_REGISTRY = {
