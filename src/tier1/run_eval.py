@@ -129,7 +129,7 @@ def load_tasks_from_hf(category: str) -> list[dict]:
     # Try labbench2 (gated) first
     if category in LABBENCH2_CATEGORIES and token:
         try:
-            ds = load_dataset("futurehouse/labbench2", category, token=token, split="test")
+            ds = load_dataset("futurehouse/labbench2", category, token=token, split="train")
             print(f"  Loaded from futurehouse/labbench2")
             return _parse_hf_dataset(ds, category, source="labbench2")
         except Exception as e:
@@ -148,7 +148,7 @@ def load_tasks_from_hf(category: str) -> list[dict]:
         fallback_cat = category_map[category]
 
     try:
-        ds = load_dataset("futurehouse/lab-bench", fallback_cat, token=token, split="test")
+        ds = load_dataset("futurehouse/lab-bench", fallback_cat, token=token, split="train")
         print(f"  Loaded from futurehouse/lab-bench ({fallback_cat})")
         return _parse_hf_dataset(ds, category, source="lab-bench")
     except Exception as e:
