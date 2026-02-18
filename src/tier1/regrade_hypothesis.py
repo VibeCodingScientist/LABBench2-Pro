@@ -11,6 +11,7 @@ Usage:
 
 import asyncio
 import json
+import re
 import sys
 
 from src.db import execute, fetch, fetchrow
@@ -107,11 +108,29 @@ async def regrade():
             try:
                 result = await call_model(
                     "claude-sonnet-4.5", prompt,
-                    system="You are a strict scientific reviewer. Most AI-generated hypotheses are too vague or obvious to pass rigorous review.",
+                    system="You are a strict scientific reviewer. Most AI-generated hypotheses are too vague or obvious to pass rigorous review. Respond with JSON only, no markdown.",
                     cache=False,
                 )
-                parsed = json.loads(result["response"])
-            except (json.JSONDecodeError, Exception) as exc:
+                resp_text = result["response"].strip()
+                # Strip markdown code fences if present
+                if resp_text.startswith("```"):
+                    resp_text = re.sub(r"^```(?:json)?\s*", "", resp_text)
+                    resp_text = re.sub(r"\s*```$", "", resp_text)
+                parsed = json.loads(resp_text)
+            except json.JSONDecodeError as exc:
+                # Try to extract JSON from mixed text
+                import re as re_mod
+                match = re_mod.search(r'\{[^{}]*"correct"[^{}]*\}', result["response"], re_mod.DOTALL)
+                if match:
+                    try:
+                        parsed = json.loads(match.group())
+                    except json.JSONDecodeError:
+                        print(f"  ERROR {row['task_id']}: could not parse JSON")
+                        return
+                else:
+                    print(f"  ERROR {row['task_id']}: no JSON found in response")
+                    return
+            except Exception as exc:
                 print(f"  ERROR {row['task_id']}: {exc}")
                 return
 
