@@ -101,11 +101,20 @@ async def call_model(
             raise NotImplementedError("OpenAI provider not configured — set OPENAI_API_KEY")
         from openai import AsyncOpenAI
         client = AsyncOpenAI(api_key=OPENAI_API_KEY)
-        resp = await client.chat.completions.create(
-            model=info["model"],
-            messages=_build_openai_messages(system, prompt, images),
-            max_tokens=max_tokens,
-        )
+        # Newer OpenAI models require max_completion_tokens instead of max_tokens
+        try:
+            resp = await client.chat.completions.create(
+                model=info["model"],
+                messages=_build_openai_messages(system, prompt, images),
+                max_completion_tokens=max_tokens,
+            )
+        except Exception:
+            # Fall back to max_tokens for older models
+            resp = await client.chat.completions.create(
+                model=info["model"],
+                messages=_build_openai_messages(system, prompt, images),
+                max_tokens=max_tokens,
+            )
         text = resp.choices[0].message.content
         t_in, t_out = resp.usage.prompt_tokens, resp.usage.completion_tokens
 
