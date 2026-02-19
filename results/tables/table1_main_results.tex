@@ -1,24 +1,25 @@
-\begin{table}[ht]
+\begin{table*}[ht]
 \centering
-\caption{Two-model accuracy comparison across LABBench2-Pro categories. BCa 95\% bootstrap CIs (10{,}000 resamples). Significance: pairwise bootstrap test.}
+\caption{Four-model accuracy comparison across LABBench2-Pro categories. BCa 95\% bootstrap CIs (10{,}000 resamples). Bold = best per category.}
 \label{tab:main-results}
-\begin{tabular}{llrrrrrl}
+\small
+\begin{tabular}{llrrrrrrrrr}
 \toprule
-Tier & Category & $n$ & Opus 4.6 & 95\% CI & Sonnet 4.6 & 95\% CI & Sig? \\
+Tier & Category & $n$ & Opus 4.6 & 95\% CI & Sonnet 4.6 & 95\% CI & GPT-5.2 & 95\% CI & Gemini 2.5 Pro & 95\% CI \\
 \midrule
-  1: LABBench & CloningScenarios & 33 & 39.4% & [24.2%, 57.6%] & 27.3% & [15.2%, 45.5%] & \textbf{p=0.014} \\
-   & LitQA2 & 187 & 31.2% & [24.7%, 38.2%] & 28.3% & [21.9%, 35.3%] & p=0.210 \\
-   & SeqQA & 585 & 17.8% & [14.9%, 21.0%] & 12.4% & [9.1%, 16.4%] & p=0.214 \\
-   & ProtocolQA & 102 & 15.0% & [9.0%, 23.0%] & 15.7% & [9.8%, 24.3%] & p=0.434 \\
-   & SuppQA & 81 & 11.1% & [4.9%, 19.8%] & 6.2% & [2.5%, 13.6%] & p=0.065 \\
-   & FigQA & 181 & 10.5% & [6.6%, 15.5%] & 5.0% & [2.2%, 9.4%] & \textbf{p=0.003} \\
-   & DbQA & 493 & 4.7% & [3.0%, 6.7%] & 2.2% & [1.2%, 3.9%] & \textbf{p=0.001} \\
+  1: LABBench & CloningScenarios & 33 & \textbf{39.4%} & [24.2%, 57.6%] & 27.3% & [15.2%, 45.5%] & 15.2% & [6.1%, 30.3%] & 27.3% & [15.2%, 45.5%] \\
+   & LitQA2 & 199 & \textbf{31.2%} & [24.7%, 38.2%] & 28.3% & [22.5%, 35.3%] & 30.2% & [24.1%, 36.7%] & 23.1% & [17.6%, 29.1%] \\
+   & SeqQA & 600 & \textbf{17.8%} & [14.9%, 21.0%] & 12.4% & [9.1%, 16.4%] & 10.8% & [8.5%, 13.5%] & 15.5% & [12.9%, 18.5%] \\
+   & ProtocolQA & 108 & 15.0% & [9.0%, 23.0%] & 15.7% & [9.8%, 23.5%] & \textbf{18.5%} & [12.0%, 26.9%] & 13.9% & [8.3%, 21.3%] \\
+   & SuppQA & 82 & 11.1% & [4.9%, 19.8%] & 6.2% & [2.5%, 13.6%] & \textbf{12.2%} & [6.1%, 20.7%] & 7.3% & [2.4%, 14.6%] \\
+   & FigQA & 181 & \textbf{10.5%} & [6.6%, 15.5%] & 5.0% & [2.2%, 8.8%] & 6.1% & [3.3%, 10.5%] & 8.8% & [5.5%, 13.8%] \\
+   & DbQA & 520 & \textbf{4.7%} & [3.0%, 6.9%] & 2.2% & [1.2%, 3.9%] & 1.7% & [0.8%, 3.1%] & 2.1% & [1.2%, 3.7%] \\
 \midrule
-  2: New Tasks & Calibration & 100 & 100.0% & [nan%, nan%] & 100.0% & [nan%, nan%] & --- \\
-   & HypothesisGeneration & 100 & 97.0% & [92.0%, 99.0%] & 97.0% & [92.0%, 99.0%] & --- \\
-   & StructureAnalysis & 303 & 45.5% & [40.3%, 51.5%] & 43.9% & [38.3%, 49.5%] & --- \\
-   & StatisticalReasoning & 200 & 23.0% & [17.5%, 29.0%] & 35.0% & [28.5%, 42.0%] & --- \\
+  2: New Tasks & Calibration & 100 & \textbf{100.0%} & [nan%, nan%] & 100.0% & [nan%, nan%] & 100.0% & [nan%, nan%] & 94.0% & [88.0%, 98.0%] \\
+   & HypothesisGeneration & 100 & 97.0% & [92.0%, 99.0%] & 97.0% & [92.0%, 99.0%] & \textbf{100.0%} & [nan%, nan%] & 95.0% & [89.0%, 98.0%] \\
+   & StructureAnalysis & 303 & 45.5% & [39.9%, 51.2%] & 43.9% & [38.3%, 49.5%] & \textbf{52.8%} & [47.2%, 58.1%] & 51.2% & [45.5%, 56.8%] \\
+   & StatisticalReasoning & 200 & 23.0% & [17.5%, 29.5%] & 35.0% & [28.5%, 42.0%] & 19.5% & [14.5%, 25.5%] & \textbf{67.5%} & [60.5%, 74.0%] \\
 \midrule
 \bottomrule
 \end{tabular}
-\end{table}
+\end{table*}

@@ -1,43 +1,44 @@
-\begin{table}[ht]
+\begin{table*}[ht]
 \centering
-\caption{Compositional chain results for both models. E2E = all steps correct.}
+\caption{Compositional chain results for all four models. E2E = all steps correct.}
 \label{tab:chain-results}
-\begin{tabular}{llrrrr}
+\small
+\begin{tabular}{llrrrrrrrr}
 \toprule
-Chain & Template & Opus Steps & Opus E2E & Sonnet Steps & Sonnet E2E \\
+Chain & Template & Opus 4.6 Steps & Opus 4.6 E2E & Sonnet 4.6 Steps & Sonnet 4.6 E2E & GPT-5.2 Steps & GPT-5.2 E2E & Gemini 2.5 Pro Steps & Gemini 2.5 Pro E2E \\
 \midrule
-  chain01 & paper_to_experiment & 3/4 & No & 1/2 & No \\
-  chain02 & structure_to_drug & 4/4 & Yes & 2/2 & Yes \\
-  chain03 & stats_pipeline & 2/3 & No & 3/3 & Yes \\
-  chain04 & critical_appraisal & 3/3 & Yes & 3/3 & Yes \\
-  chain05 & genetics_to_therapy & 1/3 & No & 1/3 & No \\
-  chain06 & protocol_troubleshoot & 3/3 & Yes & 3/3 & Yes \\
-  chain07 & paradox_resolution & 2/3 & No & 3/3 & Yes \\
-  chain08 & sequence_to_function & 1/3 & No & 2/3 & No \\
-  chain09 & data_to_mechanism & 2/3 & No & 3/3 & Yes \\
-  chain10 & evidence_synthesis & 3/3 & Yes & 3/3 & Yes \\
-  chain11 & structure_to_drug & 4/4 & Yes & 4/4 & Yes \\
-  chain12 & paper_to_experiment & 4/4 & Yes & 4/4 & Yes \\
-  chain13 & stats_pipeline & 3/3 & Yes & 3/3 & Yes \\
-  chain14 & critical_appraisal & 3/3 & Yes & 3/3 & Yes \\
-  chain15 & genetics_to_therapy & 1/3 & No & 3/3 & Yes \\
-  chain16 & protocol_troubleshoot & 2/3 & No & 2/3 & No \\
-  chain17 & paradox_resolution & 3/3 & Yes & 3/3 & Yes \\
-  chain18 & structure_to_drug & 2/2 & Yes & 2/2 & Yes \\
-  chain19 & data_to_mechanism & 3/3 & Yes & 3/3 & Yes \\
-  chain20 & evidence_synthesis & 3/3 & Yes & 3/3 & Yes \\
-  chain21 & genetics_to_therapy & 2/3 & No & 1/3 & No \\
-  chain22 & protocol_troubleshoot & 3/3 & Yes & 3/3 & Yes \\
-  chain23 & sequence_to_function & 2/2 & Yes & 1/2 & No \\
-  chain24 & paper_to_experiment & 4/4 & Yes & 4/4 & Yes \\
-  chain25 & paradox_resolution & 2/3 & No & 3/3 & Yes \\
-  chain26 & data_to_mechanism & 3/3 & Yes & 3/3 & Yes \\
-  chain27 & evidence_synthesis & 3/3 & Yes & 2/3 & No \\
-  chain28 & sequence_to_function & 2/3 & No & 3/3 & Yes \\
-  chain29 & stats_pipeline & 2/3 & No & 3/3 & Yes \\
-  chain30 & critical_appraisal & 3/3 & Yes & 2/3 & No \\
+  chain01 & paper_to_experiment & 3/4 & No & 1/2 & No & 1/4 & No & 0/4 & No \\
+  chain02 & structure_to_drug & 4/4 & Yes & 2/2 & Yes & 3/4 & No & 4/4 & Yes \\
+  chain03 & stats_pipeline & 2/3 & No & 3/3 & Yes & 3/3 & Yes & 3/3 & Yes \\
+  chain04 & critical_appraisal & 3/3 & Yes & 3/3 & Yes & 2/3 & No & 3/3 & Yes \\
+  chain05 & genetics_to_therapy & 1/3 & No & 1/3 & No & 1/3 & No & 3/3 & Yes \\
+  chain06 & protocol_troubleshoot & 3/3 & Yes & 3/3 & Yes & 2/3 & No & 1/3 & No \\
+  chain07 & paradox_resolution & 2/3 & No & 3/3 & Yes & 2/3 & No & 3/3 & Yes \\
+  chain08 & sequence_to_function & 1/3 & No & 2/3 & No & 0/3 & No & 1/2 & No \\
+  chain09 & data_to_mechanism & 2/3 & No & 3/3 & Yes & 2/3 & No & 3/3 & Yes \\
+  chain10 & evidence_synthesis & 3/3 & Yes & 3/3 & Yes & 3/3 & Yes & 3/3 & Yes \\
+  chain11 & structure_to_drug & 4/4 & Yes & 4/4 & Yes & 4/4 & Yes & 3/4 & No \\
+  chain12 & paper_to_experiment & 4/4 & Yes & 4/4 & Yes & 4/4 & Yes & 4/4 & Yes \\
+  chain13 & stats_pipeline & 3/3 & Yes & 3/3 & Yes & 2/3 & No & 3/3 & Yes \\
+  chain14 & critical_appraisal & 3/3 & Yes & 3/3 & Yes & 2/3 & No & 2/3 & No \\
+  chain15 & genetics_to_therapy & 1/3 & No & 3/3 & Yes & 3/3 & Yes & 2/3 & No \\
+  chain16 & protocol_troubleshoot & 2/3 & No & 2/3 & No & 1/3 & No & 1/3 & No \\
+  chain17 & paradox_resolution & 3/3 & Yes & 3/3 & Yes & 3/3 & Yes & 3/3 & Yes \\
+  chain18 & structure_to_drug & 2/2 & Yes & 2/2 & Yes & 2/4 & No & 3/4 & No \\
+  chain19 & data_to_mechanism & 3/3 & Yes & 3/3 & Yes & 1/3 & No & 2/3 & No \\
+  chain20 & evidence_synthesis & 3/3 & Yes & 3/3 & Yes & 3/3 & Yes & 2/3 & No \\
+  chain21 & genetics_to_therapy & 2/3 & No & 1/3 & No & 2/3 & No & 1/3 & No \\
+  chain22 & protocol_troubleshoot & 3/3 & Yes & 3/3 & Yes & 2/3 & No & 2/3 & No \\
+  chain23 & sequence_to_function & 2/2 & Yes & 1/2 & No & 3/3 & Yes & 2/3 & No \\
+  chain24 & paper_to_experiment & 4/4 & Yes & 4/4 & Yes & 3/4 & No & 3/4 & No \\
+  chain25 & paradox_resolution & 2/3 & No & 3/3 & Yes & 3/3 & Yes & 1/3 & No \\
+  chain26 & data_to_mechanism & 3/3 & Yes & 3/3 & Yes & 2/3 & No & 3/3 & Yes \\
+  chain27 & evidence_synthesis & 3/3 & Yes & 2/3 & No & 3/3 & Yes & 2/3 & No \\
+  chain28 & sequence_to_function & 2/3 & No & 3/3 & Yes & 2/3 & No & 2/3 & No \\
+  chain29 & stats_pipeline & 2/3 & No & 3/3 & Yes & 3/3 & Yes & 2/3 & No \\
+  chain30 & critical_appraisal & 3/3 & Yes & 2/3 & No & 2/3 & No & 2/3 & No \\
 \midrule
-  \textbf{Total} &  & \textbf{78/93} & \textbf{18/30} & \textbf{79/89} & \textbf{22/30} \\
+  \textbf{Total} &  & \textbf{78/93} & \textbf{18/30} & \textbf{79/89} & \textbf{22/30} & \textbf{69/96} & \textbf{11/30} & \textbf{69/95} & \textbf{11/30} \\
 \bottomrule
 \end{tabular}
-\end{table}
+\end{table*}
