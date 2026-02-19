@@ -93,7 +93,7 @@ async def call_model(
             messages=_build_anthropic_messages(prompt, images),
             max_tokens=max_tokens,
         )
-        text = resp.content[0].text
+        text = resp.content[0].text if resp.content else ""
         t_in, t_out = resp.usage.input_tokens, resp.usage.output_tokens
 
     elif info["provider"] == "openai":
