@@ -1,13 +1,16 @@
 """Unified model caller. One function, all providers."""
 
+import asyncio
 import base64
 import hashlib
 import time
 
+import httpx
 from anthropic import AsyncAnthropic
 
 from src.config import (
     ANTHROPIC_API_KEY,
+    BIOXYZ_API_KEY,
     COST_TABLE,
     GOOGLE_API_KEY,
     MODEL_REGISTRY,
@@ -59,6 +62,53 @@ def _build_google_messages(system: str, prompt: str, images: list[bytes] | None 
             parts.append({"inline_data": {"mime_type": "image/png", "data": base64.b64encode(img).decode()}})
     parts.append(prompt)
     return parts
+
+
+_BIOXYZ_BASE = "https://api.ai.bio.xyz"
+_BIOXYZ_POLL_INTERVAL = 15   # seconds between status checks
+_BIOXYZ_TIMEOUT = 45 * 60   # 45 minutes max
+
+
+async def _call_bioxyz(prompt: str, system: str) -> tuple[str, int, int]:
+    """Call bio.xyz BioAgent deep-research API (async polling)."""
+    if not BIOXYZ_API_KEY:
+        raise NotImplementedError("bio.xyz provider not configured — set BIOXYZ_API_KEY")
+
+    message = f"{system}\n\n{prompt}" if system else prompt
+    headers = {"Authorization": f"Bearer {BIOXYZ_API_KEY}"}
+
+    async with httpx.AsyncClient(timeout=60) as client:
+        # Start research job
+        resp = await client.post(
+            f"{_BIOXYZ_BASE}/deep-research/start",
+            data={"message": message, "researchMode": "steering"},
+            headers=headers,
+        )
+        resp.raise_for_status()
+        conversation_id = resp.json()["conversationId"]
+
+        # Poll until completed
+        deadline = time.monotonic() + _BIOXYZ_TIMEOUT
+        while True:
+            await asyncio.sleep(_BIOXYZ_POLL_INTERVAL)
+            if time.monotonic() > deadline:
+                raise TimeoutError(
+                    f"BioAgent job {conversation_id} timed out after {_BIOXYZ_TIMEOUT}s"
+                )
+            poll = await client.get(
+                f"{_BIOXYZ_BASE}/deep-research/{conversation_id}",
+                headers=headers,
+            )
+            poll.raise_for_status()
+            data = poll.json()
+            if data.get("status") == "completed":
+                messages = data.get("messages", [])
+                if messages:
+                    return messages[-1].get("content", ""), 0, 0
+                return "", 0, 0
+
+    # unreachable, but satisfies type checkers
+    return "", 0, 0
 
 
 async def call_model(
@@ -124,6 +174,9 @@ async def call_model(
         text = resp.text or ""
         t_in = resp.usage_metadata.prompt_token_count or 0
         t_out = resp.usage_metadata.candidates_token_count or 0
+
+    elif info["provider"] == "bioxyz":
+        text, t_in, t_out = await _call_bioxyz(prompt, system)
 
     else:
         raise ValueError(f"Unknown provider: {info['provider']}")
