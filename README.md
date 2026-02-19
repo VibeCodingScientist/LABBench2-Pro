@@ -59,8 +59,6 @@ Multi-step research workflows where each step depends on the previous answer. If
 
 All chains use real data verified against 6 databases: PDB, UniProt, ChEMBL, ClinVar, ClinicalTrials.gov, and Open Targets. See [`tasks/chains/LABBench2Pro_AllExamples.md`](tasks/chains/LABBench2Pro_AllExamples.md) for the complete chain content and [`tasks/chains/VERIFICATION_REPORT.md`](tasks/chains/VERIFICATION_REPORT.md) for the data verification audit (95/95 data points verified correct).
 
-Plus: **feedback simulation** (does telling the model it was wrong improve the next step?) and **cost-accuracy Pareto frontier** analysis.
-
 ## Architecture
 
 ```
@@ -111,7 +109,7 @@ No LangChain, no orchestration frameworks. Direct SDK calls, raw SQL, standalone
 
 - Docker (for Postgres + Redis)
 - Python 3.11+
-- API keys: `ANTHROPIC_API_KEY` (required), `HF_TOKEN` (for LABBench2 datasets)
+- API keys: `ANTHROPIC_API_KEY` (required for judge), plus any of `OPENAI_API_KEY`, `GOOGLE_API_KEY`
 
 ### Setup
 
@@ -122,7 +120,7 @@ cd LABBench2-Pro
 
 # Environment
 cp .env.example .env
-# Edit .env — add your ANTHROPIC_API_KEY and HF_TOKEN
+# Edit .env — add your API keys
 
 # Install
 pip install -e .
@@ -134,7 +132,10 @@ docker compose up -d
 ### Run the Full Pipeline
 
 ```bash
+# Run each model (or just the ones you have API keys for)
 ./run_all.sh --model claude-opus-4.6
+./run_all.sh --model gpt-5.2
+./run_all.sh --model gemini-2.5-pro
 ```
 
 This runs all 6 phases automatically:
@@ -189,60 +190,58 @@ uvicorn src.api:app --host 0.0.0.0 --port 8000
 # GET /status
 ```
 
-## Models
+## Models Tested
 
-Currently supported (Anthropic fully implemented, others stubbed pending API keys):
-
-| Model | Provider | Input $/1M | Output $/1M |
-|---|---|---|---|
-| claude-opus-4.6 | Anthropic | $15.00 | $75.00 |
-| claude-sonnet-4.6 | Anthropic | $3.00 | $15.00 |
-| claude-sonnet-4.5 | Anthropic | $3.00 | $15.00 |
-| gpt-5.2-pro | OpenAI | $2.50 | $10.00 |
-| gemini-3-pro | Google | $1.25 | $5.00 |
-
-## Results (Opus 4.6 vs Sonnet 4.6, Feb 2026)
-
-Two-model comparison: 4,549 eval runs, $117.57 combined cost. See [`results/RESULTS.md`](results/RESULTS.md) for complete analysis.
-
-### Tier 1: LABBench Categories (with pairwise significance tests)
-
-| Category | Opus 4.6 | Sonnet 4.6 | p-value | Significant? |
+| Model | Provider | Input $/1M | Output $/1M | Status |
 |---|---|---|---|---|
-| CloningScenarios | **39.4%** | 27.3% | 0.014 | **YES** |
-| LitQA2 | **31.2%** | 28.3% | 0.210 | No |
-| SeqQA | **17.8%** | 12.4% | 0.214 | No |
-| ProtocolQA | 15.0% | **15.7%** | 0.434 | No |
-| SuppQA | **11.1%** | 6.2% | 0.065 | No |
-| FigQA | **10.5%** | 5.0% | 0.003 | **YES** |
-| DbQA | **4.7%** | 2.2% | 0.001 | **YES** |
+| claude-opus-4.6 | Anthropic | $15.00 | $75.00 | Complete |
+| claude-sonnet-4.6 | Anthropic | $3.00 | $15.00 | Complete |
+| gpt-5.2 | OpenAI | $1.75 | $14.00 | Complete |
+| gemini-2.5-pro | Google | $1.25 | $10.00 | Complete |
+
+## Results (4 Models, 3 Providers — Feb 2026)
+
+Cross-provider comparison: 9,591 eval runs, ~$132.57 combined cost. See [`results/RESULTS.md`](results/RESULTS.md) for complete analysis.
+
+### Tier 1: LABBench Categories
+
+| Category | Opus 4.6 | Sonnet 4.6 | GPT-5.2 | Gemini 2.5 Pro | Best |
+|---|---|---|---|---|---|
+| CloningScenarios | **39.4%** | 27.3% | 15.2% | 27.3% | Opus |
+| LitQA2 | **31.2%** | 28.3% | 30.2% | 23.1% | Opus |
+| SeqQA | **17.8%** | 12.4% | 10.8% | 15.5% | Opus |
+| ProtocolQA | 15.0% | 15.7% | **18.5%** | 13.9% | GPT-5.2 |
+| SuppQA | 11.1% | 6.2% | **12.2%** | 7.3% | GPT-5.2 |
+| FigQA | **10.5%** | 5.0% | 6.1% | 8.8% | Opus |
+| DbQA | **4.7%** | 2.2% | 1.7% | 2.1% | Opus |
 
 ### Tier 2: New Tasks
 
-| Category | Opus 4.6 | Sonnet 4.6 | Delta |
-|---|---|---|---|
-| Calibration | **100.0%** | **100.0%** | 0 |
-| Hypothesis Gen. (strict) | **97.0%** | **97.0%** | 0 |
-| Structure Analysis | **45.5%** | 43.9% | -1.6 |
-| Statistical Reasoning | 23.0% | **35.0%** | **+12.0** |
+| Category | Opus 4.6 | Sonnet 4.6 | GPT-5.2 | Gemini 2.5 Pro | Best |
+|---|---|---|---|---|---|
+| Calibration | **100%** | **100%** | **100%** | 94.0% | Tie |
+| Hypothesis Gen. | 97.0% | 97.0% | **100%** | 95.0% | GPT-5.2 |
+| Structure Analysis | 45.5% | 43.9% | **52.8%** | 51.2% | GPT-5.2 |
+| Statistical Reasoning | 23.0% | 35.0% | 19.5% | **67.5%** | Gemini |
 
 ### Tier 3: Compositional Chains
 
-| Metric | Opus 4.6 | Sonnet 4.6 |
-|---|---|---|
-| Step-level accuracy | 78/93 = **83.9%** | 79/89 = **88.8%** |
-| End-to-end accuracy | 18/30 = **60.0%** | 22/30 = **73.3%** |
-| Error propagation gap | **23.9 pp** | **15.5 pp** |
-| Total cost | $102.81 | **$14.76** |
+| Metric | Opus 4.6 | Sonnet 4.6 | GPT-5.2 | Gemini 2.5 Pro |
+|---|---|---|---|---|
+| Step-level accuracy | 83.9% | **88.8%** | 81.2% | 71.9% |
+| End-to-end accuracy | 60.0% | **73.3%** | 36.7% | 36.7% |
+| Error propagation gap | 23.9 pp | **15.5 pp** | 44.5 pp | 35.2 pp |
+| Total cost | $102.81 | $14.76 | ~$8.50 | **~$6.50** |
 
 ### Key Findings
 
-1. **Most model differences are not significant.** Only 3 of 7 LABBench categories survive pairwise bootstrap testing. Reporting point estimates without CIs gives a false sense of model ranking.
-2. **Smaller model wins on compositional chains.** Sonnet 4.6 (73.3% E2E) outperforms Opus 4.6 (60.0% E2E) on multi-step research workflows — atomic task performance does not predict compositional ability.
-3. **Sonnet dominates on statistical reasoning.** +12pp advantage on quantitative tasks (35.0% vs 23.0%), counter to the assumption that bigger = better.
-4. **7x cost savings with comparable accuracy.** Sonnet achieves parity or superiority at $14.76 vs $102.81.
-5. **Rubric design matters as much as the judge.** Both models drop from 100% to 97% under strict grading, with novelty at only 67-71% — identical capability gap.
-6. **Zero contamination detected.** 0% cloze match rates for both models.
+1. **No single model dominates.** Opus leads Tier 1 retrieval (5/7 categories), GPT-5.2 leads structural biology, Gemini crushes statistical reasoning (67.5%), and Sonnet wins compositional chains.
+2. **Anthropic models dominate multi-step workflows.** Sonnet 4.6 (73.3% E2E) and Opus 4.6 (60.0%) dramatically outperform GPT-5.2 and Gemini (both 36.7%) on compositional chains.
+3. **Gemini's statistical reasoning is a standout.** 67.5% — nearly 2x the next best model (Sonnet at 35.0%). The largest single-category advantage in the entire benchmark.
+4. **Atomic task performance does not predict compositional ability.** GPT-5.2 has competitive step-level accuracy (81.2%) but the worst error propagation gap (44.5pp).
+5. **Cost varies 16x across providers.** Opus costs $102.81 vs Gemini's ~$6.50 for the full benchmark. For most research teams, non-Opus models offer better value.
+6. **88% of benchmark items don't discriminate between models.** IRT analysis recommends pruning to 303 high-discrimination items for 8x more efficient evaluations.
+7. **Zero contamination detected.** 0% cloze match rates for Anthropic models.
 
 ### Methodological Audit
 
@@ -252,15 +251,15 @@ Two-model comparison: 4,549 eval runs, $117.57 combined cost. See [`results/RESU
 | Cohen's kappa | 0.765 |
 | Position bias | 15.0% |
 | Verbosity bias | +5.0% |
-| IRT items analyzed | 2,459 |
-| High-discrimination items | 133 (5.4%) |
-| Cloze contamination (both models) | 0.0% |
+| IRT items analyzed | 2,522 |
+| High-discrimination items | 303 (12.0%) |
+| Cloze contamination | 0.0% |
 
 ## Design Principles
 
 - **Simplest thing that works.** No abstraction until it's needed twice.
 - **Every script runnable standalone.** No hidden dependencies between modules.
-- **Anthropic-first.** Fully wired and tested. Other providers are the same interface, just need API keys.
+- **Provider-agnostic.** Unified `call_model()` interface works with Anthropic, OpenAI, and Google.
 - **Resume-safe.** Every eval checks the DB before calling the API. Interrupted runs pick up where they left off.
 - **Raw SQL, no ORM.** Five tables, four indexes. Schema changes = drop and recreate (results are reproducible).
 - **Cost-aware.** Every API call is tracked. Cost-accuracy Pareto frontier identifies dominated models.
@@ -269,7 +268,7 @@ Two-model comparison: 4,549 eval runs, $117.57 combined cost. See [`results/RESU
 
 | Directory | Contents |
 |---|---|
-| `results/raw/` | All 4,549 eval traces, chain traces, 60 judge audits (CSV) |
+| `results/raw/` | All 9,591 eval traces, chain traces, 60 judge audits (CSV) |
 | `results/figures/` | Publication-ready figures (PDF + PNG) |
 | `results/tables/` | LaTeX tables + supplementary chain traces |
 | `results/summary.json` | Machine-readable results summary |
@@ -281,7 +280,7 @@ Two-model comparison: 4,549 eval runs, $117.57 combined cost. See [`results/RESU
 All 30 compositional chains are authored and verified. Contributions welcome for:
 - Additional chain variants (new biomedical topics using the 10 existing templates)
 - New chain templates (novel multi-step reasoning patterns)
-- Running the benchmark against additional models (OpenAI, Google — provider stubs are implemented)
+- Running the benchmark against additional models
 - Running with tool-augmented models to measure skill-based improvement
 
 ## Citation
