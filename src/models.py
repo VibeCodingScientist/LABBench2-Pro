@@ -101,21 +101,15 @@ async def call_model(
             raise NotImplementedError("OpenAI provider not configured — set OPENAI_API_KEY")
         from openai import AsyncOpenAI
         client = AsyncOpenAI(api_key=OPENAI_API_KEY)
-        # Newer OpenAI models require max_completion_tokens instead of max_tokens
-        try:
-            resp = await client.chat.completions.create(
-                model=info["model"],
-                messages=_build_openai_messages(system, prompt, images),
-                max_completion_tokens=max_tokens,
-            )
-        except Exception:
-            # Fall back to max_tokens for older models
-            resp = await client.chat.completions.create(
-                model=info["model"],
-                messages=_build_openai_messages(system, prompt, images),
-                max_tokens=max_tokens,
-            )
-        text = resp.choices[0].message.content
+        # GPT-5.x models require max_completion_tokens; older models use max_tokens
+        use_new_param = info["model"].startswith("gpt-5") or info["model"].startswith("o")
+        token_kwarg = {"max_completion_tokens": max_tokens} if use_new_param else {"max_tokens": max_tokens}
+        resp = await client.chat.completions.create(
+            model=info["model"],
+            messages=_build_openai_messages(system, prompt, images),
+            **token_kwarg,
+        )
+        text = resp.choices[0].message.content or ""
         t_in, t_out = resp.usage.prompt_tokens, resp.usage.completion_tokens
 
     elif info["provider"] == "google":
