@@ -121,9 +121,9 @@ async def call_model(
             model=info["model"],
             contents=_build_google_messages(system, prompt, images),
         )
-        text = resp.text
-        t_in = resp.usage_metadata.prompt_token_count
-        t_out = resp.usage_metadata.candidates_token_count
+        text = resp.text or ""
+        t_in = resp.usage_metadata.prompt_token_count or 0
+        t_out = resp.usage_metadata.candidates_token_count or 0
 
     else:
         raise ValueError(f"Unknown provider: {info['provider']}")
